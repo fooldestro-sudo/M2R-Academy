@@ -100,8 +100,12 @@ enrolls and plays independently.
 | Key | Shape | Written by | Cleared by |
 |-----|-------|-----------|-----------|
 | `eduportal.session` | `{"username":"...","displayName":"..."}` | login | logout |
-| `eduportal.enrolled` | `["trading-part1"]` | OTP verify | manual only |
-| `eduportal.progress` | `{"chess":{"videoIndex":2,"seconds":143}}` | player | manual only |
+| `eduportal.enrolled.<username>` | `["trading-part1"]` | OTP verify | manual only |
+| `eduportal.progress.<username>` | `{"chess":{"videoIndex":2,"seconds":143}}` | player | manual only |
+
+Every account has its own enrollments and progress (suffixed with the
+lowercased username), so users sharing one device never see each other's data.
+A leftover pre-fix global key is migrated to the current user once, then removed.
 
 All reads are `try/catch`-guarded; corrupted or disabled storage never crashes the app.
 

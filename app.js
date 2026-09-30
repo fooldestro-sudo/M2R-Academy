@@ -91,6 +91,39 @@
   var LS_ENROLLED = 'eduportal.enrolled';
   var LS_PROGRESS = 'eduportal.progress';
 
+  // Per-user namespacing: every account keeps its own enrollments + progress
+  // under `eduportal.enrolled.<username>` / `eduportal.progress.<username>`,
+  // so two users on the same device never see each other's data.
+  function scopeSuffix() {
+    return state.currentUser && state.currentUser.username
+      ? '.' + String(state.currentUser.username).toLowerCase()
+      : '';
+  }
+
+  function enrolledKey() { return LS_ENROLLED + scopeSuffix(); }
+  function progressKey() { return LS_PROGRESS + scopeSuffix(); }
+
+  /**
+   * One-time upgrade: move pre-existing global enrollments/progress
+   * (from before per-user storage) onto the current user, then drop the
+   * shared keys so accounts stay isolated from here on.
+   */
+  function migrateLegacyUserData() {
+    if (!state.currentUser) return;
+    try {
+      var uk = enrolledKey();
+      var pk = progressKey();
+      if (window.localStorage.getItem(uk) === null && window.localStorage.getItem(LS_ENROLLED) !== null) {
+        window.localStorage.setItem(uk, window.localStorage.getItem(LS_ENROLLED));
+      }
+      if (window.localStorage.getItem(pk) === null && window.localStorage.getItem(LS_PROGRESS) !== null) {
+        window.localStorage.setItem(pk, window.localStorage.getItem(LS_PROGRESS));
+      }
+      window.localStorage.removeItem(LS_ENROLLED);
+      window.localStorage.removeItem(LS_PROGRESS);
+    } catch (e) { /* storage unavailable — nothing to migrate */ }
+  }
+
   var state = {
     users: [],
     courses: [],
@@ -153,7 +186,7 @@
   }
 
   function getEnrolled() {
-    var list = readLS(LS_ENROLLED, []);
+    var list = readLS(enrolledKey(), []);
     return Array.isArray(list) ? list.filter(function (x) { return typeof x === 'string'; }) : [];
   }
 
@@ -164,7 +197,7 @@
   function addEnrollment(courseId) {
     var list = getEnrolled();
     if (list.indexOf(courseId) === -1) list.push(courseId);
-    writeLS(LS_ENROLLED, list);
+    writeLS(enrolledKey(), list);
   }
 
   function getCurrentCourse() {
@@ -394,6 +427,7 @@
     var displayName = match.displayName || match.username;
     state.currentUser = { username: match.username, displayName: displayName };
     writeLS(LS_SESSION, { username: match.username, displayName: displayName });
+    migrateLegacyUserData();
     showFieldError(errEl, null);
     if (userInput) userInput.value = '';
     if (passInput) passInput.value = '';
@@ -404,9 +438,9 @@
   }
 
   function logout() {
+    saveProgress(true); // still signed in here, so it lands on this user's key
     state.currentUser = null;
     removeLS(LS_SESSION);
-    saveProgress(true);
     showScreen('screen-login');
     var u = $('#login-username');
     try { if (u) u.focus(); } catch (e) {}
@@ -429,6 +463,7 @@
         return;
       }
       state.currentUser = { username: found.username, displayName: found.displayName || found.username };
+      migrateLegacyUserData();
       var chip = $('#user-chip');
       if (chip) chip.textContent = state.currentUser.displayName;
       renderCourses();
@@ -448,7 +483,7 @@
   }
 
   function courseProgress(course) {
-    var all = readLS(LS_PROGRESS, {});
+    var all = readLS(progressKey(), {});
     if (!all || !all[course.id]) return 0;
     var total = (course.videos || []).length;
     if (!total) return 0;
@@ -1428,7 +1463,7 @@
   /* ============================= Progress ============================ */
 
   function loadProgress(courseId) {
-    var all = readLS(LS_PROGRESS, {});
+    var all = readLS(progressKey(), {});
     if (!all || typeof all !== 'object') return null;
     var entry = all[courseId];
     if (!entry || typeof entry.videoIndex !== 'number') return null;
@@ -1448,10 +1483,10 @@
       lastProgressSave = now;
       var t = 0;
       try { t = state.player.getCurrentTime() || 0; } catch (e) { return; }
-      var all = readLS(LS_PROGRESS, {});
+      var all = readLS(progressKey(), {});
       if (!all || typeof all !== 'object') all = {};
       all[state.currentCourseId] = { videoIndex: state.currentVideoIndex, seconds: Math.floor(t) };
-      writeLS(LS_PROGRESS, all);
+      writeLS(progressKey(), all);
     } catch (e) { /* never crash on persistence */ }
   }
 
