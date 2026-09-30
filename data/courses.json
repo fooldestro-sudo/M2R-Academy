@@ -1,0 +1,1051 @@
+{
+  "courses": [
+    {
+      "id": "cybersecurity",
+      "track": "cybersecurity",
+      "trackPrefix": "S",
+      "title": "الأمن السيبراني — من الصفر للاحتراف (ISC2 CC)",
+      "about": "تراك الأمن السيبراني الكامل باللهجة المصرية: هتبدأ من يعني إيه أمن سيبراني وثلاثية CIA، وتعدي على إدارة المخاطر والحوكمة وأخلاقيات المهنة، ثم الاستجابة للحوادث واستمرارية الأعمال والتعافي من الكوارث، وبعدها ضوابط الوصول الفيزيائية والتقنية، وأساسيات الشبكات وهجماتها وطرق الحماية منها، والحوسبة السحابية والتشفير وسياسات الحماية — نفس منهج شهادة ISC2 Certified in Cybersecurity المشروحة بالعربي. المحتوى من قناة Secure The Humans (دورة أساسيات الأمن السيبراني — 25 درساً)، ومرتب هنا من المقدمة للدرس الأخير عشان تمشي خطوة بخطوة وتطلع فاهم المجال وجاهز لسوق الشغل أو للشهادة الدولية.",
+      "thumbnail": "https://img.youtube.com/vi/VyXQ8CMIQl4/maxresdefault.jpg",
+      "totalTime": "2h 34m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "المقدمة - دورة أساسيات الأمن السيبراني ISC2 CC",
+          "youtubeId": "VyXQ8CMIQl4",
+          "duration": "10:39"
+        },
+        {
+          "id": "v2",
+          "title": "CIA Triad - الدرس الأول - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "F6jvnsKW1Hs",
+          "duration": "13:03"
+        },
+        {
+          "id": "v3",
+          "title": "إدارة المخاطر (الجزء 1) - الدرس الثاني - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "wzA4VRNll3I",
+          "duration": "9:58"
+        },
+        {
+          "id": "v4",
+          "title": "إدارة المخاطر (الجزء الثاني) - الدرس الثالث - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "rdaNekYYt0Y",
+          "duration": "8:01"
+        },
+        {
+          "id": "v5",
+          "title": "ضوابط الأمان - الدرس الرابع - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "MSnXd6fncvY",
+          "duration": "11:27"
+        },
+        {
+          "id": "v6",
+          "title": "عناصر الحوكمة - الدرس الخامس - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "bcBN_RzsMvk",
+          "duration": "8:01"
+        },
+        {
+          "id": "v7",
+          "title": "(ISC)2 Ethics - الدرس السادس - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "O-pauiyACDg",
+          "duration": "7:27"
+        },
+        {
+          "id": "v8",
+          "title": "الدرس السابع - مراجعة الوحدة الأولى من دورة الأمن السيبراني",
+          "youtubeId": "rOv5H-vIMeI",
+          "duration": "14:06"
+        },
+        {
+          "id": "v9",
+          "title": "الاستجابة للحوادث - الدرس الثامن - دورة أساسيات الأمن السيبراني",
+          "youtubeId": "TY6F8ooEew4",
+          "duration": "16:57"
+        },
+        {
+          "id": "v10",
+          "title": "Business Continuity  -الدرس التاسع -دورة أساسيات الأمن السيبراني",
+          "youtubeId": "WPnVerFtPR0",
+          "duration": "5:39"
+        },
+        {
+          "id": "v11",
+          "title": "Disaster Recovery -الدرس العاشر -دورة أساسيات الأمن السيبراني",
+          "youtubeId": "OD8dIljN-Y0",
+          "duration": "8:10"
+        },
+        {
+          "id": "v12",
+          "title": "الدرس الحادي عشر - مراجعة الوحدة الثانية من دورة الأمن السيبراني",
+          "youtubeId": "T0tnVXgPoro",
+          "duration": "16:51"
+        },
+        {
+          "id": "v13",
+          "title": "عناصر التحكم في الوصول - الدرس الثاني عشر - أساسيات الأمن السيبراني",
+          "youtubeId": "oVkJ7GBbFKU",
+          "duration": "13:57"
+        },
+        {
+          "id": "v14",
+          "title": "Physical Controls - الدرس الثالث عشر - أساسيات الأمن السيبراني",
+          "youtubeId": "4kPYrTLlSdg",
+          "duration": "10:10"
+        }
+      ],
+      "source": "Secure The Humans — دورة أساسيات الأمن السيبراني (ISC2 CC)"
+    },
+    {
+      "id": "programming-cpp",
+      "track": "programming",
+      "trackPrefix": "P",
+      "title": "البرمجة بلغة C++ — الأساس الصح (Elzero)",
+      "about": "كورس تأسيس البرمجة بلغة C++ مع أسامة الزيرو (Elzero Web School) باللهجة المصرية: من تثبيت المحرر والكومبايلر وفهم الكومبايلر واللينكر، للمتغيرات والثوابت وأنواع البيانات، للـOperators والـControl Flow والـLoops والمصفوفات — بنفس ترتيب خطة دراسة الزيرو الرسمية. كل درس عليه تكليفات عملية على موقع الأكاديمية. اللي يخلص التراك ده هيكون متأسس صح ويقدر يدخل على حل المشكلات وهياكل البيانات وأي لغة تانية بسهولة.",
+      "thumbnail": "https://img.youtube.com/vi/XDuWyYxksXU/maxresdefault.jpg",
+      "totalTime": "2h 34m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #001 - Important Introduction About The Course",
+          "youtubeId": "XDuWyYxksXU",
+          "duration": "10:50"
+        },
+        {
+          "id": "v2",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #002 - Why C++ Language",
+          "youtubeId": "jOUb09iiO20",
+          "duration": "7:52"
+        },
+        {
+          "id": "v3",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #003 - Install VSC Editor, Compiler And Debugger",
+          "youtubeId": "R-Hu5rdn-vc",
+          "duration": "20:46"
+        },
+        {
+          "id": "v4",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #004 - Install Visual Studio And Answer Questions",
+          "youtubeId": "RWtT07Id-n4",
+          "duration": "21:37"
+        },
+        {
+          "id": "v5",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #005 - How The C++ Works",
+          "youtubeId": "FVV4kTy0dJg",
+          "duration": "8:17"
+        },
+        {
+          "id": "v6",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #006 - Preprocessing, Compiling And Linking",
+          "youtubeId": "1K1sET8dDrI",
+          "duration": "5:34"
+        },
+        {
+          "id": "v7",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #007 - C++ Language Syntax",
+          "youtubeId": "NeHu899_uYA",
+          "duration": "12:05"
+        },
+        {
+          "id": "v8",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #008 - Comments And Use Cases",
+          "youtubeId": "6UoFcvARKI4",
+          "duration": "14:55"
+        },
+        {
+          "id": "v9",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #009 - Variables Basic Knowledge",
+          "youtubeId": "R2zqj_52WwU",
+          "duration": "10:30"
+        },
+        {
+          "id": "v10",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #010 - Variables Naming Rules And Best Practices",
+          "youtubeId": "A6B4tlaPapo",
+          "duration": "11:06"
+        },
+        {
+          "id": "v11",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #011 - Variables Advanced Knowledge",
+          "youtubeId": "J_vnlD5Ca-U",
+          "duration": "7:59"
+        },
+        {
+          "id": "v12",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #012 - Variables Scope",
+          "youtubeId": "HHl6YF6GUhw",
+          "duration": "5:16"
+        },
+        {
+          "id": "v13",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #013 - Variables - Constant Variable",
+          "youtubeId": "zBhT544Xy0o",
+          "duration": "9:32"
+        },
+        {
+          "id": "v14",
+          "title": "[Arabic] Fundamentals Of Programming With C++ #014 - Calculate Your Age Application",
+          "youtubeId": "cS0tbixHmdI",
+          "duration": "7:54"
+        }
+      ],
+      "source": "Elzero Web School — Fundamentals Of Programming With C++"
+    },
+    {
+      "id": "programming-python",
+      "track": "programming",
+      "trackPrefix": "P",
+      "title": "البرمجة بلغة Python — من الصفر للسوق (Elzero)",
+      "about": "كورس بايثون الكامل مع أسامة الزيرو (Elzero Web School) باللهجة المصرية: من تنصيب بايثون وأول برنامج، للمتغيرات والـStrings والأرقام والـLists والـTuples والـSets والـDictionaries، للشروط والـLoops والدوال — مرتب من الدرس الأول للاحتراف. بايثون هي بوابتك لمجالات الذكاء الاصطناعي وتحليل البيانات والأتمتة، والكورس ده مشروح بأسلوب عملي بسيط يناسب اللي عمره ما برمج قبل كده.",
+      "thumbnail": "https://img.youtube.com/vi/mvZHDpCHphk/maxresdefault.jpg",
+      "totalTime": "1h 58m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "Learn Python in Arabic #001 - Introduction And What's Python",
+          "youtubeId": "mvZHDpCHphk",
+          "duration": "11:54"
+        },
+        {
+          "id": "v2",
+          "title": "Learn Python in Arabic #002 - What I Need To Learn ?",
+          "youtubeId": "02a5T6ktx8M",
+          "duration": "7:20"
+        },
+        {
+          "id": "v3",
+          "title": "Learn Python in Arabic #003 - Syntax And Your First App",
+          "youtubeId": "xiMHoMVWdI4",
+          "duration": "9:18"
+        },
+        {
+          "id": "v4",
+          "title": "Learn Python in Arabic #004 - Comments And How To Use It",
+          "youtubeId": "YsENRLNaYug",
+          "duration": "7:04"
+        },
+        {
+          "id": "v5",
+          "title": "Learn Python in Arabic #005 - Dealing With Data in Python",
+          "youtubeId": "zlkIcCHj3Dg",
+          "duration": "4:11"
+        },
+        {
+          "id": "v6",
+          "title": "Learn Python in Arabic #006 - Some Data Types Overview",
+          "youtubeId": "43lT7k0Zws0",
+          "duration": "6:33"
+        },
+        {
+          "id": "v7",
+          "title": "Learn Python in Arabic #007 - Variables Part One",
+          "youtubeId": "hQnZxqp3Q0Y",
+          "duration": "7:33"
+        },
+        {
+          "id": "v8",
+          "title": "Learn Python in Arabic #008 - Variables Part Two",
+          "youtubeId": "U0307lBCiDk",
+          "duration": "6:47"
+        },
+        {
+          "id": "v9",
+          "title": "Learn Python in Arabic #009 - Escape Sequences Characters",
+          "youtubeId": "cr2Nk2E0f5A",
+          "duration": "10:16"
+        },
+        {
+          "id": "v10",
+          "title": "Learn Python in Arabic #010 - Concatenation And Training",
+          "youtubeId": "7I_fUo5mO-U",
+          "duration": "5:49"
+        },
+        {
+          "id": "v11",
+          "title": "Learn Python in Arabic #011 - Strings",
+          "youtubeId": "j0Wktr70Cgw",
+          "duration": "6:37"
+        },
+        {
+          "id": "v12",
+          "title": "Learn Python in Arabic #012 - Strings - Indexing And Slicing",
+          "youtubeId": "PEp4oqzthnw",
+          "duration": "9:52"
+        },
+        {
+          "id": "v13",
+          "title": "Learn Python in Arabic #013 - Strings Methods Part One",
+          "youtubeId": "HmDLsnLgt0M",
+          "duration": "10:35"
+        },
+        {
+          "id": "v14",
+          "title": "Learn Python in Arabic #014 - Strings Methods Part Two",
+          "youtubeId": "doDJDkUOEJQ",
+          "duration": "14:22"
+        }
+      ],
+      "source": "Elzero Web School — Mastering Python"
+    },
+    {
+      "id": "web-dev",
+      "track": "web",
+      "trackPrefix": "W",
+      "title": "تطوير الويب الشامل — HTML وCSS وJavaScript وTypeScript وReact",
+      "about": "أضخم تراك في الأكاديمية: خمس مراحل مرتبة زي ما السوق طالب. المرحلة الأولى HTML (10 دروس): هيكل الصفحة والعناوين والروابط والصور والفورم. الثانية CSS (10 دروس): التنسيق والـBox Model والـFlex والـGrid والـPosition والانتقالات. الثالثة JavaScript (10 دروس): المتغيرات والدوال والكائنات والـDOM والأحداث والـBOM. الرابعة TypeScript (8 دروس): الأنواع والـInterfaces والـGenerics. الخامسة React (7 دروس): المكونات والـState والـProps والـContext وتطبيق CRUD كامل ورفع المشروع. المحتوى من Elzero Web School (أسامة الزيرو) وcodeZone وCodezilla — كلهم مصريين وشرحهم باللهجة المصرية. خلص التراك ده وهتبقى Front-End Developer جاهز للشغل الحر أو الشركات.",
+      "thumbnail": "https://img.youtube.com/vi/6QAELgirvjs/maxresdefault.jpg",
+      "totalTime": "26h 00m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "Learn HTML In Arabic 2021 - #01 - Introduction and What I Need To Learn",
+          "youtubeId": "6QAELgirvjs",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v2",
+          "title": "Learn HTML In Arabic 2021 - #02 - Elements And Browser",
+          "youtubeId": "7LxA9qXUY5k",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v3",
+          "title": "Learn HTML In Arabic 2021 - #03 - First Project And First Page",
+          "youtubeId": "QG5aEmS9Fu0",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v4",
+          "title": "Learn HTML In Arabic 2021 - #04 - Head And Nested Elements",
+          "youtubeId": "dVgTBEYCseU",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v5",
+          "title": "Learn HTML In Arabic 2021 - #05 - Comments And Use Cases",
+          "youtubeId": "3lXuWHtm7PM",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v6",
+          "title": "Learn HTML In Arabic 2021 - #06 - Doctype And Standard And Quirks Mode",
+          "youtubeId": "sBFemL2Mfj4",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v7",
+          "title": "Learn HTML In Arabic 2021 - #07 - Headings And Use Cases",
+          "youtubeId": "XxkX8wnRq3s",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v8",
+          "title": "Learn HTML In Arabic 2021 - #12 - Links - Anchor Tag",
+          "youtubeId": "7TQhxAOjd1w",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v9",
+          "title": "Learn HTML In Arabic 2021 - #13 - Image And Deal With Paths",
+          "youtubeId": "FmIUk3bWGmU",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v10",
+          "title": "Learn HTML In Arabic 2021 - #24 - Form Part 1 - Input Types And Labels",
+          "youtubeId": "inC9gWjNMJI",
+          "section": "🌐 أولاً: HTML — هيكل الصفحات"
+        },
+        {
+          "id": "v11",
+          "title": "Learn CSS In Arabic 2021 - #01 - Introduction And What I Need To Learn",
+          "youtubeId": "X1ulCwyhCVM",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v12",
+          "title": "Learn CSS In Arabic 2021 - #02 - Your First Project And Syntax",
+          "youtubeId": "89VLfs-wpEY",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v13",
+          "title": "Learn CSS In Arabic 2021 - #03 - Element Styling",
+          "youtubeId": "66sjwQ-hB64",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v14",
+          "title": "Learn CSS In Arabic 2021 - #07 - Padding",
+          "youtubeId": "-wdlA-wFv9A",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v15",
+          "title": "Learn CSS In Arabic 2021 - #10 - Outline",
+          "youtubeId": "NyOaxP-Adac",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v16",
+          "title": "Learn CSS In Arabic 2021 - #11 - Display - Block, Inline Block, Inline",
+          "youtubeId": "-qbGxua98To",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v17",
+          "title": "Learn CSS In Arabic 2021 - #13 - Grouping Multiple Selectors",
+          "youtubeId": "NTccbXHW7AM",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v18",
+          "title": "Learn CSS In Arabic 2021 - #22 - Inheritance",
+          "youtubeId": "fXcY14cm4_I",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v19",
+          "title": "Learn CSS In Arabic 2021 - #30 - Position",
+          "youtubeId": "-q5IyjKkKSc",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v20",
+          "title": "Learn CSS In Arabic 2021 - #42 - Transition",
+          "youtubeId": "B9wYvMHLCVE",
+          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
+        },
+        {
+          "id": "v21",
+          "title": "Learn JavaScript In Arabic 2021 - #001 - Introduction And What Is JavaScript",
+          "youtubeId": "GM6dQBmc-Xg",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v22",
+          "title": "Learn JavaScript In Arabic 2021 - #002 - How To Study The Course",
+          "youtubeId": "MAauLwSHO6Y",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v23",
+          "title": "Learn JavaScript In Arabic 2021 - #003 - Setting Up Environment",
+          "youtubeId": "5wAtDN_CLgI",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v24",
+          "title": "Learn JavaScript In Arabic 2021 - #004 - Work With Chrome Developer Tools",
+          "youtubeId": "ig_1bvufUPo",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v25",
+          "title": "Learn JavaScript In Arabic 2021 - #011 - Variables Introduction",
+          "youtubeId": "NgLgguhL2to",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v26",
+          "title": "Learn JavaScript In Arabic 2021 - #020 - Type Coercion",
+          "youtubeId": "YFUVqq68sZU",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v27",
+          "title": "Learn JavaScript In Arabic 2021 - #057 - Function Intro And Basic Usage",
+          "youtubeId": "wJ7hjluDQHI",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v28",
+          "title": "Learn JavaScript In Arabic 2021 - #079 - Object - Introduction",
+          "youtubeId": "9dkSSPWu_qY",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v29",
+          "title": "Learn JavaScript In Arabic 2021 - #092 - DOM Events",
+          "youtubeId": "BFd05UsHP48",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v30",
+          "title": "Learn JavaScript In Arabic 2021 - #102 - What Is BOM?",
+          "youtubeId": "KxhIRUjcdxQ",
+          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
+        },
+        {
+          "id": "v31",
+          "title": "Learn TypeScript In Arabic 2022 - #01 - Introduction And What Is TypeScript",
+          "youtubeId": "yUndnE-2osg",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v32",
+          "title": "Learn TypeScript In Arabic 2022 - #02 - Install TypeScript And Transpile",
+          "youtubeId": "pc5IlcEn8vw",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v33",
+          "title": "Learn TypeScript In Arabic 2022 - #03 - Create Configuration And Watch Mode",
+          "youtubeId": "CSll1rsRPOI",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v34",
+          "title": "Learn TypeScript In Arabic 2022 - #05 - Type Annotations And Any Data Type",
+          "youtubeId": "quwf-YbyHVg",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v35",
+          "title": "Learn TypeScript In Arabic 2022 - #09 - Function Optional and Default Parameters",
+          "youtubeId": "IS2VuO0IWso",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v36",
+          "title": "Learn TypeScript In Arabic 2022 - #12 - Data Types - Type Alias",
+          "youtubeId": "TWTt63RJ3ic",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v37",
+          "title": "Learn TypeScript In Arabic 2022 - #22 - Interface Declaration",
+          "youtubeId": "qopmfZ30_TQ",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v38",
+          "title": "Learn TypeScript In Arabic 2022 - #38 - The End And How To Master TypeScript",
+          "youtubeId": "Ot5AGaudAcg",
+          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
+        },
+        {
+          "id": "v39",
+          "title": "تعلم أساسيات رياكت في ساعة | Learn React in 1 hour — Codezilla",
+          "youtubeId": "3AJfX4Cd64c",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v40",
+          "title": "رياكت بالعربي - hello-world, jsx, render elements — codeZone",
+          "youtubeId": "p8nOfP2fw24",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v41",
+          "title": "رياكت بالعربي - components, state, props, handling events — codeZone",
+          "youtubeId": "HpZSCZavKL0",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v42",
+          "title": "رياكت بالعربي - State Lifting Up, Props Drilling, Context API — codeZone",
+          "youtubeId": "K1en3osvPdY",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v43",
+          "title": "رياكت بالعربي - Basic CRUD App — codeZone",
+          "youtubeId": "70jqV7fy1o4",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v44",
+          "title": "رياكت بالعربي - كيفية رفع المشروع Build / Deploy — codeZone",
+          "youtubeId": "vHF6D58PrM8",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        },
+        {
+          "id": "v45",
+          "title": "React in Arabic - Course Conclusion — codeZone",
+          "youtubeId": "1SdEhBJOEU4",
+          "section": "⚛️ خامساً: React — مكتبة الواجهات"
+        }
+      ],
+      "source": "Elzero Web School + codeZone + Codezilla"
+    },
+    {
+      "id": "chess",
+      "track": "chess",
+      "trackPrefix": "C",
+      "title": "الشطرنج — من الصفر للاحتراف (Takkat Chess)",
+      "about": "تراك الشطرنج الكامل من قناة Takkat Chess (د. إسلام حمادة) باللهجة المصرية، مرتب على 3 مستويات زي ما القناة نفسها بتنصح. 🟢 المبتدئ (17 درساً): كورس المدرسة السوفيتية — حركة القطع والبيادق والكش مات والتعادل والتبييت وتدوين النقلات وأشكال المات والقواعد الذهبية للافتتاح. 🟡 المتوسط (12 درساً): كورس نهايات سيلمان الكامل (الملك ضد بيدق والقطع الصغيرة والمنجنيق) + كورس ارفع تقييمك لـ2400 (رفعات البيادق وقواعد التكسير والمربعات الضعيفة). 🔴 المتقدم (10 دروس): طريقة نقار الخشب للتكتيك + شرح كتاب How to Reassess Your Chess (عدم التوازن). امشي بالترتيب ومستواك هيتضاعف فعلاً.",
+      "thumbnail": "https://img.youtube.com/vi/7D-6MYpfFmk/maxresdefault.jpg",
+      "totalTime": "32h 12m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "1-Chess Course for Beginners: Learn the Basics the Soviet Way!\"",
+          "youtubeId": "7D-6MYpfFmk",
+          "duration": "51:51",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v2",
+          "title": "2- كورس تعلم الشطرنج من الصفر للمبتدئين - تعلم حركة القطع - أساسيات الشطرنج من المدرسة السوفيتية",
+          "youtubeId": "29WOjcbJIxA",
+          "duration": "74:07",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v3",
+          "title": "3- كورس تعلم الشطرنج من الصفر للمبتدئين - أساسيات البيادق - أساسيات الشطرنج من المدرسة السوفيتية",
+          "youtubeId": "sgdgw4rAVqE",
+          "duration": "57:34",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v4",
+          "title": "4- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم الكش مات - أساسيات الشطرنج من المدرسة السوفيتية",
+          "youtubeId": "usi-jVw2LP8",
+          "duration": "49:16",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v5",
+          "title": "5- Chess Learning Course for Beginners - Cases of Tie in Chess - Castling and its Rules",
+          "youtubeId": "w_LuO2HTdQM",
+          "duration": "42:26",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v6",
+          "title": "6- كورس تعلم الشطرنج من الصفر للمبتدئين - طريقة تسجيل (تدوين) النقلات في الشطرنج",
+          "youtubeId": "GCTxJiirrD4",
+          "duration": "45:01",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v7",
+          "title": "7- كورس تعلم الشطرنج من الصفر للمبتدئين - إزاي بتدي تشيك ميت ؟",
+          "youtubeId": "Ak9NtWY_BZo",
+          "duration": "34:09",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v8",
+          "title": "أهم 8 مفاهيم أساسية في افتتاح الشطرنج للمبتدئين | القواعد الذهبية",
+          "youtubeId": "niflEg5RAGA",
+          "duration": "47:29",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v9",
+          "title": "8- كورس تعلم الشطرنج من الصفر للمبتدئين - أشكال التشيك ميت في النهايات",
+          "youtubeId": "KRqbkajdLWU",
+          "duration": "42:19",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v10",
+          "title": "9- كورس تعلم الشطرنج من الصفر للمبتدئين - إياك تقع في الخطأ دا",
+          "youtubeId": "jNmqokIWBVc",
+          "duration": "24:58",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v11",
+          "title": "10- كورس تعلم الشطرنج من الصفر للمبتدئين - أهم مفهوم في نهاية الدور ( المقابلة - Opposition )",
+          "youtubeId": "n-WjpPtUAmA",
+          "duration": "33:56",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v12",
+          "title": "11- كورس تعلم الشطرنج من الصفر للمبتدئين - إزاي تحط خطة في الشطرنج",
+          "youtubeId": "dIorE9Z4Ha4",
+          "duration": "53:45",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v13",
+          "title": "12- كورس تعلم الشطرنج من الصفر للمبتدئين - القيمة المطلقة والنسبية للقطع",
+          "youtubeId": "X9cO_P7N5EQ",
+          "duration": "53:51",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v14",
+          "title": "13- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم العرقلة (Obstruction)",
+          "youtubeId": "6cQIJY5rDQ8",
+          "duration": "38:04",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v15",
+          "title": "14- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم القطعة المدافعة (DEFENSIVE PIECE)",
+          "youtubeId": "PKrgQjajfr8",
+          "duration": "44:38",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v16",
+          "title": "15- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم الربط (PIN)",
+          "youtubeId": "07Sp91crP5I",
+          "duration": "43:16",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v17",
+          "title": "ازاي تدمر فخ نابليون في الشطرنج ؟ | خصمك هيندم انه لعبه بعد كدا",
+          "youtubeId": "2faBdu5Ogo4",
+          "duration": "54:32",
+          "section": "🟢 المبتدئ — من الصفر"
+        },
+        {
+          "id": "v18",
+          "title": "The Ultimate Chess Endgame Course | Jeremy Silman - Level 1 | Ladder Method & Box Method 🏆♟️",
+          "youtubeId": "AxOZ0lawJik",
+          "duration": "47:40",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v19",
+          "title": "2- أقوى كورس نهايات الشطرنج | المستوى الثاني | أهم مفهوم هتحتاجه في النهايات | المقابلة\" Opposition\"",
+          "youtubeId": "chUClIH90QA",
+          "duration": "42:26",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v20",
+          "title": "3 - أقوى كورس نهايات الشطرنج | تدريبات على ماسبق",
+          "youtubeId": "XHqxxftNefE",
+          "duration": "19:11",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v21",
+          "title": "4 - أقوى كورس نهايات الشطرنج | نهاية ملك ضد بيدق",
+          "youtubeId": "z3o8PN32QL4",
+          "duration": "70:06",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v22",
+          "title": "5 - أقوى كورس نهايات الشطرنج | نهاية فيل أو حصان ضد بيدق سالك",
+          "youtubeId": "1MpXorY5g-M",
+          "duration": "22:55",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v23",
+          "title": "6 - أقوى كورس نهايات الشطرنج | مفهوم المنجنيق في النهايات | مستوى (1400-1599)",
+          "youtubeId": "hWNZuINJMUU",
+          "duration": "50:09",
+          "section": "🟡 المتوسط — النهايات"
+        },
+        {
+          "id": "v24",
+          "title": "1- كورس إرفع تقييمك إلى 2400 | رفعات البيادق",
+          "youtubeId": "tp7xZddnB1s",
+          "duration": "76:19",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v25",
+          "title": "2- كورس إرفع تقييمك إلى 2400 | مفيش دفعة بيدقية = مفيش خطة",
+          "youtubeId": "jxvAjGMOfKQ",
+          "duration": "62:35",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v26",
+          "title": "3- كورس إرفع تقييمك إلى 2400 | قواعد التكسير في الشطرنج",
+          "youtubeId": "h_9xmp8byNQ",
+          "duration": "69:44",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v27",
+          "title": "4- كورس إرفع تقييمك إلى 2400 | التحكم في المربعات الضعيفة",
+          "youtubeId": "4Az1VYimGJE",
+          "duration": "54:59",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v28",
+          "title": "5- Course: Raise your rating to 2400 | Attacking weaknesses",
+          "youtubeId": "7PoWUDOmgiw",
+          "duration": "50:55",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v29",
+          "title": "6- كورس إرفع تقييمك إلى 2400 | عدم الإتزان المادي",
+          "youtubeId": "IQSsPzV5Eng",
+          "duration": "47:36",
+          "section": "🟡 المتوسط — ارفع تقييمك"
+        },
+        {
+          "id": "v30",
+          "title": "1- كتاب نقار الخشب في الشطرنج - الدرس الأول",
+          "youtubeId": "rR21NpHnUYo",
+          "duration": "55:14",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v31",
+          "title": "2- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الثانية",
+          "youtubeId": "M2OTyBlI1o4",
+          "duration": "53:20",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v32",
+          "title": "3- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الثالثة",
+          "youtubeId": "82pjNtUu5d4",
+          "duration": "49:05",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v33",
+          "title": "4- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الرابعة",
+          "youtubeId": "jg_dDYOhHkU",
+          "duration": "40:02",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v34",
+          "title": "5- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الخامسة",
+          "youtubeId": "58mgOGDXFh4",
+          "duration": "43:27",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v35",
+          "title": "6- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة السادسة",
+          "youtubeId": "xmeeuny5y6U",
+          "duration": "51:02",
+          "section": "🔴 المتقدم — تكتيك نقار الخشب"
+        },
+        {
+          "id": "v36",
+          "title": "1- Explanation of the world's most powerful chess book | How to Reassess Your Chess | The concept...",
+          "youtubeId": "aQshMTm4DYQ",
+          "duration": "54:58",
+          "section": "🔴 المتقدم — إعادة تقييم لعبك"
+        },
+        {
+          "id": "v37",
+          "title": "2- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | مفهوم عدم التوازن في الشطرنج",
+          "youtubeId": "tM8vt0z-OnY",
+          "duration": "56:29",
+          "section": "🔴 المتقدم — إعادة تقييم لعبك"
+        },
+        {
+          "id": "v38",
+          "title": "3- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | ازاي تبني خطة صحيحة في أي وقت",
+          "youtubeId": "eCeayt46i7E",
+          "duration": "45:37",
+          "section": "🔴 المتقدم — إعادة تقييم لعبك"
+        },
+        {
+          "id": "v39",
+          "title": "4- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | طريقة التفكير في الشطرنج",
+          "youtubeId": "hwB-HuNxT5g",
+          "duration": "77:24",
+          "section": "🔴 المتقدم — إعادة تقييم لعبك"
+        }
+      ],
+      "source": "Takkat Chess — د. إسلام حمادة"
+    },
+    {
+      "id": "english",
+      "track": "english",
+      "trackPrefix": "E",
+      "title": "الإنجليزية — المستوى الأول A1→A2 (ZAmericanEnglish)",
+      "about": "كورس الإنجليزية الأشهر في الوطن العربي مع مستر إبراهيم عادل (ZAmericanEnglish) — أكثر من 12 مليون مشترك. المستوى الأول مرتب هنا من الصفر: هتبدأ بأفضل طريقة للمذاكرة، ثم مفردات الوظائف والعائلة والمنزل والحيوانات والصفات والأرقام والوقت والتاريخ والرياضة وأجزاء الجسم — كل درس بمفردات عملية ونطق سليم. خلص المستوى ده وكمل على قناة ZAmericanEnglish للمستوى الثاني والثالث لحد ما توصل B2 وC1. الإنجليزي هو مفتاح البرمجة والشغل الحر والسفر — ابدأ من هنا.",
+      "thumbnail": "https://img.youtube.com/vi/77IK9T45kiU/maxresdefault.jpg",
+      "totalTime": "2h 48m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "تعلم اللغة الإنجليزية من الصفر للمبتدئين بأفضل طريقة من أكبر قناة في العالم",
+          "youtubeId": "77IK9T45kiU",
+          "duration": "8:36"
+        },
+        {
+          "id": "v2",
+          "title": "كورس شامل لتعلم اللغة الانجليزية من الصفر للمبتدئين : تعلم الوظائف باللغة الإنجليزية : الحلقة 2",
+          "youtubeId": "AZZCsweJaiw",
+          "duration": "7:57"
+        },
+        {
+          "id": "v3",
+          "title": "كورس شامل لتعلم اللغة الانجليزية من الصفر للمبتدئين كلمات عن العائلة : الحلقة 3",
+          "youtubeId": "S_deJPyvtfo",
+          "duration": "12:18"
+        },
+        {
+          "id": "v4",
+          "title": "كورس شامل لتعلم اللغة الانجليزية من الصفر للمبتدئين: كلمات المنزل والفصل : الحلقة 4",
+          "youtubeId": "m8VUaW1b_z8",
+          "duration": "10:57"
+        },
+        {
+          "id": "v5",
+          "title": "كورس شامل لتعلم اللغة الانجليزية من الصفر للمبتدئين : تكملة كلمات الوظائف : الحلقة 5",
+          "youtubeId": "gBhK2m_CdQc",
+          "duration": "12:13"
+        },
+        {
+          "id": "v6",
+          "title": "تعلم اللغة الإنجليزية للمبتدئين : الدرس السادس : مفردات عن الحيوانات",
+          "youtubeId": "Th9S81mblxo",
+          "duration": "8:22"
+        },
+        {
+          "id": "v7",
+          "title": "تعلم الصفات المضادة في اللغة الإنجليزية : كورس تعلم اللغة الانجليزية للمبتدئين من الصفر : ٧",
+          "youtubeId": "gZBAXCRrl_U",
+          "duration": "16:31"
+        },
+        {
+          "id": "v8",
+          "title": "تعلم كلمات إنجليزية عن الخضروات : كورس شامل لتعلم الانجليزي من الصفر : ٨",
+          "youtubeId": "63Riw1SEDPk",
+          "duration": "11:00"
+        },
+        {
+          "id": "v9",
+          "title": "تعلم الأرقام الإنجليزية : كورس تعليم اللغة الإنجليزية للمبتدئين من الصفر : ٩",
+          "youtubeId": "pI3CrFMsduY",
+          "duration": "14:03"
+        },
+        {
+          "id": "v10",
+          "title": "كلمات انجليزية عن الوقت : كورس تعلم اللغة الانجليزية من الصفر: ١٠",
+          "youtubeId": "q_bAo_n0pDU",
+          "duration": "13:49"
+        },
+        {
+          "id": "v11",
+          "title": "تعلم كلمات انجليزية عن التاريخ : كورس تعليم اللغة الانجليزية للمبتدئين من الصفر : ١١",
+          "youtubeId": "HIz-rb0lMAY",
+          "duration": "13:29"
+        },
+        {
+          "id": "v12",
+          "title": "تعلم كلمات انجليزية عن الرياضة : كورس تعلم اللغة الإنجليزية للمبتدئين كامل مجانا : ١٢",
+          "youtubeId": "QQ66VKPsAag",
+          "duration": "11:46"
+        },
+        {
+          "id": "v13",
+          "title": "كلمات عن أجزاء الجسم باللغة الإنجليزية : كورس تعليم اللغة الإنجليزية للمبتدئين مجانا  : ١٣",
+          "youtubeId": "LBdAxKWOz1c",
+          "duration": "14:42"
+        },
+        {
+          "id": "v14",
+          "title": "كورس شامل لتعلم اللغة الانجليزية من الصفر للمبتدئين كورس كامل من البداية الى الاحتراف : الحلقة 14",
+          "youtubeId": "pqGg9MiP2ic",
+          "duration": "12:17"
+        }
+      ],
+      "source": "ZAmericanEnglish — إبراهيم عادل (المستوى الأول)"
+    },
+    {
+      "id": "trading-part1",
+      "track": "trading",
+      "trackPrefix": "T",
+      "title": "التداول — الدورة الكلاسيكية (الجزء الأول)",
+      "about": "دورة أساسيات التداول وأسواق المال الكلاسيكية من قناة Limitless Organization باللهجة المصرية، مرتبة من المحاضرة التمهيدية للمحاضرة العاشرة (12 درساً متسلسلاً): مدخل لأسواق المال، ثم المحاضرات الأولى للسادسة (الجزء الأول والثاني) ثم السابعة والثامنة والتاسعة والعاشرة — كل محاضرة مبنية على اللي قبلها. المحتوى تعليمي للمبتدئين تماماً: يعني إيه تداول، أزواج العملات والأسهم، قراءة الشارت، وإدارة رأس المال. ⚠️ تنبيه: التداول فيه مخاطرة عالية — المحتوى تعليمي فقط وليس توصية استثمارية.",
+      "thumbnail": "https://img.youtube.com/vi/p1vTmk92vtc/maxresdefault.jpg",
+      "totalTime": "11h 35m",
+      "videos": [
+        {
+          "id": "v1",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة التمهيدية للمبتدئين 📈🔥",
+          "youtubeId": "p1vTmk92vtc",
+          "duration": "51:32"
+        },
+        {
+          "id": "v2",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الاولي للمبتدئين 📈🔥",
+          "youtubeId": "WXYHqZgDPNQ",
+          "duration": "43:08"
+        },
+        {
+          "id": "v3",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الثانية للمبتدئين 📈🔥",
+          "youtubeId": "LMG9ys9NbAY",
+          "duration": "58:11"
+        },
+        {
+          "id": "v4",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الثالثة للمبتدئين 📈🔥",
+          "youtubeId": "i4sI0QiV93g",
+          "duration": "62:21"
+        },
+        {
+          "id": "v5",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الرابعة للمبتدئين 📈🔥",
+          "youtubeId": "79vHRf1oAFM",
+          "duration": "47:45"
+        },
+        {
+          "id": "v6",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الخامسة للمبتدئين 📈🔥",
+          "youtubeId": "6C8ZDrd8_y8",
+          "duration": "37:16"
+        },
+        {
+          "id": "v7",
+          "title": "تعليم أساسيات التداول | الدورة الكلاسيكية 6-6 | المحاضرة االسادسه  للمبتدئين  📈🔥  | الجزء الاول",
+          "youtubeId": "iACXRJc2iWk",
+          "duration": "43:34"
+        },
+        {
+          "id": "v8",
+          "title": "تعليم أساسيات التداول | الدورة الكلاسيكية 6-6 | المحاضرة االسادسه للمبتدئين 📈🔥 | الجزء التاني",
+          "youtubeId": "5j-XD0v705A",
+          "duration": "33:17"
+        },
+        {
+          "id": "v9",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة االسابعه  للمبتدئين  📈🔥",
+          "youtubeId": "oRVG_TP0wzI",
+          "duration": "96:14"
+        },
+        {
+          "id": "v10",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة الثامنة  للمبتدئين  📈🔥",
+          "youtubeId": "1F0hJyu3tmc",
+          "duration": "66:15"
+        },
+        {
+          "id": "v11",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة التاسعة  للمبتدئين  📈🔥",
+          "youtubeId": "b2WGDtRTpIc",
+          "duration": "43:30"
+        },
+        {
+          "id": "v12",
+          "title": "تعليم أساسيات التداول وأسواق المال | الدورة الكلاسيكية 6-2026 | المحاضرة العاشرة  للمبتدئين  📈🔥",
+          "youtubeId": "IacRqbNMyn4",
+          "duration": "112:13"
+        }
+      ],
+      "source": "Limitless Organization — الدورة الكلاسيكية 6-6"
+    },
+    {
+      "id": "trading-part1-1",
+      "track": "trading",
+      "trackPrefix": "T",
+      "title": "التداول — الجزء 1.1 (قريباً)",
+      "about": "الجزء المتقدم من دورة التداول — هيتضاف هنا قريباً. خلص الجزء الأول الأول وطبق عليه، وارجع تابع التحديثات. لو أنت مشترك في الجزء الأول فاشتراكك محفوظ وهتقدر تكمل من نفس حسابك.",
+      "thumbnail": "https://img.youtube.com/vi/p1vTmk92vtc/maxresdefault.jpg",
+      "totalTime": "قريباً",
+      "videos": [],
+      "source": "Limitless Organization",
+      "comingSoon": true
+    }
+  ]
+}
