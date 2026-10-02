@@ -14,18 +14,16 @@ Open `index.html` directly via `file://` or serve it from any static host.
    `<script type="application/json">` blocks when `fetch` is blocked on `file://`).
 2. Or serve statically, e.g. `python3 -m http.server 8000`, then open `http://localhost:8000`.
 3. Sign in with your account (see `../secrets/cred.txt` for the 100 shipped accounts),
-   pick one of the **6 tracks**, open a part, enroll with the reversed-code OTP, and watch.
+   pick one of the **4 tracks**, open a part, enroll with the reversed-code OTP, and watch.
 
-## The 6 tracks
+## The 4 tracks
 
 | # | Track | Code prefix | Content (all Egyptian Arabic) |
 |---|-------|-------------|-------------------------------|
-| 1 | 🛡️ Cybersecurity | `S` | Secure The Humans — ISC2 CC basics, 14 lessons |
-| 2 | 💻 Programming | `P` | Choice of C++ (Elzero, 14 lessons) or Python (Elzero, 14 lessons) |
-| 3 | 🌐 Web Development | `W` | HTML (10) + CSS (10) + JavaScript (10) + TypeScript (8) + React (7) — Elzero / codeZone / Codezilla |
-| 4 | ♞ Chess | `C` | Takkat Chess — Beginner Soviet school (17) + Intermediate endings & rating (12) + Advanced Woodpecker & Reassess (10) |
-| 5 | 🔤 English | `E` | ZAmericanEnglish Level 1 (A1→A2, 14 lessons), roadmap to C1 on the channel |
-| 6 | 📈 Trading | `T` | Limitless Organization classic course Part 1 (12 lessons, oldest→newest) + Part 1.1 (coming soon) |
+| 1 | 💻 Programming | `P` | Choice of C++ (Elzero, 14 lessons) or Python (Elzero, 14 lessons) |
+| 2 | 🌐 Web Development | `W` | HTML (10) + CSS (10) + JavaScript (10) + TypeScript (8) + React (7) — Elzero / codeZone / Codezilla |
+| 3 | ♞ Chess | `C` | Takkat Chess — Beginner Soviet school (17) + Intermediate endings & rating (12) + Advanced Woodpecker & Reassess (10) |
+| 4 | 📈 Trading | `T` | Limitless Organization classic course Part 1 (12 lessons, oldest→newest) + Part 1.1 (coming soon) |
 
 Tracks with two choices (Programming, Trading) first show a parts list; each part
 enrolls and plays independently.
@@ -38,13 +36,13 @@ enrolls and plays independently.
 | `style.css` | Design system (tokens on `:root`), layout, responsive rules |
 | `app.js` | All logic: Bootstrap, Router, Auth, Tracks, Detail, Enroll, Player, Controls, Progress, Utils |
 | `data/users.json` | 100 users (must match `../secrets/cred.txt`) |
-| `data/courses.json` | 8 courses across the 6 tracks |
+| `data/courses.json` | 6 courses across the 4 tracks |
 
 ## Enrollment / OTP flow
 
 1. The enroll screen shows a random **8-character hexadecimal code**.
-   Its **first letter is fixed per track** — `S` cybersecurity, `P` programming,
-   `W` web, `C` chess, `E` English, `T` trading — so the Appline knows the track.
+   Its **first letter is fixed per track** — `P` programming,
+   `W` web, `C` chess, `T` trading — so the Appline knows the track.
 2. Copy it with **Copy** (uses `navigator.clipboard` with an `execCommand` fallback).
 3. The OTP is the code **reversed** (e.g. `T3F9A1C4` → `4C1A9F3T`, case-insensitive).
 4. Type it and press **Verify & Unlock course**. Wrong codes shake + clear;

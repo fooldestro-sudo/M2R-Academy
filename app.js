@@ -217,16 +217,12 @@
   // (two choices); the rest hold a single course. The first letter of every
   // enrollment code is the track prefix so the Appline can tell tracks apart.
   var TRACKS = [
-    { id: 'cybersecurity', prefix: 'S', icon: '🛡️', title: 'الأمن السيبراني',
-      tagline: 'من الصفر للاحتراف — ISC2 CC بالعربي', courseIds: ['cybersecurity'] },
     { id: 'programming', prefix: 'P', icon: '💻', title: 'البرمجة',
       tagline: 'اختر: C++ للتأسيس أو Python للسوق', courseIds: ['programming-cpp', 'programming-python'] },
     { id: 'web', prefix: 'W', icon: '🌐', title: 'تطوير الويب',
       tagline: 'HTML • CSS • JavaScript • TypeScript • React', courseIds: ['web-dev'] },
     { id: 'chess', prefix: 'C', icon: '♞', title: 'الشطرنج',
       tagline: 'من الصفر للاحتراف — Takkat Chess', courseIds: ['chess'] },
-    { id: 'english', prefix: 'E', icon: '🔤', title: 'الإنجليزية',
-      tagline: 'المستوى الأول A1 ← A2 — ZAmericanEnglish', courseIds: ['english'] },
     { id: 'trading', prefix: 'T', icon: '📈', title: 'التداول',
       tagline: 'الدورة الكلاسيكية — Part 1 و Part 1.1', courseIds: ['trading-part1', 'trading-part1-1'] }
   ];
@@ -508,7 +504,7 @@
     if (empty) empty.hidden = true;
     if (loadErr) loadErr.hidden = true;
     var sub2 = $('#courses-sub');
-    if (sub2) sub2.textContent = 'Choose your track — 6 professional Arabic tracks.';
+    if (sub2) sub2.textContent = 'Choose your track — 4 professional Arabic tracks.';
 
     TRACKS.forEach(function (track) {
       var cs = trackCourses(track);
