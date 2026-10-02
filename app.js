@@ -90,6 +90,18 @@
   var LS_SESSION = 'eduportal.session';
   var LS_ENROLLED = 'eduportal.enrolled';
   var LS_PROGRESS = 'eduportal.progress';
+  var LS_QUALITY = 'eduportal.quality'; // device preference, not per-user
+
+  function loadQualityPref() {
+    var q = readLS(LS_QUALITY, 'hd720');
+    if (q === 'auto' || q === 'hd720' || q === 'large' || q === 'medium') state.qualityMode = q;
+    var sel = $('#quality');
+    if (sel) sel.value = state.qualityMode;
+  }
+
+  function saveQualityPref() {
+    writeLS(LS_QUALITY, state.qualityMode);
+  }
 
   // Per-user namespacing: every account keeps its own enrollments + progress
   // under `eduportal.enrolled.<username>` / `eduportal.progress.<username>`,
@@ -138,7 +150,8 @@
     storageOK: true,
     currentTrackId: null,
     detailMode: 'course',
-    enrollTrackPrefix: null
+    enrollTrackPrefix: null,
+    qualityMode: 'hd720' // hd720 | large (480p) | medium (360p) | auto
   };
 
   // Player-local flags (kept outside persisted state on purpose).
@@ -1020,7 +1033,7 @@
     if (!video) return;
     if (state.player && state.playerReady) {
       try {
-        state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: 'hd720' });
+        state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: preferredQuality() });
       } catch (e) {
         recreatePlayer(video.youtubeId);
         return;
@@ -1115,7 +1128,8 @@
       updatePlayButton(true);
       startTick();
       hidePlayerFallback();
-      forceHighQuality();
+      // NOTE: no quality forcing here — re-asserting HD on every play
+      // fights YouTube's adaptive streaming and causes rebuffer loops.
     } else if (event.data === YTNS.PAUSED) {
       updatePlayButton(false);
       saveProgress(true);
@@ -1131,17 +1145,24 @@
   }
 
   /**
-   * Lock playback to HD (720p when the video offers it). YouTube still
-   * adapts to very slow networks, so this re-asserts on ready/cued/playing.
+   * Lock playback to the user's chosen quality (HD 720p by default).
+   * Called on ready/cued and shortly after — never during PLAYING, so we
+   * don't fight YouTube's adaptive streaming on slow networks.
    */
+  function preferredQuality() {
+    return state.qualityMode === 'auto' ? 'default' : (state.qualityMode || 'hd720');
+  }
+
   function forceHighQuality() {
     try {
       if (!state.player || !state.playerReady) return;
+      if (state.qualityMode === 'auto') return; // let YouTube adapt freely
+      var want = state.qualityMode || 'hd720';
       var levels = state.player.getAvailableQualityLevels
         ? state.player.getAvailableQualityLevels() : [];
-      var want = null;
-      if (levels.indexOf('hd720') !== -1) want = 'hd720';
-      else if (levels.indexOf('large') !== -1) want = 'large';
+      if (levels.length && levels.indexOf(want) === -1) {
+        want = levels.indexOf('hd720') !== -1 ? 'hd720' : levels[0];
+      }
       if (!want || !state.player.setPlaybackQuality) return;
       var cur = state.player.getPlaybackQuality ? state.player.getPlaybackQuality() : '';
       if (cur !== want) state.player.setPlaybackQuality(want);
@@ -1178,7 +1199,7 @@
     var video = course.videos[index];
     hidePlayerFallback();
     if (state.player && state.playerReady) {
-      try { state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: 'hd720' }); }
+      try { state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: preferredQuality() }); }
       catch (e) { recreatePlayer(video.youtubeId); }
     } else if (window.YT && window.YT.Player) {
       ensurePlayer();
@@ -1288,6 +1309,7 @@
   /* ============================= Controls ============================ */
 
   function bindControls() {
+    loadQualityPref();
     // Anti-leak shield: the transparent layer above the frame owns every
     // pointer gesture, so users can never reach YouTube chrome or navigate away.
     var shield = $('#player-shield');
@@ -1347,6 +1369,12 @@
     var speed = $('#speed');
     if (speed) speed.addEventListener('change', function () {
       try { if (state.player && state.playerReady) state.player.setPlaybackRate(Number(speed.value)); } catch (e) {}
+    });
+    var quality = $('#quality');
+    if (quality) quality.addEventListener('change', function () {
+      state.qualityMode = quality.value;
+      saveQualityPref();
+      forceHighQuality();
     });
     var fs = $('#btn-fullscreen');
     if (fs) fs.addEventListener('click', toggleFullscreen);
