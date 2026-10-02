@@ -51,7 +51,9 @@ enrolls and plays independently.
 ## Player (protected)
 
 - Lazy-loads the YouTube IFrame API on first open with
-  `controls:0, rel:0, modestbranding:1, disablekb:1, playsinline:1, iv_load_policy:3, fs:0`.
+  `controls:0, rel:0, modestbranding:1, disablekb:1, playsinline:1, iv_load_policy:3, fs:0, vq:hd720`.
+- Quality defaults to **HD 720p** (`vq` + per-video `suggestedQuality` + re-assert on
+  ready/cued/playing); YouTube may still step down on very slow networks.
 - A transparent shield owns every pointer gesture and right-click/drag are
   blocked, so viewers can never reach YouTube chrome, external links, or
   downloads — playback stays inside OAW Academy with an on-screen watermark.

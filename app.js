@@ -1020,7 +1020,7 @@
     if (!video) return;
     if (state.player && state.playerReady) {
       try {
-        state.player.loadVideoById(video.youtubeId);
+        state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: 'hd720' });
       } catch (e) {
         recreatePlayer(video.youtubeId);
         return;
@@ -1070,7 +1070,8 @@
           disablekb: 1,
           playsinline: 1,
           iv_load_policy: 3,
-          fs: 0
+          fs: 0,
+          vq: 'hd720' // request HD quality from the first frame
         },
         events: {
           onReady: onPlayerReady,
@@ -1093,6 +1094,8 @@
       var speed = $('#speed');
       if (speed) event.target.setPlaybackRate(Number(speed.value) || 1);
     } catch (e) {}
+    forceHighQuality();
+    try { setTimeout(forceHighQuality, 1500); } catch (e) {}
     // Restore saved position for the same video (progress shape: {videoIndex, seconds}).
     if (state.pendingSeek && state.pendingSeek > 1) {
       try { event.target.seekTo(state.pendingSeek, true); } catch (e) {}
@@ -1112,6 +1115,7 @@
       updatePlayButton(true);
       startTick();
       hidePlayerFallback();
+      forceHighQuality();
     } else if (event.data === YTNS.PAUSED) {
       updatePlayButton(false);
       saveProgress(true);
@@ -1122,7 +1126,26 @@
     } else if (event.data === YTNS.CUED) {
       renderNowPlaying();
       updateNavButtons();
+      forceHighQuality();
     }
+  }
+
+  /**
+   * Lock playback to HD (720p when the video offers it). YouTube still
+   * adapts to very slow networks, so this re-asserts on ready/cued/playing.
+   */
+  function forceHighQuality() {
+    try {
+      if (!state.player || !state.playerReady) return;
+      var levels = state.player.getAvailableQualityLevels
+        ? state.player.getAvailableQualityLevels() : [];
+      var want = null;
+      if (levels.indexOf('hd720') !== -1) want = 'hd720';
+      else if (levels.indexOf('large') !== -1) want = 'large';
+      if (!want || !state.player.setPlaybackQuality) return;
+      var cur = state.player.getPlaybackQuality ? state.player.getPlaybackQuality() : '';
+      if (cur !== want) state.player.setPlaybackQuality(want);
+    } catch (e) { /* quality API unavailable — keep default */ }
   }
 
   function onPlayerError() {
@@ -1155,7 +1178,7 @@
     var video = course.videos[index];
     hidePlayerFallback();
     if (state.player && state.playerReady) {
-      try { state.player.loadVideoById(video.youtubeId); }
+      try { state.player.loadVideoById({ videoId: video.youtubeId, suggestedQuality: 'hd720' }); }
       catch (e) { recreatePlayer(video.youtubeId); }
     } else if (window.YT && window.YT.Player) {
       ensurePlayer();
