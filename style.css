@@ -287,6 +287,8 @@ kbd {
 .form-error[hidden] { display: none; }
 
 .demo-hint { margin-top: var(--sp-4); color: var(--text-muted); font-size: var(--fs-sm); }
+.auth-switch { text-align: center; color: var(--text-muted); font-size: var(--fs-sm); margin: var(--sp-4) 0 0; }
+.auth-switch .btn-link { min-height: 0; padding: 0 var(--sp-1); font-size: var(--fs-sm); }
 .demo-hint__summary { cursor: pointer; padding: var(--sp-2) 0; }
 .demo-hint__list { margin: var(--sp-2) 0 0; padding-left: var(--sp-5); }
 

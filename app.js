@@ -92,6 +92,17 @@
   var LS_PROGRESS = 'eduportal.progress';
   var LS_QUALITY = 'eduportal.quality'; // device preference, not per-user
 
+  /* ---- Free online accounts (Firebase Spark plan: free, no card) ----
+     Paste your project's web config below (README: "Free online accounts").
+     While empty, the app runs in demo mode with the built-in users and
+     works fully offline. */
+  var FIREBASE_CONFIG = {
+    apiKey: '',
+    authDomain: '',
+    projectId: '',
+    appId: ''
+  };
+
   function loadQualityPref() {
     var q = readLS(LS_QUALITY, 'hd720');
     if (q === 'auto' || q === 'hd720' || q === 'large' || q === 'medium') state.qualityMode = q;
@@ -211,6 +222,7 @@
     var list = getEnrolled();
     if (list.indexOf(courseId) === -1) list.push(courseId);
     writeLS(enrolledKey(), list);
+    cloudSyncEnroll(); // no-op for demo users
   }
 
   function getCurrentCourse() {
@@ -335,6 +347,7 @@
     bindEnroll();
     bindControls();
     bindGlobalKeys();
+    initFirebase(); // no-op until FIREBASE_CONFIG is filled in
     window.addEventListener('beforeunload', function () { saveProgress(true); });
 
     var retryBtn = $('#btn-retry-courses');
@@ -362,7 +375,7 @@
 
   /* ============================== Router ============================= */
 
-  var SCREENS = ['screen-login', 'screen-courses', 'screen-detail', 'screen-enroll', 'screen-player'];
+  var SCREENS = ['screen-login', 'screen-signup', 'screen-courses', 'screen-detail', 'screen-enroll', 'screen-player'];
 
   /**
    * Show exactly one screen; hide the rest, manage topbar + focus,
@@ -401,6 +414,15 @@
     if (form) form.addEventListener('submit', function (ev) { ev.preventDefault(); handleLogin(); });
     var logoutBtn = $('#btn-logout');
     if (logoutBtn) logoutBtn.addEventListener('click', logout);
+    var goSignup = $('#btn-goto-signup');
+    if (goSignup) goSignup.addEventListener('click', function () {
+      showFieldError($('#signup-error'), null);
+      showScreen('screen-signup');
+    });
+    var goLogin = $('#btn-goto-login');
+    if (goLogin) goLogin.addEventListener('click', function () { showScreen('screen-login'); });
+    var signupForm = $('#signup-form');
+    if (signupForm) signupForm.addEventListener('submit', function (ev) { ev.preventDefault(); handleSignup(); });
   }
 
   function findUser(username, password) {
@@ -426,6 +448,7 @@
       shakeElement($('#login-card'));
       return;
     }
+    if (username.indexOf('@') !== -1) { firebaseSignIn(username, rawPass); return; }
     var match = findUser(username, rawPass);
     if (!match) {
       showFieldError(errEl, 'Invalid username or password.');
@@ -448,11 +471,234 @@
 
   function logout() {
     saveProgress(true); // still signed in here, so it lands on this user's key
+    try { if (firebaseAuth) firebaseAuth.signOut(); } catch (e) {}
     state.currentUser = null;
     removeLS(LS_SESSION);
     showScreen('screen-login');
     var u = $('#login-username');
     try { if (u) u.focus(); } catch (e) {}
+  }
+
+  /* ============================= Firebase ============================ */
+  // Real email accounts on the free Spark plan (auth + database, no card).
+  // Everything is lazy-loaded and every cloud call fails soft: offline or
+  // unconfigured just means demo mode with local data.
+
+  var firebaseApp = null;
+  var firebaseAuth = null;
+  var firebaseDb = null;
+  var firebaseLoading = null;
+  var lastCloudWrite = 0;
+
+  function firebaseConfigured() {
+    return !!(FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.projectId);
+  }
+
+  function firebaseUid() {
+    return state.currentUser && state.currentUser.firebaseUid ? state.currentUser.firebaseUid : null;
+  }
+
+  function loadScriptOnce(src) {
+    return new Promise(function (resolve, reject) {
+      var done = false;
+      var s = document.createElement('script');
+      s.src = src;
+      s.onload = function () { if (!done) { done = true; resolve(); } };
+      s.onerror = function () { if (!done) { done = true; reject(new Error('load failed')); } };
+      document.head.appendChild(s);
+      setTimeout(function () { if (!done) { done = true; reject(new Error('load timeout')); } }, 15000);
+    });
+  }
+
+  function loadFirebase() {
+    if (firebaseApp) return Promise.resolve();
+    if (firebaseLoading) return firebaseLoading;
+    firebaseLoading = Promise.resolve()
+      .then(function () {
+        if (!firebaseConfigured()) throw new Error('not configured');
+        if (!window.navigator.onLine) throw new Error('offline');
+        if (!window.firebase || !window.firebase.initializeApp) {
+          var V = '10.12.0';
+          var base = 'https://www.gstatic.com/firebasejs/' + V + '/';
+          return loadScriptOnce(base + 'firebase-app-compat.js')
+            .then(function () { return loadScriptOnce(base + 'firebase-auth-compat.js'); })
+            .then(function () { return loadScriptOnce(base + 'firebase-firestore-compat.js'); });
+        }
+      })
+      .then(function () {
+        if (!firebaseApp) {
+          firebaseApp = window.firebase.initializeApp(FIREBASE_CONFIG);
+          firebaseAuth = window.firebase.auth();
+          firebaseDb = window.firebase.firestore();
+        }
+      })
+      .catch(function (err) {
+        firebaseLoading = null; // allow a later retry
+        throw err;
+      });
+    return firebaseLoading;
+  }
+
+  function initFirebase() {
+    if (!firebaseConfigured()) return; // demo mode
+    loadFirebase().then(function () {
+      firebaseAuth.onAuthStateChanged(function (fbUser) {
+        // Returning session: sign the user straight in.
+        if (fbUser && !state.currentUser) enterFirebaseUser(fbUser);
+      });
+    }).catch(function () { /* stay in demo mode */ });
+  }
+
+  function firebaseErrorMessage(err) {
+    var code = (err && err.code) || '';
+    if (!window.navigator.onLine) return 'You appear to be offline. Demo accounts still work offline.';
+    switch (code) {
+      case 'auth/email-already-in-use': return 'This email already has an account. Try signing in.';
+      case 'auth/invalid-email': return 'Please enter a valid email address.';
+      case 'auth/user-not-found':
+      case 'auth/wrong-password':
+      case 'auth/invalid-credential': return 'Invalid email or password.';
+      case 'auth/weak-password': return 'Password must be at least 6 characters.';
+      case 'auth/too-many-requests': return 'Too many attempts. Please wait a bit and retry.';
+      case 'auth/network-request-failed': return 'Network error. Check your connection and retry.';
+      default: return 'Sign-in failed. Please try again.';
+    }
+  }
+
+  /**
+   * Sign a Firebase user into the app shell (session chip, per-user data,
+   * cloud pull, grid). Works for fresh signups and returning sessions.
+   */
+  function enterFirebaseUser(fbUser, extraName) {
+    var email = String((fbUser && fbUser.email) || '').toLowerCase();
+    var name = extraName || (fbUser && fbUser.displayName) || email.split('@')[0] || 'Student';
+    state.currentUser = { username: email, displayName: name, firebaseUid: fbUser.uid };
+    migrateLegacyUserData();
+    showFieldError($('#login-error'), null);
+    showFieldError($('#signup-error'), null);
+    var chip = $('#user-chip');
+    if (chip) chip.textContent = name;
+    cloudPull().then(function () { renderCourses(); }, function () { renderCourses(); });
+    showScreen('screen-courses');
+    var u = $('#login-username'); if (u) u.value = '';
+    var p = $('#login-password'); if (p) p.value = '';
+  }
+
+  function firebaseSignIn(email, password) {
+    var errEl = $('#login-error');
+    if (!firebaseConfigured()) {
+      showFieldError(errEl, 'Online accounts are not set up yet. Use a demo username instead.');
+      shakeElement($('#login-card'));
+      return;
+    }
+    showFieldError(errEl, null);
+    loadFirebase()
+      .then(function () { return firebaseAuth.signInWithEmailAndPassword(email, password); })
+      .then(function (cred) {
+        enterFirebaseUser(cred.user);
+        toast('Welcome back!', 'success');
+      })
+      .catch(function (err) {
+        showFieldError(errEl, firebaseErrorMessage(err));
+        shakeElement($('#login-card'));
+      });
+  }
+
+  function handleSignup() {
+    var nameEl = $('#signup-name');
+    var emailEl = $('#signup-email');
+    var passEl = $('#signup-password');
+    var errEl = $('#signup-error');
+    var name = nameEl ? nameEl.value.trim() : '';
+    var email = emailEl ? emailEl.value.trim() : '';
+    var pass = passEl ? passEl.value : '';
+    if (!name || !email || !pass) {
+      showFieldError(errEl, 'Please fill in all fields.');
+      shakeElement($('#signup-card'));
+      return;
+    }
+    if (pass.length < 6) {
+      showFieldError(errEl, 'Password must be at least 6 characters.');
+      shakeElement($('#signup-card'));
+      return;
+    }
+    if (!firebaseConfigured()) {
+      showFieldError(errEl, 'Online sign-up is not set up yet. Use a demo account for now.');
+      return;
+    }
+    showFieldError(errEl, null);
+    var btn = $('#btn-signup');
+    if (btn) btn.disabled = true;
+    loadFirebase()
+      .then(function () { return firebaseAuth.createUserWithEmailAndPassword(email, pass); })
+      .then(function (cred) {
+        if (name && cred.user.updateProfile) {
+          return cred.user.updateProfile({ displayName: name }).then(function () { return cred; });
+        }
+        return cred;
+      })
+      .then(function (cred) {
+        state.currentUser = { username: email.toLowerCase(), displayName: name, firebaseUid: cred.user.uid };
+        return cloudSaveAll().catch(function () {}).then(function () { return cred; });
+      })
+      .then(function (cred) {
+        enterFirebaseUser(cred.user, name);
+        toast('Account created. Welcome!', 'success');
+      })
+      .catch(function (err) {
+        if (btn) btn.disabled = false;
+        state.currentUser = null;
+        showFieldError(errEl, firebaseErrorMessage(err));
+        shakeElement($('#signup-card'));
+      })
+      .then(function () { if (btn) btn.disabled = false; });
+  }
+
+  /** Write the full local snapshot for this user to their cloud doc. */
+  function cloudSaveAll() {
+    var uid = firebaseUid();
+    if (!uid || !firebaseDb) return Promise.resolve();
+    try {
+      return firebaseDb.collection('users').doc(uid).set({
+        displayName: state.currentUser.displayName,
+        email: state.currentUser.username,
+        enrolled: getEnrolled(),
+        progress: readLS(progressKey(), {}),
+        updatedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true });
+    } catch (e) { return Promise.resolve(); }
+  }
+
+  /** Pull the cloud snapshot into this device's local per-user keys. */
+  function cloudPull() {
+    var uid = firebaseUid();
+    if (!uid || !firebaseDb) return Promise.resolve();
+    return firebaseDb.collection('users').doc(uid).get().then(function (snap) {
+      if (!snap.exists) return cloudSaveAll();
+      var data = snap.data() || {};
+      if (Array.isArray(data.enrolled)) writeLS(enrolledKey(), data.enrolled);
+      if (data.progress && typeof data.progress === 'object') writeLS(progressKey(), data.progress);
+    }).catch(function () {});
+  }
+
+  function cloudSyncEnroll() {
+    var uid = firebaseUid();
+    if (!uid || !firebaseDb) return;
+    try {
+      firebaseDb.collection('users').doc(uid).set({
+        enrolled: getEnrolled(),
+        updatedAt: window.firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).catch(function () {});
+    } catch (e) {}
+  }
+
+  function cloudQueueSave(force) {
+    var uid = firebaseUid();
+    if (!uid || !firebaseDb) return;
+    var now = Date.now();
+    if (!force && now - lastCloudWrite < 30000) return; // throttle cloud writes
+    lastCloudWrite = now;
+    cloudSaveAll().catch(function () {});
   }
 
   function restoreSession() {
@@ -1534,6 +1780,7 @@
       if (!all || typeof all !== 'object') all = {};
       all[state.currentCourseId] = { videoIndex: state.currentVideoIndex, seconds: Math.floor(t) };
       writeLS(progressKey(), all);
+      cloudQueueSave(force); // no-op for demo users
     } catch (e) { /* never crash on persistence */ }
   }
 

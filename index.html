@@ -35,14 +35,14 @@
           <p class="auth-card__sub">Sign in to access your tracks</p>
           <form class="auth-form" id="login-form" novalidate>
             <div class="field">
-              <label class="field__label" for="login-username">Username</label>
+              <label class="field__label" for="login-username">Username or email</label>
               <input
                 class="field__input"
                 type="text"
                 id="login-username"
                 name="username"
                 autocomplete="username"
-                placeholder="Your username"
+                placeholder="Demo username or account email"
                 required />
             </div>
             <div class="field">
@@ -59,9 +59,59 @@
             <p class="form-error" id="login-error" aria-live="polite" role="status" hidden></p>
             <button type="submit" class="btn btn-primary btn-block" id="btn-login">Sign in</button>
           </form>
+          <p class="auth-switch">New here? <button type="button" class="btn-link" id="btn-goto-signup">Create account</button></p>
           <p class="storage-notice" id="storage-notice" aria-live="polite" hidden>
             Note: private browsing is blocking storage — your session won’t be saved, but the app still works.
           </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SCREEN 1b — SIGN UP ============ -->
+    <section class="screen" id="screen-signup" aria-labelledby="signup-heading" hidden>
+      <div class="auth-wrap">
+        <div class="auth-card" id="signup-card">
+          <div class="auth-card__brand" aria-hidden="true">🎓</div>
+          <h1 class="auth-card__title" id="signup-heading" tabindex="-1">Create account</h1>
+          <p class="auth-card__sub">One free account, all tracks, any device</p>
+          <form class="auth-form" id="signup-form" novalidate>
+            <div class="field">
+              <label class="field__label" for="signup-name">Display name</label>
+              <input
+                class="field__input"
+                type="text"
+                id="signup-name"
+                name="name"
+                autocomplete="nickname"
+                placeholder="e.g. Mostafa"
+                required />
+            </div>
+            <div class="field">
+              <label class="field__label" for="signup-email">Email</label>
+              <input
+                class="field__input"
+                type="email"
+                id="signup-email"
+                name="email"
+                autocomplete="email"
+                placeholder="you@example.com"
+                required />
+            </div>
+            <div class="field">
+              <label class="field__label" for="signup-password">Password (6+ characters)</label>
+              <input
+                class="field__input"
+                type="password"
+                id="signup-password"
+                name="password"
+                autocomplete="new-password"
+                placeholder="Choose a password"
+                required />
+            </div>
+            <p class="form-error" id="signup-error" aria-live="polite" role="status" hidden></p>
+            <button type="submit" class="btn btn-primary btn-block" id="btn-signup">Create free account</button>
+          </form>
+          <p class="auth-switch"><button type="button" class="btn-link" id="btn-goto-login">← Back to sign in</button></p>
         </div>
       </div>
     </section>

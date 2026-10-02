@@ -15,6 +15,7 @@ Open `index.html` directly via `file://` or serve it from any static host.
 2. Or serve statically, e.g. `python3 -m http.server 8000`, then open `http://localhost:8000`.
 3. Sign in with your account (see `../secrets/cred.txt` for the 100 shipped accounts),
    pick one of the **4 tracks**, open a part, enroll with the reversed-code OTP, and watch.
+   `Create account` gives a real email account once the free Firebase setup below is done.
 
 ## The 4 tracks
 
@@ -37,6 +38,36 @@ enrolls and plays independently.
 | `app.js` | All logic: Bootstrap, Router, Auth, Tracks, Detail, Enroll, Player, Controls, Progress, Utils |
 | `data/users.json` | 100 users (must match `../secrets/cred.txt`) |
 | `data/courses.json` | 6 courses across the 4 tracks |
+
+## Real accounts (free, no money, stays on GitHub)
+
+Out of the box the app runs in **demo mode** (100 built-in users, data in the
+browser). For **real sign-up / sign-in with email + password** and data that
+follows users across devices, plug in Firebase's free Spark plan
+(free forever for this size, **no credit card asked**):
+
+1. Go to **console.firebase.google.com** and sign in with any Google account.
+2. **Add project** → name it e.g. `oaw-academy` → decline Gemini/AI help → Create.
+3. Left menu → **Build → Authentication** → **Get started** → **Sign-in method** tab → enable **Email/Password** → Save.
+4. Left menu → **Build → Firestore Database** → **Create database** → choose any
+   location → **Start in test mode** → Enable. (Test mode is fine to start;
+   tighten rules later from the Rules tab.)
+5. Top-left ⚙️ → **Project settings** → scroll to **Your apps** → click **`</>` (Web)**
+   → nickname `oaw` → **Register app** → copy the `firebaseConfig` values.
+6. In this repo open **`app.js`**, find `FIREBASE_CONFIG` near the top, paste your
+   four values (`apiKey`, `authDomain`, `projectId`, `appId`), then push —
+   the live site picks it up in ~1 minute.
+
+What changes once configured (nothing else to do):
+- **Create account** on the login screen creates a real account (passwords are
+  hashed by Google — the app never sees or stores them).
+- Signing in with an `email` uses the real account; plain usernames keep using demo mode.
+- Enrollments + progress sync to Firestore per user **and** stay in the browser,
+  so offline still works and nothing is ever lost.
+- Sessions survive refresh via Firebase; Log out signs out everywhere on the device.
+
+Costs: Spark plan includes 50k monthly logins + 1 GiB database free. This app's
+usage is a tiny fraction of that — the bill stays $0.
 
 ## Enrollment / OTP flow
 
