@@ -1,4 +1,4 @@
-/* EduPortal design system — all tokens live on :root. */
+/* M2R-Academy design system — all tokens live on :root. */
 :root {
   /* Brand */
   --brand-500: #6366f1;
@@ -635,7 +635,7 @@ button.video-list__item:hover { border-color: var(--brand-500); }
   .topbar__inner { gap: var(--sp-2); }
 }
 
-/* ---------- OAW tracks & parts ---------- */
+/* ---------- M2R tracks & parts ---------- */
 .course-card__track-icon {
   position: absolute;
   left: var(--sp-2);

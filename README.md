@@ -1,4 +1,4 @@
-# OAW Academy — Static Front-End Learning Platform
+# M2R-Academy — Static Front-End Learning Platform
 
 A 100% client-side single-page app (vanilla HTML + CSS + JS). No backend, no build step, no npm.
 Open `index.html` directly via `file://` or serve it from any static host.
@@ -89,7 +89,7 @@ usage is a tiny fraction of that — the bill stays $0.
   internet drop down for smooth playback; the choice is remembered on the device.
 - A transparent shield owns every pointer gesture and right-click/drag are
   blocked, so viewers can never reach YouTube chrome, external links, or
-  downloads — playback stays inside OAW Academy with an on-screen watermark.
+  downloads — playback stays inside M2R-Academy with an on-screen watermark.
 - Custom controls only: prev / play / next, seek bar (250 ms tick), time,
   mute + volume, speed (0.5–2×), fullscreen (wraps the stage, not the frame).
 - Shortcuts (player screen, not while typing): `Space/K` play, `←/→` ±5s,

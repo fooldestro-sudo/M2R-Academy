@@ -1,5 +1,5 @@
-// <!-- OAW Academy — UI prototype with NO real security. Credentials live in plain text, enrollment is a localStorage flag, and the OTP is the shown code reversed. Do NOT use for real, private, or paid content. -->
-/* OAW Academy — UI prototype with NO real security.
+// <!-- M2R-Academy — UI prototype with NO real security. Credentials live in plain text, enrollment is a localStorage flag, and the OTP is the shown code reversed. Do NOT use for real, private, or paid content. -->
+/* M2R-Academy — UI prototype with NO real security.
    Credentials live in a plain-text JSON file, enrollment is a localStorage
    boolean, and the OTP is trivially derivable (reverse of the shown code).
    Do NOT use this pattern for real, private, or paid content. When real
