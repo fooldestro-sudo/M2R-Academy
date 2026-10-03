@@ -341,7 +341,7 @@ Before marking the project as done, verify:
 
 ## 12. Deploy to GitHub Pages
 
-1. Repo `M2R-Academy` (public) on GitHub. (Existing `OAW-Academy` may be renamed instead of creating a new repo.)
+1. Repo `M2R-Academy` (public) on GitHub.
 2. Push all files to `main` branch.
 3. Settings → Pages → Source: `main` branch, `/` (root).
 4. Site live at: `https://<username>.github.io/M2R-Academy/`
