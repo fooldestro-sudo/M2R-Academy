@@ -1,0 +1,48 @@
+{
+  "projects": [
+    {
+      "title": "موقع بورتفوليو شخصي",
+      "titleEn": "Personal portfolio site",
+      "student": "أحمد",
+      "studentEn": "Ahmed",
+      "track": "web",
+      "image": "",
+      "description": "موقع تعريفي من صفحة واحدة بـ HTML وCSS مع قسم مشاريع ونموذج تواصل.",
+      "descriptionEn": "One-page personal site in HTML/CSS with a projects section.",
+      "link": ""
+    },
+    {
+      "title": "آلة حاسبة بايثون",
+      "titleEn": "Python calculator",
+      "student": "منة",
+      "studentEn": "Menna",
+      "track": "programming",
+      "image": "",
+      "description": "آلة حاسبة في التيرمينال تدعم العمليات الأساسية وحفظ النتائج.",
+      "descriptionEn": "Terminal calculator with history.",
+      "link": ""
+    },
+    {
+      "title": "لغز نهاية الدور",
+      "titleEn": "Endgame puzzle",
+      "student": "يوسف",
+      "studentEn": "Youssef",
+      "track": "chess",
+      "image": "",
+      "description": "تحليل مفصّل لنهاية ملك وبيدق ضد ملك بأسلوب المدرسة السوفيتية.",
+      "descriptionEn": "Annotated king+pawn vs king endgame study.",
+      "link": ""
+    },
+    {
+      "title": "برنامج إدارة المصاريف",
+      "titleEn": "Expense tracker",
+      "student": "سلمى",
+      "studentEn": "Salma",
+      "track": "programming",
+      "image": "",
+      "description": "برنامج C++ لتسجيل المصاريف اليومية وحساب الإجمالي بالفئات.",
+      "descriptionEn": "C++ daily expense tracker with category totals.",
+      "link": ""
+    }
+  ]
+}
