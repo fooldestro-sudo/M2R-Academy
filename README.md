@@ -24,6 +24,7 @@ Open `index.html` directly via `file://` or serve it from any static host.
 | 1 | 💻 Programming | `P` | Choice of C++ (Elzero, 14 lessons) or Python (Elzero, 14 lessons) |
 | 2 | 🌐 Web Development | `W` | HTML (10) + CSS (10) + JavaScript (10) + TypeScript (8) + React (7) — Elzero / codeZone / Codezilla |
 | 3 | ♞ Chess | `C` | Takkat Chess — Beginner Soviet school (17) + Intermediate endings & rating (12) + Advanced Woodpecker & Reassess (10) |
+| 4 | 🛡️ Cybersec (SOON) | `S` | Content being prepared — card shown, enroll disabled |
 
 Tracks with two choices (Programming) first show a parts list; each part
 enrolls and plays independently.
@@ -36,7 +37,7 @@ enrolls and plays independently.
 | `style.css` | Design system (tokens on `:root`), layout, responsive rules |
 | `app.js` | All logic: Bootstrap, Router, Auth, Tracks, Detail, Enroll, Player, Controls, Progress, Utils |
 | `data/users.json` | 100 users (must match `../secrets/cred.txt`) |
-| `data/courses.json` | 4 courses across the 3 tracks |
+| `data/courses.json` | 5 courses (3 live + 1 coming-soon) across the tracks |
 
 ## Real accounts (free, no money, stays on GitHub)
 

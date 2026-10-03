@@ -128,7 +128,7 @@ Sections (in order):
 1. **Hero:** Academy name + tagline + CTA button "Start Learning"
 2. **What is M2R-Academy:** 2-3 sentences
 3. **Our Target:** 3 bullet points
-4. **Tracks Preview:** 3 cards (Programming, Web, Chess)
+4. **Tracks Preview:** 3 cards (Programming, Web, Chess) + Cybersec (SOON) card
 5. **Projects Preview:** 3 latest student projects
 6. **How it Works:** 3 steps (Choose course → Get Appline code → Unlock & learn)
 7. **Footer**
@@ -227,6 +227,8 @@ Reshape the existing verified catalogue (3 tracks, 112 videos) into:
 - `chess` — Takkat Chess playlist (prefix: **C**)
 
 **Total: 112 videos across 3 tracks.** All YouTube IDs already verified as embeddable — reuse them, do not re-research.
+A 4th card, **Cybersec (SOON)** (`cybersecurity`, empty, `comingSoon: true`), renders
+disabled until its content ships.
 
 ### `data/projects.json`
 ```json

@@ -247,7 +247,9 @@
     { id: 'web', prefix: 'W', icon: '🌐', title: 'تطوير الويب',
       tagline: 'HTML • CSS • JavaScript • TypeScript • React', courseIds: ['web-dev'] },
     { id: 'chess', prefix: 'C', icon: '♞', title: 'الشطرنج',
-      tagline: 'من الصفر للاحتراف — Takkat Chess', courseIds: ['chess'] }
+      tagline: 'من الصفر للاحتراف — Takkat Chess', courseIds: ['chess'] },
+    { id: 'cybersecurity', prefix: 'S', icon: '🛡️', title: 'الأمن السيبراني',
+      tagline: 'Cybersec — SOON', courseIds: ['cybersecurity'] }
   ];
 
   function getTrackById(trackId) {
@@ -761,7 +763,7 @@
     if (empty) empty.hidden = true;
     if (loadErr) loadErr.hidden = true;
     var sub2 = $('#courses-sub');
-    if (sub2) sub2.textContent = 'Choose your track — 3 professional Arabic tracks.';
+    if (sub2) sub2.textContent = 'Choose your track — 3 live tracks + Cybersec soon.';
 
     TRACKS.forEach(function (track) {
       var cs = trackCourses(track);

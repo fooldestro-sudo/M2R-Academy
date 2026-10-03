@@ -8,7 +8,7 @@
 1. **Portfolio** — academy/student work showcase (hero-adjacent gallery).
 2. **About** — academy story + **Founders, each with name, picture, and role**
    (Mustafa — Founder; Malak — role TBA; Rahma — role TBA) + **motivational words**.
-3. **Courses** — the 3 tracks (Programming, Web, Chess), parts, enroll, player.
+3. **Courses** — 3 live tracks (Programming, Web, Chess) + Cybersec (SOON) card, parts, enroll, player.
 4. **Competition leaderboard** — live ranks from user points (see §3).
 5. **Contact** — founder WhatsApp (+201094578070, prefilled chat link) + channels.
 6. **Footer** — links, tracks, credited sources, disclaimer, copyright.
