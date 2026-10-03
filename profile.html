@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Profile" />
+  <title>M2R-Academy — Profile</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="profile">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <div id="profile-need-login" hidden>
+      <p data-i18n="profile.need_login">Log in to see your profile.</p>
+      <p><a class="btn btn-primary" href="login.html" data-i18n="auth.signin">Log in</a></p>
+    </div>
+    <div id="profile-main" hidden>
+      <h1 data-i18n="profile.t">My profile</h1>
+      <div class="profile-head">
+        <img id="pf-avatar" src="assets/logo.svg" alt="" />
+        <div>
+          <h2 id="pf-name-view" style="margin:0">—</h2>
+          <p style="margin:0;color:var(--text-secondary)"><span data-i18n="profile.points">My points</span>: <strong id="pf-points">0</strong> · <span data-i18n="profile.rank">My rank</span>: <strong id="pf-rank">—</strong></p>
+        </div>
+      </div>
+      <div class="section admin-grid">
+        <div class="admin-card">
+          <h2 data-i18n="profile.t">My profile</h2>
+          <div class="field">
+            <label class="field__label" for="pf-avatar-input" data-i18n="profile.avatar">Photo (max 2MB)</label>
+            <input class="field__input" type="file" id="pf-avatar-input" accept="image/*" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="pf-name" data-i18n="profile.name">Name</label>
+            <input class="field__input" type="text" id="pf-name" maxlength="60" />
+          </div>
+          <div class="field">
+            <label class="field__label" for="pf-bio" data-i18n="profile.bio">About you</label>
+            <textarea class="field__textarea" id="pf-bio" maxlength="300"></textarea>
+          </div>
+          <p><button class="btn btn-primary" id="pf-save" data-i18n="profile.save">Save</button></p>
+        </div>
+        <div class="admin-card">
+          <h2 data-i18n="profile.courses_t">My courses</h2>
+          <div id="pf-courses" class="grid"></div>
+          <p style="margin-top:var(--sp-4)"><button class="btn btn-ghost" id="pf-logout" data-i18n="profile.logout">Log out</button></p>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/profile.js"></script>
+</body>
+</html>

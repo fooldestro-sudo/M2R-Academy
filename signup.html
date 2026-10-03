@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Sign up" />
+  <title>M2R-Academy — Sign up</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="signup">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container container--narrow" id="main">
+    <div class="auth-card">
+      <h1 class="auth-card__title" data-i18n="auth.signup_t">Sign up</h1>
+      <p class="auth-card__sub" data-i18n="auth.signup_sub">Free account.</p>
+      <form class="auth-form" id="signup-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="su-name" data-i18n="auth.name">Name</label>
+          <input class="field__input" type="text" id="su-name" autocomplete="nickname" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="su-email" data-i18n="auth.email">Email</label>
+          <input class="field__input" type="email" id="su-email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="su-pass" data-i18n="auth.password">Password</label>
+          <input class="field__input" type="password" id="su-pass" autocomplete="new-password" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="su-pass2" data-i18n="auth.confirm">Confirm password</label>
+          <input class="field__input" type="password" id="su-pass2" autocomplete="new-password" required />
+        </div>
+        <div class="field">
+          <label for="su-terms"><input type="checkbox" id="su-terms" /> <span data-i18n="auth.terms">I agree</span></label>
+        </div>
+        <p class="form-error" id="signup-error" role="status" aria-live="polite" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="auth.create">Create free account</button>
+      </form>
+      <p class="auth-switch"><span data-i18n="auth.has_account">Have an account?</span> <a class="btn-link" href="login.html" data-i18n="auth.login_link">Log in</a></p>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.M2RAuth.redirectIfAuthed();
+      document.getElementById('signup-form').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var err = document.getElementById('signup-error');
+        var fail = function (k) {
+          err.textContent = window.M2R.t(k); err.hidden = false;
+          document.querySelector('.auth-card').classList.remove('shake');
+          void document.querySelector('.auth-card').offsetWidth;
+          document.querySelector('.auth-card').classList.add('shake');
+        };
+        var name = document.getElementById('su-name').value.trim();
+        var email = document.getElementById('su-email').value.trim();
+        var p1 = document.getElementById('su-pass').value;
+        var p2 = document.getElementById('su-pass2').value;
+        if (!name || !email || !p1 || !p2) return fail('auth.err_fill');
+        if (p1.length < 6) return fail('auth.err_short');
+        if (p1 !== p2) return fail('auth.err_match');
+        if (!document.getElementById('su-terms').checked) return fail('auth.err_terms');
+        err.hidden = true;
+        window.M2RAuth.signup(name, email, p1).then(function () {
+          window.M2R.toast(window.M2R.t('auth.created'), 'success');
+          setTimeout(function () { window.location.href = 'index.html'; }, 600);
+        }).catch(function (e) { fail(window.M2RAuth.errKey(e)); });
+      });
+    });
+  </script>
+</body>
+</html>

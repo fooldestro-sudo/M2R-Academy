@@ -1,0 +1,125 @@
+/* M2R-Academy profile page: avatar upload, name/bio, points/rank, my courses. */
+(function () {
+  'use strict';
+
+  var MAX_AVATAR = 2 * 1024 * 1024;
+
+  function esc(s) { return window.M2R.esc(s); }
+
+  function progressPct(part) {
+    var all = window.M2RAuth.getProgress();
+    var e = all[part.id];
+    var total = (part.videos || []).length;
+    if (!e || !total) return 0;
+    return Math.min(100, Math.round(((e.videoIndex || 0) / total) * 100));
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    window.M2RAuth.current().then(function (u) {
+      if (!u) {
+        document.getElementById('profile-need-login').hidden = false;
+        return;
+      }
+      document.getElementById('profile-main').hidden = false;
+      boot(u);
+    });
+  });
+
+  function boot(u) {
+    window.M2RFirebase.ready().then(function (fb) {
+      return fb.db.collection('users').doc(u.uid).get().then(function (s) {
+        return s.exists ? s.data() : {};
+      });
+    }).catch(function () { return {}; }).then(function (doc) {
+      doc = doc || {};
+      document.getElementById('pf-name-view').textContent = doc.displayName || u.displayName;
+      document.getElementById('pf-points').textContent = doc.points || 0;
+      document.getElementById('pf-name').value = doc.displayName || u.displayName || '';
+      document.getElementById('pf-bio').value = doc.bio || '';
+      if (doc.photoURL || u.photoURL) document.getElementById('pf-avatar').src = doc.photoURL || u.photoURL;
+      rankOf(doc.points || 0);
+      renderCourses();
+      wireSave(u);
+    });
+
+    document.getElementById('pf-logout').addEventListener('click', function () {
+      window.M2RAuth.logout();
+    });
+  }
+
+  /** Rank = 1 + number of users with strictly more points. */
+  function rankOf(points) {
+    window.M2RFirebase.ready().then(function (fb) {
+      return fb.db.collection('users').where('points', '>', points).get();
+    }).then(function (snap) {
+      document.getElementById('pf-rank').textContent = '#' + (snap.size + 1);
+    }).catch(function () {
+      document.getElementById('pf-rank').textContent = '—';
+    });
+  }
+
+  function renderCourses() {
+    var box = document.getElementById('pf-courses');
+    var enrolled = window.M2RAuth.getEnrolled();
+    window.M2R.loadJSON('data/courses.json').then(function (d) {
+      var parts = {};
+      (d.tracks || []).forEach(function (t) {
+        (t.parts || []).forEach(function (p) { parts[p.id] = p; });
+      });
+      box.innerHTML = '';
+      if (!enrolled.length) {
+        box.innerHTML = '<p style="color:var(--text-secondary)">—</p>';
+        return;
+      }
+      enrolled.forEach(function (pid) {
+        var p = parts[pid];
+        if (!p) return;
+        var pct = progressPct(p);
+        var div = document.createElement('div');
+        div.innerHTML = '<strong>' + esc(p.title) + '</strong>' +
+          '<div style="height:6px;background:var(--bg-secondary);border-radius:999px;margin-top:6px">' +
+          '<div style="height:100%;width:' + pct + '%;background:var(--accent);border-radius:999px"></div></div>';
+        box.appendChild(div);
+      });
+    }).catch(function () {
+      box.innerHTML = '<p>' + esc(window.M2R.t('common.load_fail')) + '</p>';
+    });
+  }
+
+  function wireSave(u) {
+    document.getElementById('pf-save').addEventListener('click', function () {
+      var btn = this;
+      btn.disabled = true;
+      var name = document.getElementById('pf-name').value.trim().slice(0, 60);
+      var bio = document.getElementById('pf-bio').value.trim().slice(0, 300);
+      var file = document.getElementById('pf-avatar-input').files[0] || null;
+      if (file && (file.size > MAX_AVATAR || (file.type || '').indexOf('image/') !== 0)) {
+        window.M2R.toast('max 2MB, images only', 'error');
+        btn.disabled = false;
+        return;
+      }
+      window.M2RFirebase.ready().then(function (fb) {
+        var ref = fb.db.collection('users').doc(u.uid);
+        var chain = Promise.resolve(null);
+        if (file) {
+          var path = 'profile-pictures/' + u.uid + '/avatar';
+          chain = fb.storage.ref(path).put(file)
+            .then(function () { return fb.storage.ref(path).getDownloadURL(); });
+        }
+        return chain.then(function (url) {
+          var patch = { displayName: name || u.displayName, bio: bio };
+          if (url) patch.photoURL = url;
+          return ref.set(patch, { merge: true }).then(function () { return url; });
+        });
+      }).then(function (url) {
+        document.getElementById('pf-name-view').textContent =
+          document.getElementById('pf-name').value.trim() || u.displayName;
+        if (url) document.getElementById('pf-avatar').src = url;
+        window.M2RAuth.refreshHeader();
+        window.M2R.toast(window.M2R.t('profile.saved'), 'success');
+      }).catch(function () {
+        window.M2R.toast(window.M2R.t('auth.err_net'), 'error');
+      }).then(function () { btn.disabled = false; });
+    });
+  }
+})();

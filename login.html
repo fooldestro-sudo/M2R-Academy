@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Log in" />
+  <title>M2R-Academy — Login</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="login">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container container--narrow" id="main">
+    <div class="auth-card">
+      <h1 class="auth-card__title" data-i18n="auth.login_t">Log in</h1>
+      <p class="auth-card__sub" data-i18n="auth.login_sub">Welcome back!</p>
+      <form class="auth-form" id="login-form" novalidate>
+        <div class="field">
+          <label class="field__label" for="login-email" data-i18n="auth.email">Email</label>
+          <input class="field__input" type="email" id="login-email" autocomplete="email" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="login-password" data-i18n="auth.password">Password</label>
+          <input class="field__input" type="password" id="login-password" autocomplete="current-password" required />
+        </div>
+        <p class="form-error" id="login-error" role="status" aria-live="polite" hidden></p>
+        <button type="submit" class="btn btn-primary btn-block" data-i18n="auth.signin">Log in</button>
+      </form>
+      <p class="auth-switch"><span data-i18n="auth.no_account">New here?</span> <a class="btn-link" href="signup.html" data-i18n="auth.create_link">Sign up</a></p>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      window.M2RAuth.redirectIfAuthed();
+      document.getElementById('login-form').addEventListener('submit', function (ev) {
+        ev.preventDefault();
+        var email = document.getElementById('login-email').value.trim();
+        var pass = document.getElementById('login-password').value;
+        var err = document.getElementById('login-error');
+        if (!email || !pass) {
+          err.textContent = window.M2R.t('auth.err_fill'); err.hidden = false; return;
+        }
+        err.hidden = true;
+        window.M2RAuth.login(email, pass).then(function () {
+          return window.M2RAuth.pullCloud();
+        }).then(function () {
+          window.location.href = 'index.html';
+        }).catch(function (e) {
+          err.textContent = window.M2R.t(window.M2RAuth.errKey(e)); err.hidden = false;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
