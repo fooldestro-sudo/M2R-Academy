@@ -8,7 +8,7 @@
 1. **Portfolio** — academy/student work showcase (hero-adjacent gallery).
 2. **About** — academy story + **Founders, each with name, picture, and role**
    (Mustafa — Founder; Malak — role TBA; Rahma — role TBA) + **motivational words**.
-3. **Courses** — the 4 tracks (Programming, Web, Chess, Trading), parts, enroll, player.
+3. **Courses** — the 3 tracks (Programming, Web, Chess), parts, enroll, player.
 4. **Competition leaderboard** — live ranks from user points (see §3).
 5. **Contact** — founder WhatsApp (+201094578070, prefilled chat link) + channels.
 6. **Footer** — links, tracks, credited sources, disclaimer, copyright.
@@ -34,7 +34,7 @@
 M2R-Academy/
 ├── index.html        # hero, portfolio preview, tracks preview, leaderboard preview
 ├── about.html        # story, founders (photo+name+role), motivational words, FAQ
-├── courses.html      # 4 tracks grid
+├── courses.html      # 3 tracks grid
 ├── track.html        # parts list (?track=)
 ├── enroll.html       # WhatsApp handshake unlock (?course=)
 ├── watch.html        # protected player (?course=)
@@ -67,3 +67,5 @@ M2R-Academy/
 10. **This file**: target locked — portfolio/about/courses/leaderboard/contact/
     footer; demo accounts slated for deletion; Firebase set; admin + competition;
     clean-code structure above.
+11. Removed Limitless Organization (trading track retired) → 3 tracks / 112 videos;
+    Udemy added as a credited content source.

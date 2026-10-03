@@ -15,7 +15,7 @@
 - **Mission:** Provide high-quality programming and chess courses in Arabic, free and accessible.
 - **Target audience:** Arabic-speaking learners in Egypt and the Middle East.
 - **Founder contact (WhatsApp):** +201094578070 → `https://wa.me/201094578070`
-- **Source channels (credited in footer):** Elzero Web School, codeZone, Codezilla, Takkat Chess, Limitless Organization.
+- **Source channels (credited in footer):** Elzero Web School, codeZone, Codezilla, Takkat Chess, Udemy.
 
 ---
 
@@ -128,7 +128,7 @@ Sections (in order):
 1. **Hero:** Academy name + tagline + CTA button "Start Learning"
 2. **What is M2R-Academy:** 2-3 sentences
 3. **Our Target:** 3 bullet points
-4. **Tracks Preview:** 4 cards (Programming, Web, Chess, Trading)
+4. **Tracks Preview:** 3 cards (Programming, Web, Chess)
 5. **Projects Preview:** 3 latest student projects
 6. **How it Works:** 3 steps (Choose course → Get Appline code → Unlock & learn)
 7. **Footer**
@@ -146,11 +146,11 @@ Sections (in order):
 - Each card: icon, title, short description, "Explore" button → `track.html?track=<id>`
 
 ### `track.html` — Track Detail
-- Query param: `?track=<id>` (ids: `programming`, `web`, `chess`, `trading`)
+- Query param: `?track=<id>` (ids: `programming`, `web`, `chess`)
 - Hero with track name + description
 - List of parts/sections
 - Each part: title, video count, "Get Code" button → `enroll.html?course=<courseId>`
-- Coming-soon parts (e.g. Trading Part 1.1) render disabled, never link to enroll
+- Coming-soon parts render disabled, never link to enroll
 
 ### `enroll.html` — OTP Unlock
 - Query param: `?course=<courseId>`
@@ -195,7 +195,7 @@ Sections (in order):
 ## 7. Data Structures
 
 ### `data/courses.json`
-Reshape the existing verified catalogue (4 tracks, 124 videos) into:
+Reshape the existing verified catalogue (3 tracks, 112 videos) into:
 ```json
 {
   "tracks": [
@@ -221,13 +221,12 @@ Reshape the existing verified catalogue (4 tracks, 124 videos) into:
 }
 ```
 
-**4 Tracks (prefix is an explicit field, never derived from the id):**
+**3 Tracks (prefix is an explicit field, never derived from the id):**
 - `programming` — C++ / Python (prefix: **P**)
 - `web` — HTML → CSS → JS → TS → React (prefix: **W**)
 - `chess` — Takkat Chess playlist (prefix: **C**)
-- `trading` — Limitless Organization playlist (prefix: **T**)
 
-**Total: 124 videos across 4 tracks.** All YouTube IDs already verified as embeddable — reuse them, do not re-research.
+**Total: 112 videos across 3 tracks.** All YouTube IDs already verified as embeddable — reuse them, do not re-research.
 
 ### `data/projects.json`
 ```json
@@ -255,8 +254,8 @@ previous build): try `fetch()` first, fall back to inline data.
 ## 8. OTP Unlock Logic (`enroll.html`)
 
 ```javascript
-// The page shows a random code, e.g. "T3F9A1C4".
-// First char = track prefix (P/W/C/T) + 7 random hex chars (0-9, A-F).
+// The page shows a random code, e.g. "C7B2E9A1".
+// First char = track prefix (P/W/C) + 7 random hex chars (0-9, A-F).
 // The user types its REVERSE. There is NO stored list of valid codes.
 function verifyOTP(input, displayedCode) {
   const norm = input.replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
@@ -366,7 +365,7 @@ Before marking the project as done, verify:
 
 1. `assets/styles.css` — design system first
 2. `assets/site.js` — header/footer injection + i18n
-3. `data/courses.json` — reshape existing 4 tracks, 124 videos
+3. `data/courses.json` — reshape existing 3 tracks, 112 videos
 4. `data/projects.json` — sample 3-5 projects
 5. `index.html` — landing
 6. `courses.html` — tracks grid

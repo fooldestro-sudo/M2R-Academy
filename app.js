@@ -238,8 +238,8 @@
   }
 
   /* ============================== Tracks ============================= */
-  // Six learning tracks. Programming and Trading each bundle two courses
-  // (two choices); the rest hold a single course. The first letter of every
+  // Four learning tracks. Programming bundles two courses (two choices);
+  // the rest hold a single course. The first letter of every
   // enrollment code is the track prefix so the Appline can tell tracks apart.
   var TRACKS = [
     { id: 'programming', prefix: 'P', icon: '💻', title: 'البرمجة',
@@ -247,9 +247,7 @@
     { id: 'web', prefix: 'W', icon: '🌐', title: 'تطوير الويب',
       tagline: 'HTML • CSS • JavaScript • TypeScript • React', courseIds: ['web-dev'] },
     { id: 'chess', prefix: 'C', icon: '♞', title: 'الشطرنج',
-      tagline: 'من الصفر للاحتراف — Takkat Chess', courseIds: ['chess'] },
-    { id: 'trading', prefix: 'T', icon: '📈', title: 'التداول',
-      tagline: 'الدورة الكلاسيكية — Part 1 و Part 1.1', courseIds: ['trading-part1', 'trading-part1-1'] }
+      tagline: 'من الصفر للاحتراف — Takkat Chess', courseIds: ['chess'] }
   ];
 
   function getTrackById(trackId) {
@@ -763,7 +761,7 @@
     if (empty) empty.hidden = true;
     if (loadErr) loadErr.hidden = true;
     var sub2 = $('#courses-sub');
-    if (sub2) sub2.textContent = 'Choose your track — 4 professional Arabic tracks.';
+    if (sub2) sub2.textContent = 'Choose your track — 3 professional Arabic tracks.';
 
     TRACKS.forEach(function (track) {
       var cs = trackCourses(track);
@@ -858,7 +856,7 @@
 
   /**
    * Open a track. Single-course tracks go straight to the course detail;
-   * multi-choice tracks (Programming, Trading) first show the parts list.
+   * multi-choice tracks (Programming) first show the parts list.
    * @param {string} trackId
    */
   function openTrack(trackId) {
@@ -963,8 +961,7 @@
   }
 
   /**
-   * Render the parts list of a multi-choice track
-   * (Programming: C++ / Python — Trading: Part 1 / Part 1.1).
+   * Render the parts list of a multi-choice track (Programming: C++ / Python).
    * @param {string} trackId
    */
   function renderTrackParts(trackId) {
