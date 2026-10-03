@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Courses" />
+  <title>M2R-Academy — Courses</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="courses">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="courses.t">Courses</h1>
+    <p style="color:var(--text-secondary)" data-i18n="courses.sub">sub</p>
+    <div class="grid grid--4" id="tracks-grid" aria-live="polite"></div>
+    <p class="form-error" id="tracks-error" hidden></p>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      function count(t) {
+        var n = 0;
+        (t.parts || []).forEach(function (p) { n += (p.videos || []).length; });
+        return n;
+      }
+      function thumb(t) {
+        for (var i = 0; i < (t.parts || []).length; i++) {
+          var v = (t.parts[i].videos || [])[0];
+          if (v) return 'https://img.youtube.com/vi/' + v.youtubeId + '/maxresdefault.jpg';
+        }
+        return '';
+      }
+      function enrolledIds() {
+        return window.M2RAuth.getEnrolled();
+      }
+      function render() {
+        window.M2R.loadJSON('data/courses.json').then(function (d) {
+          var box = document.getElementById('tracks-grid');
+          var L = window.M2R.lang();
+          var en = enrolledIds();
+          box.innerHTML = '';
+          (d.tracks || []).forEach(function (t) {
+            var soon = (t.parts || []).every(function (p) { return p.comingSoon; });
+            var open = (t.parts || []).some(function (p) { return en.indexOf(p.id) !== -1; });
+            var a = document.createElement('a');
+            a.className = 'card';
+            a.href = 'track.html?track=' + encodeURIComponent(t.id);
+            var img = thumb(t);
+            a.innerHTML = '<div class="card__media">' +
+              (img ? '<img loading="lazy" alt="" src="' + img + '" onerror="this.remove()" />' : '<span>' + t.icon + '</span>') +
+              '</div><div class="card__body">' +
+              '<h3 class="card__title">' + window.M2R.esc(t.icon + ' ' + (L === 'en' ? (t.titleEn || t.title) : t.title)) + '</h3>' +
+              '<p class="card__text">' + window.M2R.esc(L === 'en' ? (t.descriptionEn || t.description) : t.description) + '</p>' +
+              '<div class="card__meta"><span class="chip">🎬 ' + count(t) + '</span>' +
+              (soon ? '<span class="chip chip--warning">' + window.M2R.esc(window.M2R.t('common.coming')) + '</span>' :
+                (open ? '<span class="chip chip--success">✓</span>' : '')) + '</div>' +
+              '<span style="color:var(--accent-hover);font-weight:600;font-size:.875rem">' + window.M2R.esc(window.M2R.t('common.view')) + '</span></div>';
+            box.appendChild(a);
+          });
+        }).catch(function () {
+          var e = document.getElementById('tracks-error');
+          e.textContent = window.M2R.t('common.load_fail');
+          e.hidden = false;
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        render();
+        window.M2R.onLang(render);
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Unlock course" />
+  <title>M2R-Academy — Unlock</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="courses">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container container--narrow" id="main">
+    <p><a class="btn btn-ghost btn-sm" href="courses.html" data-i18n="detail.back">← All tracks</a></p>
+    <div class="enroll-card">
+      <h1 class="enroll-card__title" data-i18n="enroll.t">Unlock course</h1>
+      <p><span data-i18n="enroll.course">Course:</span> <strong id="enroll-name">—</strong></p>
+      <p class="enroll-note" id="enroll-track-hint"></p>
+      <p><strong data-i18n="enroll.step1">Take this code:</strong></p>
+      <div class="code-box">
+        <span class="code-box__value" id="enroll-code" aria-live="polite">········</span>
+        <button type="button" class="btn btn-ghost btn-sm" id="btn-copy" data-i18n="enroll.copy">Copy</button>
+      </div>
+      <p>
+        <button type="button" class="btn-link" id="btn-regen" data-i18n="enroll.regen">↻ New code</button>
+        <a class="wa-btn" id="btn-wa" href="https://wa.me/201094578070" target="_blank" rel="noopener">✆ <span data-i18n="enroll.wa">Send on WhatsApp</span></a>
+      </p>
+      <p><strong data-i18n="enroll.step2">Enter the unlock code:</strong></p>
+      <div class="field">
+        <label class="field__label" for="otp-input" data-i18n="enroll.otp">Unlock code</label>
+        <input class="field__input field__input--mono" type="text" id="otp-input" autocomplete="one-time-code" maxlength="16" />
+      </div>
+      <p class="form-error" id="otp-error" role="status" aria-live="polite" hidden></p>
+      <p><button type="button" class="btn btn-primary btn-block" id="btn-verify" data-i18n="enroll.verify">Verify</button></p>
+      <p class="enroll-note" data-i18n="enroll.note">Contact your Appline.</p>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var part = null, track = null, code = null, busy = false;
+
+      /** Per-part 8-char code: track prefix + 7 random hex. */
+      function generateCode(prefix) {
+        var hex = '0123456789ABCDEF';
+        var c = String(prefix || 'X').toUpperCase().charAt(0);
+        for (var i = 1; i < 8; i++) c += hex.charAt(Math.floor(Math.random() * 16));
+        return c;
+      }
+      function expectedOtp(c) { return String(c).split('').reverse().join(''); }
+
+      function paint() {
+        document.getElementById('enroll-code').textContent = code;
+        document.getElementById('enroll-track-hint').textContent =
+          'Track code — starts with “' + track.trackPrefix + '”.';
+        var msg = 'Hello M2R-Academy, my enrollment code is: ' + code + ' (' + part.title + ')';
+        document.getElementById('btn-wa').href =
+          'https://wa.me/201094578070?text=' + encodeURIComponent(msg);
+      }
+
+      function copyCode() {
+        var btn = document.getElementById('btn-copy');
+        var done = function () {
+          btn.textContent = window.M2R.t('enroll.copied');
+          setTimeout(function () { btn.textContent = window.M2R.t('enroll.copy'); }, 1500);
+        };
+        if (window.navigator.clipboard && window.navigator.clipboard.writeText) {
+          window.navigator.clipboard.writeText(code).then(done, function () { legacy(); });
+        } else legacy();
+        function legacy() {
+          try {
+            var ta = document.createElement('textarea');
+            ta.value = code;
+            ta.style.cssText = 'position:absolute;left:-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            document.execCommand('copy');
+            document.body.removeChild(ta);
+            done();
+          } catch (e) {}
+        }
+      }
+
+      function verify() {
+        if (busy || !code) return;
+        busy = true;
+        var err = document.getElementById('otp-error');
+        var input = document.getElementById('otp-input');
+        var norm = String(input.value || '').replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
+        if (norm.length < 8) {
+          err.textContent = window.M2R.t('enroll.err_short'); err.hidden = false; busy = false; return;
+        }
+        if (norm !== expectedOtp(code).toUpperCase()) {
+          err.textContent = window.M2R.t('enroll.err_wrong'); err.hidden = false;
+          input.value = '';
+          try { input.focus(); } catch (e) {}
+          busy = false;
+          return;
+        }
+        err.hidden = true;
+        window.M2RAuth.addEnrollment(part.id).then(function () {
+          window.M2R.toast(window.M2R.t('enroll.ok'), 'success');
+          setTimeout(function () {
+            window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
+          }, 600);
+        });
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var id = window.M2R.getParam('course');
+        window.M2R.loadJSON('data/courses.json').then(function (d) {
+          (d.tracks || []).forEach(function (t) {
+            (t.parts || []).forEach(function (p) {
+              if (p.id === id && !p.comingSoon) { part = p; track = t; }
+            });
+          });
+          if (!part) { window.location.href = 'courses.html'; return; }
+          if (window.M2RAuth.getEnrolled().indexOf(part.id) !== -1) {
+            window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
+            return;
+          }
+          document.getElementById('enroll-name').textContent = part.title;
+          code = generateCode(track.trackPrefix);
+          paint();
+          document.getElementById('btn-copy').addEventListener('click', copyCode);
+          document.getElementById('btn-regen').addEventListener('click', function () {
+            code = generateCode(track.trackPrefix);
+            document.getElementById('otp-input').value = '';
+            document.getElementById('otp-error').hidden = true;
+            paint();
+          });
+          document.getElementById('btn-verify').addEventListener('click', verify);
+          document.getElementById('otp-input').addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter') { ev.preventDefault(); verify(); }
+          });
+        }).catch(function () { window.location.href = 'courses.html'; });
+      });
+    })();
+  </script>
+</body>
+</html>

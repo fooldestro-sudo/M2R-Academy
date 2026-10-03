@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Student projects" />
+  <title>M2R-Academy — Projects</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="projects">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="projects.t">Projects</h1>
+    <p style="color:var(--text-secondary)" data-i18n="projects.sub">sub</p>
+    <p id="proj-filters" class="chip-row"></p>
+    <div class="grid grid--3" id="projects-grid"></div>
+    <p class="form-error" id="projects-error" hidden></p>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var all = [], admin = [], filter = 'all';
+      function render() {
+        var L = window.M2R.lang();
+        var box = document.getElementById('projects-grid');
+        box.innerHTML = '';
+        var list = all.concat(admin).filter(function (p) {
+          return filter === 'all' || p.track === filter;
+        });
+        list.forEach(function (p) {
+          var title = L === 'en' ? (p.titleEn || p.title) : p.title;
+          var desc = L === 'en' ? (p.descriptionEn || p.description) : p.description;
+          var card = p.link
+            ? document.createElement('a') : document.createElement('div');
+          card.className = 'card';
+          if (p.link) { card.href = p.link; card.target = '_blank'; card.rel = 'noopener'; }
+          card.innerHTML = '<div class="card__media">' +
+            (p.image ? '<img loading="lazy" src="' + window.M2R.esc(p.image) + '" alt="" onerror="this.remove()" />' : '🎨') +
+            '</div><div class="card__body"><h3 class="card__title">' + window.M2R.esc(title) + '</h3>' +
+            '<p class="card__text">👤 ' + window.M2R.esc(L === 'en' ? (p.studentEn || p.student) : p.student) + ' · ' + window.M2R.esc(p.track || '') + '</p>' +
+            '<p class="card__text">' + window.M2R.esc(desc) + '</p></div>';
+          box.appendChild(card);
+        });
+        var f = document.getElementById('proj-filters');
+        f.innerHTML = '';
+        ['all'].concat(Object.keys(tracksOf(list))).forEach(function (t) {
+          var b = document.createElement('button');
+          b.className = 'chip' + (filter === t ? ' chip--success' : '');
+          b.style.cursor = 'pointer';
+          b.textContent = t === 'all' ? window.M2R.t('projects.all') : t;
+          b.addEventListener('click', function () { filter = t; render(); });
+          f.appendChild(b);
+        });
+      }
+      function tracksOf(list) {
+        var o = {};
+        list.forEach(function (p) { if (p.track) o[p.track] = 1; });
+        return o;
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        window.M2R.loadJSON('data/projects.json').then(function (d) {
+          all = d.projects || [];
+          return window.M2RFirebase.ready().then(function (fb) {
+            return fb.db.collection('siteProjects').orderBy('createdAt', 'desc').limit(50).get();
+          }).catch(function () { return null; });
+        }).then(function (snap) {
+          if (snap) snap.forEach(function (doc) {
+            var p = doc.data() || {};
+            p.title = p.title || doc.id;
+            admin.push(p);
+          });
+          render();
+          window.M2R.onLang(render);
+        }).catch(function () {
+          var e = document.getElementById('projects-error');
+          e.textContent = window.M2R.t('common.load_fail');
+          e.hidden = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — About" />
+  <title>M2R-Academy — About</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="about.hero_t">About us</h1>
+    <p style="color:var(--text-secondary)" data-i18n="about.hero_s">sub</p>
+    <section class="section">
+      <h2 class="section__title" data-i18n="story.t">Story</h2>
+      <p data-i18n="story.x">x</p>
+    </section>
+    <section class="section grid grid--2">
+      <div><h2 class="section__title" data-i18n="mission.t">Mission</h2><p data-i18n="mission.x">x</p></div>
+      <div><h2 class="section__title" data-i18n="vision.t">Vision</h2><p data-i18n="vision.x">x</p></div>
+    </section>
+    <section class="section">
+      <h2 class="section__title" data-i18n="method.t">Method</h2>
+      <p data-i18n="method.x">x</p>
+    </section>
+    <section class="section">
+      <h2 class="section__title" data-i18n="founders.t">Founders</h2>
+      <div class="founders" id="founders"></div>
+    </section>
+    <section class="section">
+      <h2 class="section__title" data-i18n="quote.t">Fuel</h2>
+      <p class="quote" data-i18n="quote.x">x</p>
+    </section>
+    <section class="section faq">
+      <h2 class="section__title" data-i18n="faq.t">FAQ</h2>
+      <div id="faq-list"></div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var FOUNDERS = [
+        { img: 'assets/founders/mustafa.svg', ar: 'مصطفى', en: 'Mustafa', role: 'role.founder' },
+        { img: 'assets/founders/malak.svg', ar: 'ملك', en: 'Malak', role: 'role.tba' },
+        { img: 'assets/founders/rahma.svg', ar: 'رحمة', en: 'Rahma', role: 'role.tba' }
+      ];
+      function render() {
+        var L = window.M2R.lang();
+        var box = document.getElementById('founders');
+        box.innerHTML = '';
+        FOUNDERS.forEach(function (f) {
+          var d = document.createElement('div');
+          d.className = 'founder-card';
+          d.innerHTML = '<img src="' + f.img + '" alt="" />' +
+            '<h3 style="margin:0">' + window.M2R.esc(L === 'en' ? f.en : f.ar) + '</h3>' +
+            '<p style="color:var(--text-secondary);margin:4px 0 0">' + window.M2R.esc(window.M2R.t(f.role)) + '</p>';
+          box.appendChild(d);
+        });
+        var faq = document.getElementById('faq-list');
+        faq.innerHTML = '';
+        for (var i = 1; i <= 6; i++) {
+          var det = document.createElement('details');
+          det.innerHTML = '<summary>' + window.M2R.esc(window.M2R.t('faq.q' + i)) + '</summary>' +
+            '<p>' + window.M2R.esc(window.M2R.t('faq.a' + i)) + '</p>';
+          faq.appendChild(det);
+        }
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        render();
+        window.M2R.onLang(render);
+      });
+    })();
+  </script>
+</body>
+</html>

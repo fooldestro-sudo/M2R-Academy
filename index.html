@@ -1,1561 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="ar">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="M2R-Academy — 4 professional Arabic tracks. Sign in, enroll, and watch." />
-  <title>M2R-Academy — Learn Anything</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%236366f1'/%3E%3Ctext x='16' y='22' font-size='18' text-anchor='middle' fill='white' font-family='system-ui'%3E%E2%9C%8E%3C/text%3E%3C/svg%3E" />
+  <meta name="description" content="M2R-Academy — Learn. Practice. Master." />
+  <title>M2R-Academy</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
 </head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
+<body data-page="index">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main id="main">
+    <div class="container">
+      <div id="announce" hidden></div>
+      <section class="hero">
+        <span class="hero__badge" data-i18n="hero.badge">badge</span>
+        <h1 class="hero__title" data-i18n-html="hero.title">title</h1>
+        <p class="hero__sub" data-i18n="hero.sub">sub</p>
+        <div class="hero__cta">
+          <a class="btn btn-primary" href="courses.html" data-i18n="hero.cta_courses">Start</a>
+          <a class="btn btn-ghost" href="#how" data-i18n="hero.cta_how">How</a>
+        </div>
+      </section>
 
-  <!-- Topbar: visible after login -->
-  <header class="topbar" id="topbar" hidden>
-    <div class="topbar__inner">
-      <div class="topbar__brand" aria-label="M2R-Academy home">
-        <span class="topbar__logo" aria-hidden="true">🎓</span>
-        <span class="topbar__wordmark">M2R-Academy</span>
-      </div>
-      <div class="topbar__actions">
-        <span class="user-chip" id="user-chip" title="Signed in user">Guest</span>
-        <button type="button" class="btn btn-ghost btn-sm" id="btn-logout">Log out</button>
-      </div>
+      <section class="section">
+        <h2 class="section__title" data-i18n="what.t">What</h2>
+        <p data-i18n="what.x">x</p>
+      </section>
+
+      <section class="section">
+        <h2 class="section__title" data-i18n="target.t">Target</h2>
+        <ul>
+          <li data-i18n="target.1">1</li>
+          <li data-i18n="target.2">2</li>
+          <li data-i18n="target.3">3</li>
+        </ul>
+      </section>
+
+      <section class="section">
+        <h2 class="section__title" data-i18n="tracks.t">Tracks</h2>
+        <p class="section__sub" data-i18n="tracks.sub">sub</p>
+        <div class="grid grid--4" id="tracks-preview"></div>
+      </section>
+
+      <section class="section">
+        <h2 class="section__title" data-i18n="projects.t">Projects</h2>
+        <p class="section__sub" data-i18n="projects.sub">sub</p>
+        <div class="grid grid--3" id="projects-preview"></div>
+        <p><a class="btn btn-ghost" href="projects.html" data-i18n="projects.more">All</a></p>
+      </section>
+
+      <section class="section" id="lb-preview-sec" hidden>
+        <h2 class="section__title" data-i18n="lb.t">Top</h2>
+        <div style="overflow-x:auto"><table class="lb-table"><tbody id="lb-preview"></tbody></table></div>
+        <p><a class="btn btn-ghost" href="leaderboard.html" data-i18n="lb.more">Full</a></p>
+      </section>
+
+      <section class="section" id="how">
+        <h2 class="section__title" data-i18n="how.t">How</h2>
+        <div class="steps">
+          <div class="step"><span class="step__n">1</span><h3 class="step__title" data-i18n="how.1t">t</h3><p class="step__text" data-i18n="how.1x">x</p></div>
+          <div class="step"><span class="step__n">2</span><h3 class="step__title" data-i18n="how.2t">t</h3><p class="step__text" data-i18n="how.2x">x</p></div>
+          <div class="step"><span class="step__n">3</span><h3 class="step__title" data-i18n="how.3t">t</h3><p class="step__text" data-i18n="how.3x">x</p></div>
+        </div>
+      </section>
     </div>
-  </header>
-
-  <main class="main" id="main">
-    <!-- ============ SCREEN 1 — LOGIN ============ -->
-    <section class="screen active" id="screen-login" aria-labelledby="login-heading">
-      <div class="auth-wrap">
-        <div class="auth-card" id="login-card">
-          <div class="auth-card__brand" aria-hidden="true">🎓</div>
-          <h1 class="auth-card__title" id="login-heading" tabindex="-1">Welcome back</h1>
-          <p class="auth-card__sub">Sign in to access your tracks</p>
-          <form class="auth-form" id="login-form" novalidate>
-            <div class="field">
-              <label class="field__label" for="login-username">Username or email</label>
-              <input
-                class="field__input"
-                type="text"
-                id="login-username"
-                name="username"
-                autocomplete="username"
-                placeholder="Demo username or account email"
-                required />
-            </div>
-            <div class="field">
-              <label class="field__label" for="login-password">Password</label>
-              <input
-                class="field__input"
-                type="password"
-                id="login-password"
-                name="password"
-                autocomplete="current-password"
-                placeholder="Your password"
-                required />
-            </div>
-            <p class="form-error" id="login-error" aria-live="polite" role="status" hidden></p>
-            <button type="submit" class="btn btn-primary btn-block" id="btn-login">Sign in</button>
-          </form>
-          <p class="auth-switch">New here? <button type="button" class="btn-link" id="btn-goto-signup">Create account</button></p>
-          <p class="storage-notice" id="storage-notice" aria-live="polite" hidden>
-            Note: private browsing is blocking storage — your session won’t be saved, but the app still works.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SCREEN 1b — SIGN UP ============ -->
-    <section class="screen" id="screen-signup" aria-labelledby="signup-heading" hidden>
-      <div class="auth-wrap">
-        <div class="auth-card" id="signup-card">
-          <div class="auth-card__brand" aria-hidden="true">🎓</div>
-          <h1 class="auth-card__title" id="signup-heading" tabindex="-1">Create account</h1>
-          <p class="auth-card__sub">One free account, all tracks, any device</p>
-          <form class="auth-form" id="signup-form" novalidate>
-            <div class="field">
-              <label class="field__label" for="signup-name">Display name</label>
-              <input
-                class="field__input"
-                type="text"
-                id="signup-name"
-                name="name"
-                autocomplete="nickname"
-                placeholder="e.g. Mostafa"
-                required />
-            </div>
-            <div class="field">
-              <label class="field__label" for="signup-email">Email</label>
-              <input
-                class="field__input"
-                type="email"
-                id="signup-email"
-                name="email"
-                autocomplete="email"
-                placeholder="you@example.com"
-                required />
-            </div>
-            <div class="field">
-              <label class="field__label" for="signup-password">Password (6+ characters)</label>
-              <input
-                class="field__input"
-                type="password"
-                id="signup-password"
-                name="password"
-                autocomplete="new-password"
-                placeholder="Choose a password"
-                required />
-            </div>
-            <p class="form-error" id="signup-error" aria-live="polite" role="status" hidden></p>
-            <button type="submit" class="btn btn-primary btn-block" id="btn-signup">Create free account</button>
-          </form>
-          <p class="auth-switch"><button type="button" class="btn-link" id="btn-goto-login">← Back to sign in</button></p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SCREEN 2 — TRACKS GRID ============ -->
-    <section class="screen" id="screen-courses" aria-labelledby="courses-heading" hidden>
-      <div class="container">
-        <div class="screen-head">
-          <div>
-            <h1 class="screen-head__title" id="courses-heading" tabindex="-1">Learning Tracks</h1>
-            <p class="screen-head__sub" id="courses-sub">Choose your track — 3 live tracks + Cybersec soon.</p>
-          </div>
-        </div>
-        <div class="courses-grid" id="courses-grid" aria-live="polite"></div>
-        <div class="empty-state" id="courses-empty" hidden>
-          <p class="empty-state__icon" aria-hidden="true">📚</p>
-          <h2 class="empty-state__title">No tracks yet</h2>
-          <p class="empty-state__text">Ask an administrator to add tracks to <code>data/courses.json</code>.</p>
-        </div>
-        <div class="load-error" id="courses-load-error" hidden>
-          <h2 class="load-error__title">Could not load tracks</h2>
-          <p class="load-error__text">The catalogue failed to load. Check your connection and try again.</p>
-          <button type="button" class="btn btn-primary" id="btn-retry-courses">Retry</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SCREEN 3 — TRACK / COURSE DETAIL ============ -->
-    <section class="screen" id="screen-detail" aria-labelledby="detail-title" hidden>
-      <div class="container">
-        <button type="button" class="btn btn-ghost btn-sm detail-back" id="btn-back-courses">← All tracks</button>
-        <div class="detail-hero" id="detail-hero">
-          <div class="detail-hero__media">
-            <img class="detail-hero__thumb" id="detail-thumb" src="" alt="" loading="lazy" />
-          </div>
-          <div class="detail-hero__body">
-            <h1 class="detail-hero__title" id="detail-title" tabindex="-1" dir="auto">Track title</h1>
-            <div class="chip-row" id="detail-chips"></div>
-            <p class="detail-hero__about" id="detail-about" dir="auto"></p>
-            <button type="button" class="btn btn-primary" id="btn-detail-action">Enroll this course</button>
-          </div>
-        </div>
-        <h2 class="section-title" id="detail-videos-title">Course videos</h2>
-        <ol class="video-list" id="detail-videos"></ol>
-      </div>
-    </section>
-
-    <!-- ============ SCREEN 4 — ENROLL / OTP ============ -->
-    <section class="screen" id="screen-enroll" aria-labelledby="enroll-heading" hidden>
-      <div class="container container--narrow">
-        <button type="button" class="btn btn-ghost btn-sm detail-back" id="btn-back-detail">← Back to course</button>
-        <div class="enroll-card">
-          <h1 class="enroll-card__title" id="enroll-heading" tabindex="-1">Enroll in course</h1>
-          <p class="enroll-card__course">Course: <strong id="enroll-course-name" dir="auto">—</strong></p>
-          <p class="enroll-track" id="enroll-track-hint" aria-live="polite"></p>
-
-          <div class="enroll-step">
-            <p class="enroll-step__label"><strong>Step 1:</strong> Take this code and send it to your Appline:</p>
-            <div class="code-box">
-              <span class="code-box__value" id="enroll-code" aria-live="polite">········</span>
-              <button type="button" class="btn btn-ghost btn-sm" id="btn-copy">Copy</button>
-            </div>
-            <button type="button" class="btn-link" id="btn-regen">↻ Generate a new code</button>
-          </div>
-
-          <div class="enroll-step">
-            <p class="enroll-step__label"><strong>Step 2:</strong> Enter the OTP that your Appline gives you:</p>
-            <div class="field">
-              <label class="field__label" for="otp-input">8-character OTP code</label>
-              <input
-                class="field__input field__input--mono"
-                type="text"
-                id="otp-input"
-                inputmode="text"
-                autocomplete="one-time-code"
-                maxlength="16"
-                placeholder="e.g. 4C1A9F3T" />
-            </div>
-            <p class="form-error" id="otp-error" aria-live="polite" role="status" hidden></p>
-            <button type="button" class="btn btn-primary btn-block" id="btn-verify">Verify &amp; Unlock course</button>
-            <p class="enroll-note">Contact your Appline and enter the OTP code it gives you.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ SCREEN 5 — PLAYER ============ -->
-    <section class="screen" id="screen-player" aria-labelledby="now-playing" hidden>
-      <div class="container container--wide">
-        <div class="player-topbar">
-          <button type="button" class="btn btn-ghost btn-sm" id="btn-back-player">← Back to course</button>
-          <span class="player-pos" id="playlist-position" aria-live="polite"></span>
-        </div>
-        <div class="player-layout">
-          <div class="player-main">
-            <div
-              class="player-stage"
-              id="player-wrapper"
-              role="region"
-              aria-label="M2R-Academy video player">
-              <div id="yt-player"></div>
-              <button type="button" class="player-shield" id="player-shield" aria-label="Play or pause video" title="Play / pause"></button>
-              <div class="player-watermark" aria-hidden="true"><span>M2R-Academy</span><span class="player-watermark__lock">🔒 Protected</span></div>
-              <div class="player-fallback" id="player-fallback" hidden>
-                <p class="player-fallback__title">Video unavailable</p>
-                <p class="player-fallback__text" id="player-fallback-text">This video could not be loaded.</p>
-                <p class="player-fallback__links">
-                  <button type="button" class="btn btn-primary btn-sm" id="btn-fallback-next">Next video →</button>
-                </p>
-              </div>
-            </div>
-            <div class="now-playing">
-              <h1 class="now-playing__title" id="now-playing" tabindex="-1" dir="auto">Now playing</h1>
-              <p class="now-playing__sub" id="now-playing-course" dir="auto"></p>
-            </div>
-            <div class="controls" aria-label="Playback controls">
-              <button type="button" class="controls__btn" id="btn-prev" aria-label="Previous video" title="Previous (P)">⏮</button>
-              <button type="button" class="controls__btn controls__btn--play" id="btn-play" aria-label="Play" title="Play / pause (Space)">▶</button>
-              <button type="button" class="controls__btn" id="btn-next" aria-label="Next video" title="Next (N)">⏭</button>
-              <span class="controls__time" id="time-current">0:00</span>
-              <label class="visually-hidden" for="seek">Seek</label>
-              <input class="controls__seek" type="range" id="seek" min="0" max="100" step="0.1" value="0" aria-label="Seek" />
-              <span class="controls__time" id="time-total">0:00</span>
-              <button type="button" class="controls__btn" id="btn-mute" aria-label="Mute" title="Mute (M)">🔊</button>
-              <label class="visually-hidden" for="volume">Volume</label>
-              <input class="controls__volume" type="range" id="volume" min="0" max="100" value="100" aria-label="Volume" />
-              <label class="visually-hidden" for="speed">Playback speed</label>
-              <select class="controls__speed" id="speed" aria-label="Playback speed">
-                <option value="0.5">0.5×</option>
-                <option value="0.75">0.75×</option>
-                <option value="1" selected>1×</option>
-                <option value="1.25">1.25×</option>
-                <option value="1.5">1.5×</option>
-                <option value="2">2×</option>
-              </select>
-              <label class="visually-hidden" for="quality">Video quality</label>
-              <select class="controls__speed" id="quality" aria-label="Video quality" title="Video quality">
-                <option value="auto">Auto</option>
-                <option value="hd720" selected>720p</option>
-                <option value="large">480p</option>
-                <option value="medium">360p</option>
-              </select>
-              <button type="button" class="controls__btn" id="btn-fullscreen" aria-label="Fullscreen" title="Fullscreen (F)">⛶</button>
-            </div>
-            <p class="player-error" id="player-error" aria-live="polite" role="status" hidden></p>
-            <p class="shortcuts-hint">Shortcuts: <kbd>Space</kbd> play · <kbd>←</kbd><kbd>→</kbd> seek 5s · <kbd>↑</kbd><kbd>↓</kbd> volume · <kbd>M</kbd> mute · <kbd>F</kbd> fullscreen · <kbd>N</kbd>/<kbd>P</kbd> next/prev</p>
-          </div>
-          <aside class="playlist-wrap" aria-label="Course playlist">
-            <h2 class="playlist__heading">Course content</h2>
-            <ol class="playlist" id="playlist"></ol>
-          </aside>
-        </div>
-      </div>
-    </section>
   </main>
-
+  <div id="site-footer"></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
-
-  <!-- Embedded data fallback for file:// (fetch is blocked by CORS there).
-       The same payloads are shipped as data/users.json and data/courses.json. -->
-  <script type="application/json" id="users-data">
-  {
-  "users": [
-    {
-      "username": "mostafa",
-      "password": "mostafa343",
-      "displayName": "Mostafa"
-    },
-    {
-      "username": "mahmoud",
-      "password": "mahmoud428",
-      "displayName": "Mahmoud"
-    },
-    {
-      "username": "omar",
-      "password": "omar468",
-      "displayName": "Omar"
-    },
-    {
-      "username": "youssef",
-      "password": "youssef961",
-      "displayName": "Youssef"
-    },
-    {
-      "username": "ahmed",
-      "password": "ahmed641",
-      "displayName": "Ahmed"
-    },
-    {
-      "username": "mohamed",
-      "password": "mohamed692",
-      "displayName": "Mohamed"
-    },
-    {
-      "username": "karim",
-      "password": "karim832",
-      "displayName": "Karim"
-    },
-    {
-      "username": "tarek",
-      "password": "tarek747",
-      "displayName": "Tarek"
-    },
-    {
-      "username": "hossam",
-      "password": "hossam501",
-      "displayName": "Hossam"
-    },
-    {
-      "username": "walid",
-      "password": "walid915",
-      "displayName": "Walid"
-    },
-    {
-      "username": "sameh",
-      "password": "sameh943",
-      "displayName": "Sameh"
-    },
-    {
-      "username": "ramy",
-      "password": "ramy227",
-      "displayName": "Ramy"
-    },
-    {
-      "username": "fady",
-      "password": "fady713",
-      "displayName": "Fady"
-    },
-    {
-      "username": "khaled",
-      "password": "khaled253",
-      "displayName": "Khaled"
-    },
-    {
-      "username": "ibrahim",
-      "password": "ibrahim292",
-      "displayName": "Ibrahim"
-    },
-    {
-      "username": "adel",
-      "password": "adel878",
-      "displayName": "Adel"
-    },
-    {
-      "username": "samir",
-      "password": "samir850",
-      "displayName": "Samir"
-    },
-    {
-      "username": "nabil",
-      "password": "nabil179",
-      "displayName": "Nabil"
-    },
-    {
-      "username": "ashraf",
-      "password": "ashraf792",
-      "displayName": "Ashraf"
-    },
-    {
-      "username": "magdy",
-      "password": "magdy239",
-      "displayName": "Magdy"
-    },
-    {
-      "username": "sayed",
-      "password": "sayed138",
-      "displayName": "Sayed"
-    },
-    {
-      "username": "reda",
-      "password": "reda291",
-      "displayName": "Reda"
-    },
-    {
-      "username": "hamdy",
-      "password": "hamdy573",
-      "displayName": "Hamdy"
-    },
-    {
-      "username": "sherif",
-      "password": "sherif488",
-      "displayName": "Sherif"
-    },
-    {
-      "username": "amr",
-      "password": "amr318",
-      "displayName": "Amr"
-    },
-    {
-      "username": "sara",
-      "password": "sara448",
-      "displayName": "Sara"
-    },
-    {
-      "username": "laila",
-      "password": "laila296",
-      "displayName": "Laila"
-    },
-    {
-      "username": "nour",
-      "password": "nour678",
-      "displayName": "Nour"
-    },
-    {
-      "username": "menna",
-      "password": "menna374",
-      "displayName": "Menna"
-    },
-    {
-      "username": "salma",
-      "password": "salma360",
-      "displayName": "Salma"
-    },
-    {
-      "username": "habiba",
-      "password": "habiba935",
-      "displayName": "Habiba"
-    },
-    {
-      "username": "mariem",
-      "password": "mariem500",
-      "displayName": "Mariem"
-    },
-    {
-      "username": "aya",
-      "password": "aya924",
-      "displayName": "Aya"
-    },
-    {
-      "username": "esraa",
-      "password": "esraa876",
-      "displayName": "Esraa"
-    },
-    {
-      "username": "doaa",
-      "password": "doaa308",
-      "displayName": "Doaa"
-    },
-    {
-      "username": "rana",
-      "password": "rana420",
-      "displayName": "Rana"
-    },
-    {
-      "username": "dina",
-      "password": "dina126",
-      "displayName": "Dina"
-    },
-    {
-      "username": "heba",
-      "password": "heba981",
-      "displayName": "Heba"
-    },
-    {
-      "username": "asmaa",
-      "password": "asmaa336",
-      "displayName": "Asmaa"
-    },
-    {
-      "username": "fatma",
-      "password": "fatma926",
-      "displayName": "Fatma"
-    },
-    {
-      "username": "hend",
-      "password": "hend662",
-      "displayName": "Hend"
-    },
-    {
-      "username": "shahd",
-      "password": "shahd354",
-      "displayName": "Shahd"
-    },
-    {
-      "username": "jana",
-      "password": "jana866",
-      "displayName": "Jana"
-    },
-    {
-      "username": "retaj",
-      "password": "retaj369",
-      "displayName": "Retaj"
-    },
-    {
-      "username": "malak",
-      "password": "malak591",
-      "displayName": "Malak"
-    },
-    {
-      "username": "farah",
-      "password": "farah563",
-      "displayName": "Farah"
-    },
-    {
-      "username": "nadine",
-      "password": "nadine289",
-      "displayName": "Nadine"
-    },
-    {
-      "username": "yasmine",
-      "password": "yasmine468",
-      "displayName": "Yasmine"
-    },
-    {
-      "username": "rania",
-      "password": "rania497",
-      "displayName": "Rania"
-    },
-    {
-      "username": "soha",
-      "password": "soha615",
-      "displayName": "Soha"
-    },
-    {
-      "username": "naruto",
-      "password": "naruto812",
-      "displayName": "Naruto"
-    },
-    {
-      "username": "sasuke",
-      "password": "sasuke939",
-      "displayName": "Sasuke"
-    },
-    {
-      "username": "sakura",
-      "password": "sakura847",
-      "displayName": "Sakura"
-    },
-    {
-      "username": "kakashi",
-      "password": "kakashi158",
-      "displayName": "Kakashi"
-    },
-    {
-      "username": "itachi",
-      "password": "itachi560",
-      "displayName": "Itachi"
-    },
-    {
-      "username": "jiraiya",
-      "password": "jiraiya498",
-      "displayName": "Jiraiya"
-    },
-    {
-      "username": "luffy",
-      "password": "luffy706",
-      "displayName": "Luffy"
-    },
-    {
-      "username": "zoro",
-      "password": "zoro756",
-      "displayName": "Zoro"
-    },
-    {
-      "username": "sanji",
-      "password": "sanji599",
-      "displayName": "Sanji"
-    },
-    {
-      "username": "nami",
-      "password": "nami225",
-      "displayName": "Nami"
-    },
-    {
-      "username": "chopper",
-      "password": "chopper210",
-      "displayName": "Chopper"
-    },
-    {
-      "username": "robin",
-      "password": "robin948",
-      "displayName": "Robin"
-    },
-    {
-      "username": "goku",
-      "password": "goku793",
-      "displayName": "Goku"
-    },
-    {
-      "username": "vegeta",
-      "password": "vegeta605",
-      "displayName": "Vegeta"
-    },
-    {
-      "username": "gohan",
-      "password": "gohan490",
-      "displayName": "Gohan"
-    },
-    {
-      "username": "piccolo",
-      "password": "piccolo280",
-      "displayName": "Piccolo"
-    },
-    {
-      "username": "eren",
-      "password": "eren533",
-      "displayName": "Eren"
-    },
-    {
-      "username": "mikasa",
-      "password": "mikasa813",
-      "displayName": "Mikasa"
-    },
-    {
-      "username": "levi",
-      "password": "levi281",
-      "displayName": "Levi"
-    },
-    {
-      "username": "armin",
-      "password": "armin747",
-      "displayName": "Armin"
-    },
-    {
-      "username": "tanjiro",
-      "password": "tanjiro846",
-      "displayName": "Tanjiro"
-    },
-    {
-      "username": "nezuko",
-      "password": "nezuko638",
-      "displayName": "Nezuko"
-    },
-    {
-      "username": "zenitsu",
-      "password": "zenitsu391",
-      "displayName": "Zenitsu"
-    },
-    {
-      "username": "inosuke",
-      "password": "inosuke155",
-      "displayName": "Inosuke"
-    },
-    {
-      "username": "gojo",
-      "password": "gojo597",
-      "displayName": "Gojo"
-    },
-    {
-      "username": "itadori",
-      "password": "itadori554",
-      "displayName": "Itadori"
-    },
-    {
-      "username": "megumi",
-      "password": "megumi116",
-      "displayName": "Megumi"
-    },
-    {
-      "username": "nobara",
-      "password": "nobara834",
-      "displayName": "Nobara"
-    },
-    {
-      "username": "light",
-      "password": "light678",
-      "displayName": "Light"
-    },
-    {
-      "username": "ryuk",
-      "password": "ryuk346",
-      "displayName": "Ryuk"
-    },
-    {
-      "username": "lelouch",
-      "password": "lelouch548",
-      "displayName": "Lelouch"
-    },
-    {
-      "username": "edward",
-      "password": "edward787",
-      "displayName": "Edward"
-    },
-    {
-      "username": "ichigo",
-      "password": "ichigo694",
-      "displayName": "Ichigo"
-    },
-    {
-      "username": "rukia",
-      "password": "rukia992",
-      "displayName": "Rukia"
-    },
-    {
-      "username": "gon",
-      "password": "gon638",
-      "displayName": "Gon"
-    },
-    {
-      "username": "killua",
-      "password": "killua562",
-      "displayName": "Killua"
-    },
-    {
-      "username": "deku",
-      "password": "deku236",
-      "displayName": "Deku"
-    },
-    {
-      "username": "bakugo",
-      "password": "bakugo585",
-      "displayName": "Bakugo"
-    },
-    {
-      "username": "allmight",
-      "password": "allmight851",
-      "displayName": "AllMight"
-    },
-    {
-      "username": "todorki",
-      "password": "todorki375",
-      "displayName": "Todoroki"
-    },
-    {
-      "username": "spike",
-      "password": "spike695",
-      "displayName": "Spike"
-    },
-    {
-      "username": "ash",
-      "password": "ash328",
-      "displayName": "Ash"
-    },
-    {
-      "username": "gintoki",
-      "password": "gintoki353",
-      "displayName": "Gintoki"
-    },
-    {
-      "username": "saitama",
-      "password": "saitama194",
-      "displayName": "Saitama"
-    },
-    {
-      "username": "genoss",
-      "password": "genoss296",
-      "displayName": "Genos"
-    },
-    {
-      "username": "kaneki",
-      "password": "kaneki305",
-      "displayName": "Kaneki"
-    },
-    {
-      "username": "asta",
-      "password": "asta314",
-      "displayName": "Asta"
-    },
-    {
-      "username": "yuno",
-      "password": "yuno152",
-      "displayName": "Yuno"
-    },
-    {
-      "username": "denji",
-      "password": "denji682",
-      "displayName": "Denji"
-    },
-    {
-      "username": "anya",
-      "password": "anya439",
-      "displayName": "Anya"
-    }
-  ]
-}
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      function lang() { return window.M2R.lang(); }
+      function trackCount(t) {
+        var n = 0;
+        (t.parts || []).forEach(function (p) { n += (p.videos || []).length; });
+        return n;
+      }
+      function thumbFor(t) {
+        for (var i = 0; i < (t.parts || []).length; i++) {
+          var v = (t.parts[i].videos || [])[0];
+          if (v) return 'https://img.youtube.com/vi/' + v.youtubeId + '/maxresdefault.jpg';
+        }
+        return '';
+      }
+      function renderTracks() {
+        window.M2R.loadJSON('data/courses.json').then(function (d) {
+          var box = document.getElementById('tracks-preview');
+          var L = lang();
+          box.innerHTML = '';
+          (d.tracks || []).forEach(function (t) {
+            var soon = (t.parts || []).every(function (p) { return p.comingSoon; });
+            var a = document.createElement('a');
+            a.className = 'card';
+            a.href = 'track.html?track=' + encodeURIComponent(t.id);
+            var img = thumbFor(t);
+            a.innerHTML =
+              '<div class="card__media">' +
+              (img ? '<img loading="lazy" alt="" src="' + img + '" onerror="this.remove()" />' : '<span>' + t.icon + '</span>') +
+              '</div><div class="card__body">' +
+              '<h3 class="card__title">' + window.M2R.esc(t.icon + ' ' + (L === 'en' ? (t.titleEn || t.title) : t.title)) + '</h3>' +
+              '<p class="card__text">' + window.M2R.esc(L === 'en' ? (t.descriptionEn || t.description) : t.description) + '</p>' +
+              '<div class="card__meta"><span class="chip">🎬 ' + trackCount(t) + '</span>' +
+              (soon ? '<span class="chip chip--warning">' + window.M2R.esc(window.M2R.t('common.coming')) + '</span>' : '') + '</div>' +
+              '<span style="color:var(--accent-hover);font-weight:600;font-size:.875rem">' + window.M2R.esc(window.M2R.t('common.view')) + '</span></div>';
+            box.appendChild(a);
+          });
+        }).catch(function () {});
+      }
+      function renderProjects() {
+        window.M2R.loadJSON('data/projects.json').then(function (d) {
+          var box = document.getElementById('projects-preview');
+          var L = lang();
+          box.innerHTML = '';
+          (d.projects || []).slice(0, 3).forEach(function (p) {
+            var a = document.createElement('a');
+            a.className = 'card';
+            a.href = 'projects.html';
+            a.innerHTML = '<div class="card__media">🎨</div><div class="card__body">' +
+              '<h3 class="card__title">' + window.M2R.esc(L === 'en' ? (p.titleEn || p.title) : p.title) + '</h3>' +
+              '<p class="card__text">' + window.M2R.esc(L === 'en' ? (p.descriptionEn || p.description) : p.description) + '</p></div>';
+            box.appendChild(a);
+          });
+        }).catch(function () {});
+      }
+      function renderBoard() {
+        window.M2RFirebase.ready().then(function (fb) {
+          return fb.db.collection('users').orderBy('points', 'desc').limit(5).get();
+        }).then(function (snap) {
+          if (snap.empty) return;
+          var tb = document.getElementById('lb-preview');
+          var rank = 0, last = null;
+          snap.forEach(function (doc, i) {
+            var u = doc.data() || {};
+            if (u.banned) return;
+            if (u.points !== last) { rank = i + 1; last = u.points; }
+            var tr = document.createElement('tr');
+            tr.innerHTML = '<td>#' + rank + '</td><td>' +
+              window.M2R.esc(u.displayName || u.email || '?') + '</td><td><strong>' +
+              (u.points || 0) + '</strong></td>';
+            tb.appendChild(tr);
+          });
+          if (tb.children.length) document.getElementById('lb-preview-sec').hidden = false;
+        }).catch(function () {});
+      }
+      function renderAnnounce() {
+        var show = function (txt) {
+          if (!txt) return;
+          var el = document.getElementById('announce');
+          el.innerHTML = '<p class="quote">' + window.M2R.esc(txt) + '</p>';
+          el.hidden = false;
+        };
+        window.M2RFirebase.ready().then(function (fb) {
+          return fb.db.collection('settings').doc('main').get();
+        }).then(function (s) {
+          if (s.exists && s.data().announcement) show(s.data().announcement);
+          else return window.M2R.loadJSON('data/settings.json').then(function (j) { show(j.announcement); });
+        }).catch(function () {
+          window.M2R.loadJSON('data/settings.json').then(function (j) { show(j.announcement); }).catch(function () {});
+        });
+      }
+      function renderAll() {
+        document.getElementById('tracks-preview').innerHTML = '';
+        document.getElementById('projects-preview').innerHTML = '';
+        document.getElementById('lb-preview').innerHTML = '';
+        document.getElementById('lb-preview-sec').hidden = true;
+        renderTracks(); renderProjects(); renderBoard(); renderAnnounce();
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        renderAll();
+        window.M2R.onLang(renderAll);
+      });
+    })();
   </script>
-  <script type="application/json" id="courses-data">
-  {
-  "courses": [
-    {
-      "id": "programming-cpp",
-      "track": "programming",
-      "trackPrefix": "P",
-      "title": "البرمجة بلغة C++ — الأساس الصح (Elzero)",
-      "about": "كورس تأسيس البرمجة بلغة C++ مع أسامة الزيرو (Elzero Web School) باللهجة المصرية: من تثبيت المحرر والكومبايلر وفهم الكومبايلر واللينكر، للمتغيرات والثوابت وأنواع البيانات، للـOperators والـControl Flow والـLoops والمصفوفات — بنفس ترتيب خطة دراسة الزيرو الرسمية. كل درس عليه تكليفات عملية على موقع الأكاديمية. اللي يخلص التراك ده هيكون متأسس صح ويقدر يدخل على حل المشكلات وهياكل البيانات وأي لغة تانية بسهولة.",
-      "thumbnail": "https://img.youtube.com/vi/XDuWyYxksXU/maxresdefault.jpg",
-      "totalTime": "2h 34m",
-      "videos": [
-        {
-          "id": "v1",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #001 - Important Introduction About The Course",
-          "youtubeId": "XDuWyYxksXU",
-          "duration": "10:50"
-        },
-        {
-          "id": "v2",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #002 - Why C++ Language",
-          "youtubeId": "jOUb09iiO20",
-          "duration": "7:52"
-        },
-        {
-          "id": "v3",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #003 - Install VSC Editor, Compiler And Debugger",
-          "youtubeId": "R-Hu5rdn-vc",
-          "duration": "20:46"
-        },
-        {
-          "id": "v4",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #004 - Install Visual Studio And Answer Questions",
-          "youtubeId": "RWtT07Id-n4",
-          "duration": "21:37"
-        },
-        {
-          "id": "v5",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #005 - How The C++ Works",
-          "youtubeId": "FVV4kTy0dJg",
-          "duration": "8:17"
-        },
-        {
-          "id": "v6",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #006 - Preprocessing, Compiling And Linking",
-          "youtubeId": "1K1sET8dDrI",
-          "duration": "5:34"
-        },
-        {
-          "id": "v7",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #007 - C++ Language Syntax",
-          "youtubeId": "NeHu899_uYA",
-          "duration": "12:05"
-        },
-        {
-          "id": "v8",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #008 - Comments And Use Cases",
-          "youtubeId": "6UoFcvARKI4",
-          "duration": "14:55"
-        },
-        {
-          "id": "v9",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #009 - Variables Basic Knowledge",
-          "youtubeId": "R2zqj_52WwU",
-          "duration": "10:30"
-        },
-        {
-          "id": "v10",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #010 - Variables Naming Rules And Best Practices",
-          "youtubeId": "A6B4tlaPapo",
-          "duration": "11:06"
-        },
-        {
-          "id": "v11",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #011 - Variables Advanced Knowledge",
-          "youtubeId": "J_vnlD5Ca-U",
-          "duration": "7:59"
-        },
-        {
-          "id": "v12",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #012 - Variables Scope",
-          "youtubeId": "HHl6YF6GUhw",
-          "duration": "5:16"
-        },
-        {
-          "id": "v13",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #013 - Variables - Constant Variable",
-          "youtubeId": "zBhT544Xy0o",
-          "duration": "9:32"
-        },
-        {
-          "id": "v14",
-          "title": "[Arabic] Fundamentals Of Programming With C++ #014 - Calculate Your Age Application",
-          "youtubeId": "cS0tbixHmdI",
-          "duration": "7:54"
-        }
-      ],
-      "source": "Elzero Web School — Fundamentals Of Programming With C++"
-    },
-    {
-      "id": "programming-python",
-      "track": "programming",
-      "trackPrefix": "P",
-      "title": "البرمجة بلغة Python — من الصفر للسوق (Elzero)",
-      "about": "كورس بايثون الكامل مع أسامة الزيرو (Elzero Web School) باللهجة المصرية: من تنصيب بايثون وأول برنامج، للمتغيرات والـStrings والأرقام والـLists والـTuples والـSets والـDictionaries، للشروط والـLoops والدوال — مرتب من الدرس الأول للاحتراف. بايثون هي بوابتك لمجالات الذكاء الاصطناعي وتحليل البيانات والأتمتة، والكورس ده مشروح بأسلوب عملي بسيط يناسب اللي عمره ما برمج قبل كده.",
-      "thumbnail": "https://img.youtube.com/vi/mvZHDpCHphk/maxresdefault.jpg",
-      "totalTime": "1h 58m",
-      "videos": [
-        {
-          "id": "v1",
-          "title": "Learn Python in Arabic #001 - Introduction And What's Python",
-          "youtubeId": "mvZHDpCHphk",
-          "duration": "11:54"
-        },
-        {
-          "id": "v2",
-          "title": "Learn Python in Arabic #002 - What I Need To Learn ?",
-          "youtubeId": "02a5T6ktx8M",
-          "duration": "7:20"
-        },
-        {
-          "id": "v3",
-          "title": "Learn Python in Arabic #003 - Syntax And Your First App",
-          "youtubeId": "xiMHoMVWdI4",
-          "duration": "9:18"
-        },
-        {
-          "id": "v4",
-          "title": "Learn Python in Arabic #004 - Comments And How To Use It",
-          "youtubeId": "YsENRLNaYug",
-          "duration": "7:04"
-        },
-        {
-          "id": "v5",
-          "title": "Learn Python in Arabic #005 - Dealing With Data in Python",
-          "youtubeId": "zlkIcCHj3Dg",
-          "duration": "4:11"
-        },
-        {
-          "id": "v6",
-          "title": "Learn Python in Arabic #006 - Some Data Types Overview",
-          "youtubeId": "43lT7k0Zws0",
-          "duration": "6:33"
-        },
-        {
-          "id": "v7",
-          "title": "Learn Python in Arabic #007 - Variables Part One",
-          "youtubeId": "hQnZxqp3Q0Y",
-          "duration": "7:33"
-        },
-        {
-          "id": "v8",
-          "title": "Learn Python in Arabic #008 - Variables Part Two",
-          "youtubeId": "U0307lBCiDk",
-          "duration": "6:47"
-        },
-        {
-          "id": "v9",
-          "title": "Learn Python in Arabic #009 - Escape Sequences Characters",
-          "youtubeId": "cr2Nk2E0f5A",
-          "duration": "10:16"
-        },
-        {
-          "id": "v10",
-          "title": "Learn Python in Arabic #010 - Concatenation And Training",
-          "youtubeId": "7I_fUo5mO-U",
-          "duration": "5:49"
-        },
-        {
-          "id": "v11",
-          "title": "Learn Python in Arabic #011 - Strings",
-          "youtubeId": "j0Wktr70Cgw",
-          "duration": "6:37"
-        },
-        {
-          "id": "v12",
-          "title": "Learn Python in Arabic #012 - Strings - Indexing And Slicing",
-          "youtubeId": "PEp4oqzthnw",
-          "duration": "9:52"
-        },
-        {
-          "id": "v13",
-          "title": "Learn Python in Arabic #013 - Strings Methods Part One",
-          "youtubeId": "HmDLsnLgt0M",
-          "duration": "10:35"
-        },
-        {
-          "id": "v14",
-          "title": "Learn Python in Arabic #014 - Strings Methods Part Two",
-          "youtubeId": "doDJDkUOEJQ",
-          "duration": "14:22"
-        }
-      ],
-      "source": "Elzero Web School — Mastering Python"
-    },
-    {
-      "id": "web-dev",
-      "track": "web",
-      "trackPrefix": "W",
-      "title": "تطوير الويب الشامل — HTML وCSS وJavaScript وTypeScript وReact",
-      "about": "أضخم تراك في الأكاديمية: خمس مراحل مرتبة زي ما السوق طالب. المرحلة الأولى HTML (10 دروس): هيكل الصفحة والعناوين والروابط والصور والفورم. الثانية CSS (10 دروس): التنسيق والـBox Model والـFlex والـGrid والـPosition والانتقالات. الثالثة JavaScript (10 دروس): المتغيرات والدوال والكائنات والـDOM والأحداث والـBOM. الرابعة TypeScript (8 دروس): الأنواع والـInterfaces والـGenerics. الخامسة React (7 دروس): المكونات والـState والـProps والـContext وتطبيق CRUD كامل ورفع المشروع. المحتوى من Elzero Web School (أسامة الزيرو) وcodeZone وCodezilla — كلهم مصريين وشرحهم باللهجة المصرية. خلص التراك ده وهتبقى Front-End Developer جاهز للشغل الحر أو الشركات.",
-      "thumbnail": "https://img.youtube.com/vi/6QAELgirvjs/maxresdefault.jpg",
-      "totalTime": "26h 00m",
-      "videos": [
-        {
-          "id": "v1",
-          "title": "Learn HTML In Arabic 2021 - #01 - Introduction and What I Need To Learn",
-          "youtubeId": "6QAELgirvjs",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v2",
-          "title": "Learn HTML In Arabic 2021 - #02 - Elements And Browser",
-          "youtubeId": "7LxA9qXUY5k",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v3",
-          "title": "Learn HTML In Arabic 2021 - #03 - First Project And First Page",
-          "youtubeId": "QG5aEmS9Fu0",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v4",
-          "title": "Learn HTML In Arabic 2021 - #04 - Head And Nested Elements",
-          "youtubeId": "dVgTBEYCseU",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v5",
-          "title": "Learn HTML In Arabic 2021 - #05 - Comments And Use Cases",
-          "youtubeId": "3lXuWHtm7PM",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v6",
-          "title": "Learn HTML In Arabic 2021 - #06 - Doctype And Standard And Quirks Mode",
-          "youtubeId": "sBFemL2Mfj4",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v7",
-          "title": "Learn HTML In Arabic 2021 - #07 - Headings And Use Cases",
-          "youtubeId": "XxkX8wnRq3s",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v8",
-          "title": "Learn HTML In Arabic 2021 - #12 - Links - Anchor Tag",
-          "youtubeId": "7TQhxAOjd1w",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v9",
-          "title": "Learn HTML In Arabic 2021 - #13 - Image And Deal With Paths",
-          "youtubeId": "FmIUk3bWGmU",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v10",
-          "title": "Learn HTML In Arabic 2021 - #24 - Form Part 1 - Input Types And Labels",
-          "youtubeId": "inC9gWjNMJI",
-          "section": "🌐 أولاً: HTML — هيكل الصفحات"
-        },
-        {
-          "id": "v11",
-          "title": "Learn CSS In Arabic 2021 - #01 - Introduction And What I Need To Learn",
-          "youtubeId": "X1ulCwyhCVM",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v12",
-          "title": "Learn CSS In Arabic 2021 - #02 - Your First Project And Syntax",
-          "youtubeId": "89VLfs-wpEY",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v13",
-          "title": "Learn CSS In Arabic 2021 - #03 - Element Styling",
-          "youtubeId": "66sjwQ-hB64",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v14",
-          "title": "Learn CSS In Arabic 2021 - #07 - Padding",
-          "youtubeId": "-wdlA-wFv9A",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v15",
-          "title": "Learn CSS In Arabic 2021 - #10 - Outline",
-          "youtubeId": "NyOaxP-Adac",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v16",
-          "title": "Learn CSS In Arabic 2021 - #11 - Display - Block, Inline Block, Inline",
-          "youtubeId": "-qbGxua98To",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v17",
-          "title": "Learn CSS In Arabic 2021 - #13 - Grouping Multiple Selectors",
-          "youtubeId": "NTccbXHW7AM",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v18",
-          "title": "Learn CSS In Arabic 2021 - #22 - Inheritance",
-          "youtubeId": "fXcY14cm4_I",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v19",
-          "title": "Learn CSS In Arabic 2021 - #30 - Position",
-          "youtubeId": "-q5IyjKkKSc",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v20",
-          "title": "Learn CSS In Arabic 2021 - #42 - Transition",
-          "youtubeId": "B9wYvMHLCVE",
-          "section": "🎨 ثانياً: CSS — التنسيق والتجاوب"
-        },
-        {
-          "id": "v21",
-          "title": "Learn JavaScript In Arabic 2021 - #001 - Introduction And What Is JavaScript",
-          "youtubeId": "GM6dQBmc-Xg",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v22",
-          "title": "Learn JavaScript In Arabic 2021 - #002 - How To Study The Course",
-          "youtubeId": "MAauLwSHO6Y",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v23",
-          "title": "Learn JavaScript In Arabic 2021 - #003 - Setting Up Environment",
-          "youtubeId": "5wAtDN_CLgI",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v24",
-          "title": "Learn JavaScript In Arabic 2021 - #004 - Work With Chrome Developer Tools",
-          "youtubeId": "ig_1bvufUPo",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v25",
-          "title": "Learn JavaScript In Arabic 2021 - #011 - Variables Introduction",
-          "youtubeId": "NgLgguhL2to",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v26",
-          "title": "Learn JavaScript In Arabic 2021 - #020 - Type Coercion",
-          "youtubeId": "YFUVqq68sZU",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v27",
-          "title": "Learn JavaScript In Arabic 2021 - #057 - Function Intro And Basic Usage",
-          "youtubeId": "wJ7hjluDQHI",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v28",
-          "title": "Learn JavaScript In Arabic 2021 - #079 - Object - Introduction",
-          "youtubeId": "9dkSSPWu_qY",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v29",
-          "title": "Learn JavaScript In Arabic 2021 - #092 - DOM Events",
-          "youtubeId": "BFd05UsHP48",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v30",
-          "title": "Learn JavaScript In Arabic 2021 - #102 - What Is BOM?",
-          "youtubeId": "KxhIRUjcdxQ",
-          "section": "⚡ ثالثاً: JavaScript — لغة التفاعل"
-        },
-        {
-          "id": "v31",
-          "title": "Learn TypeScript In Arabic 2022 - #01 - Introduction And What Is TypeScript",
-          "youtubeId": "yUndnE-2osg",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v32",
-          "title": "Learn TypeScript In Arabic 2022 - #02 - Install TypeScript And Transpile",
-          "youtubeId": "pc5IlcEn8vw",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v33",
-          "title": "Learn TypeScript In Arabic 2022 - #03 - Create Configuration And Watch Mode",
-          "youtubeId": "CSll1rsRPOI",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v34",
-          "title": "Learn TypeScript In Arabic 2022 - #05 - Type Annotations And Any Data Type",
-          "youtubeId": "quwf-YbyHVg",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v35",
-          "title": "Learn TypeScript In Arabic 2022 - #09 - Function Optional and Default Parameters",
-          "youtubeId": "IS2VuO0IWso",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v36",
-          "title": "Learn TypeScript In Arabic 2022 - #12 - Data Types - Type Alias",
-          "youtubeId": "TWTt63RJ3ic",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v37",
-          "title": "Learn TypeScript In Arabic 2022 - #22 - Interface Declaration",
-          "youtubeId": "qopmfZ30_TQ",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v38",
-          "title": "Learn TypeScript In Arabic 2022 - #38 - The End And How To Master TypeScript",
-          "youtubeId": "Ot5AGaudAcg",
-          "section": "🛡️ رابعاً: TypeScript — أمان الأنواع"
-        },
-        {
-          "id": "v39",
-          "title": "تعلم أساسيات رياكت في ساعة | Learn React in 1 hour — Codezilla",
-          "youtubeId": "3AJfX4Cd64c",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v40",
-          "title": "رياكت بالعربي - hello-world, jsx, render elements — codeZone",
-          "youtubeId": "p8nOfP2fw24",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v41",
-          "title": "رياكت بالعربي - components, state, props, handling events — codeZone",
-          "youtubeId": "HpZSCZavKL0",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v42",
-          "title": "رياكت بالعربي - State Lifting Up, Props Drilling, Context API — codeZone",
-          "youtubeId": "K1en3osvPdY",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v43",
-          "title": "رياكت بالعربي - Basic CRUD App — codeZone",
-          "youtubeId": "70jqV7fy1o4",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v44",
-          "title": "رياكت بالعربي - كيفية رفع المشروع Build / Deploy — codeZone",
-          "youtubeId": "vHF6D58PrM8",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        },
-        {
-          "id": "v45",
-          "title": "React in Arabic - Course Conclusion — codeZone",
-          "youtubeId": "1SdEhBJOEU4",
-          "section": "⚛️ خامساً: React — مكتبة الواجهات"
-        }
-      ],
-      "source": "Elzero Web School + codeZone + Codezilla"
-    },
-    {
-      "id": "chess",
-      "track": "chess",
-      "trackPrefix": "C",
-      "title": "الشطرنج — من الصفر للاحتراف (Takkat Chess)",
-      "about": "تراك الشطرنج الكامل من قناة Takkat Chess (د. إسلام حمادة) باللهجة المصرية، مرتب على 3 مستويات زي ما القناة نفسها بتنصح. 🟢 المبتدئ (17 درساً): كورس المدرسة السوفيتية — حركة القطع والبيادق والكش مات والتعادل والتبييت وتدوين النقلات وأشكال المات والقواعد الذهبية للافتتاح. 🟡 المتوسط (12 درساً): كورس نهايات سيلمان الكامل (الملك ضد بيدق والقطع الصغيرة والمنجنيق) + كورس ارفع تقييمك لـ2400 (رفعات البيادق وقواعد التكسير والمربعات الضعيفة). 🔴 المتقدم (10 دروس): طريقة نقار الخشب للتكتيك + شرح كتاب How to Reassess Your Chess (عدم التوازن). امشي بالترتيب ومستواك هيتضاعف فعلاً.",
-      "thumbnail": "https://img.youtube.com/vi/7D-6MYpfFmk/maxresdefault.jpg",
-      "totalTime": "32h 12m",
-      "videos": [
-        {
-          "id": "v1",
-          "title": "1-Chess Course for Beginners: Learn the Basics the Soviet Way!\"",
-          "youtubeId": "7D-6MYpfFmk",
-          "duration": "51:51",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v2",
-          "title": "2- كورس تعلم الشطرنج من الصفر للمبتدئين - تعلم حركة القطع - أساسيات الشطرنج من المدرسة السوفيتية",
-          "youtubeId": "29WOjcbJIxA",
-          "duration": "74:07",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v3",
-          "title": "3- كورس تعلم الشطرنج من الصفر للمبتدئين - أساسيات البيادق - أساسيات الشطرنج من المدرسة السوفيتية",
-          "youtubeId": "sgdgw4rAVqE",
-          "duration": "57:34",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v4",
-          "title": "4- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم الكش مات - أساسيات الشطرنج من المدرسة السوفيتية",
-          "youtubeId": "usi-jVw2LP8",
-          "duration": "49:16",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v5",
-          "title": "5- Chess Learning Course for Beginners - Cases of Tie in Chess - Castling and its Rules",
-          "youtubeId": "w_LuO2HTdQM",
-          "duration": "42:26",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v6",
-          "title": "6- كورس تعلم الشطرنج من الصفر للمبتدئين - طريقة تسجيل (تدوين) النقلات في الشطرنج",
-          "youtubeId": "GCTxJiirrD4",
-          "duration": "45:01",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v7",
-          "title": "7- كورس تعلم الشطرنج من الصفر للمبتدئين - إزاي بتدي تشيك ميت ؟",
-          "youtubeId": "Ak9NtWY_BZo",
-          "duration": "34:09",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v8",
-          "title": "أهم 8 مفاهيم أساسية في افتتاح الشطرنج للمبتدئين | القواعد الذهبية",
-          "youtubeId": "niflEg5RAGA",
-          "duration": "47:29",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v9",
-          "title": "8- كورس تعلم الشطرنج من الصفر للمبتدئين - أشكال التشيك ميت في النهايات",
-          "youtubeId": "KRqbkajdLWU",
-          "duration": "42:19",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v10",
-          "title": "9- كورس تعلم الشطرنج من الصفر للمبتدئين - إياك تقع في الخطأ دا",
-          "youtubeId": "jNmqokIWBVc",
-          "duration": "24:58",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v11",
-          "title": "10- كورس تعلم الشطرنج من الصفر للمبتدئين - أهم مفهوم في نهاية الدور ( المقابلة - Opposition )",
-          "youtubeId": "n-WjpPtUAmA",
-          "duration": "33:56",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v12",
-          "title": "11- كورس تعلم الشطرنج من الصفر للمبتدئين - إزاي تحط خطة في الشطرنج",
-          "youtubeId": "dIorE9Z4Ha4",
-          "duration": "53:45",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v13",
-          "title": "12- كورس تعلم الشطرنج من الصفر للمبتدئين - القيمة المطلقة والنسبية للقطع",
-          "youtubeId": "X9cO_P7N5EQ",
-          "duration": "53:51",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v14",
-          "title": "13- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم العرقلة (Obstruction)",
-          "youtubeId": "6cQIJY5rDQ8",
-          "duration": "38:04",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v15",
-          "title": "14- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم القطعة المدافعة (DEFENSIVE PIECE)",
-          "youtubeId": "PKrgQjajfr8",
-          "duration": "44:38",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v16",
-          "title": "15- كورس تعلم الشطرنج من الصفر للمبتدئين - مفهوم الربط (PIN)",
-          "youtubeId": "07Sp91crP5I",
-          "duration": "43:16",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v17",
-          "title": "ازاي تدمر فخ نابليون في الشطرنج ؟ | خصمك هيندم انه لعبه بعد كدا",
-          "youtubeId": "2faBdu5Ogo4",
-          "duration": "54:32",
-          "section": "🟢 المبتدئ — من الصفر"
-        },
-        {
-          "id": "v18",
-          "title": "The Ultimate Chess Endgame Course | Jeremy Silman - Level 1 | Ladder Method & Box Method 🏆♟️",
-          "youtubeId": "AxOZ0lawJik",
-          "duration": "47:40",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v19",
-          "title": "2- أقوى كورس نهايات الشطرنج | المستوى الثاني | أهم مفهوم هتحتاجه في النهايات | المقابلة\" Opposition\"",
-          "youtubeId": "chUClIH90QA",
-          "duration": "42:26",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v20",
-          "title": "3 - أقوى كورس نهايات الشطرنج | تدريبات على ماسبق",
-          "youtubeId": "XHqxxftNefE",
-          "duration": "19:11",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v21",
-          "title": "4 - أقوى كورس نهايات الشطرنج | نهاية ملك ضد بيدق",
-          "youtubeId": "z3o8PN32QL4",
-          "duration": "70:06",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v22",
-          "title": "5 - أقوى كورس نهايات الشطرنج | نهاية فيل أو حصان ضد بيدق سالك",
-          "youtubeId": "1MpXorY5g-M",
-          "duration": "22:55",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v23",
-          "title": "6 - أقوى كورس نهايات الشطرنج | مفهوم المنجنيق في النهايات | مستوى (1400-1599)",
-          "youtubeId": "hWNZuINJMUU",
-          "duration": "50:09",
-          "section": "🟡 المتوسط — النهايات"
-        },
-        {
-          "id": "v24",
-          "title": "1- كورس إرفع تقييمك إلى 2400 | رفعات البيادق",
-          "youtubeId": "tp7xZddnB1s",
-          "duration": "76:19",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v25",
-          "title": "2- كورس إرفع تقييمك إلى 2400 | مفيش دفعة بيدقية = مفيش خطة",
-          "youtubeId": "jxvAjGMOfKQ",
-          "duration": "62:35",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v26",
-          "title": "3- كورس إرفع تقييمك إلى 2400 | قواعد التكسير في الشطرنج",
-          "youtubeId": "h_9xmp8byNQ",
-          "duration": "69:44",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v27",
-          "title": "4- كورس إرفع تقييمك إلى 2400 | التحكم في المربعات الضعيفة",
-          "youtubeId": "4Az1VYimGJE",
-          "duration": "54:59",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v28",
-          "title": "5- Course: Raise your rating to 2400 | Attacking weaknesses",
-          "youtubeId": "7PoWUDOmgiw",
-          "duration": "50:55",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v29",
-          "title": "6- كورس إرفع تقييمك إلى 2400 | عدم الإتزان المادي",
-          "youtubeId": "IQSsPzV5Eng",
-          "duration": "47:36",
-          "section": "🟡 المتوسط — ارفع تقييمك"
-        },
-        {
-          "id": "v30",
-          "title": "1- كتاب نقار الخشب في الشطرنج - الدرس الأول",
-          "youtubeId": "rR21NpHnUYo",
-          "duration": "55:14",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v31",
-          "title": "2- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الثانية",
-          "youtubeId": "M2OTyBlI1o4",
-          "duration": "53:20",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v32",
-          "title": "3- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الثالثة",
-          "youtubeId": "82pjNtUu5d4",
-          "duration": "49:05",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v33",
-          "title": "4- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الرابعة",
-          "youtubeId": "jg_dDYOhHkU",
-          "duration": "40:02",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v34",
-          "title": "5- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة الخامسة",
-          "youtubeId": "58mgOGDXFh4",
-          "duration": "43:27",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v35",
-          "title": "6- أقوى كورس تاكتيك في الشطرنج | طريقة نقار الخشب | المحاضرة السادسة",
-          "youtubeId": "xmeeuny5y6U",
-          "duration": "51:02",
-          "section": "🔴 المتقدم — تكتيك نقار الخشب"
-        },
-        {
-          "id": "v36",
-          "title": "1- Explanation of the world's most powerful chess book | How to Reassess Your Chess | The concept...",
-          "youtubeId": "aQshMTm4DYQ",
-          "duration": "54:58",
-          "section": "🔴 المتقدم — إعادة تقييم لعبك"
-        },
-        {
-          "id": "v37",
-          "title": "2- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | مفهوم عدم التوازن في الشطرنج",
-          "youtubeId": "tM8vt0z-OnY",
-          "duration": "56:29",
-          "section": "🔴 المتقدم — إعادة تقييم لعبك"
-        },
-        {
-          "id": "v38",
-          "title": "3- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | ازاي تبني خطة صحيحة في أي وقت",
-          "youtubeId": "eCeayt46i7E",
-          "duration": "45:37",
-          "section": "🔴 المتقدم — إعادة تقييم لعبك"
-        },
-        {
-          "id": "v39",
-          "title": "4- شرح أقوى كتاب شطرنج في العالم | How to Reassess Your Chess | طريقة التفكير في الشطرنج",
-          "youtubeId": "hwB-HuNxT5g",
-          "duration": "77:24",
-          "section": "🔴 المتقدم — إعادة تقييم لعبك"
-        }
-      ],
-      "source": "Takkat Chess — د. إسلام حمادة"
-    },
-    {
-      "id": "cybersecurity",
-      "track": "cybersecurity",
-      "trackPrefix": "S",
-      "title": "الأمن السيبراني (قريباً)",
-      "about": "تراك الأمن السيبراني قيد التجهيز حالياً: منهج عملي باللهجة المصرية من الصفر للاحتراف — أساسيات الشبكات وأنظمة لينكس وأمن المعلومات والحماية والاختبار الأخلاقي. المحتوى اتجهز وهيترفع هنا قريب جداً — خلص تراك من التراكات المتاحة وارجع لنا.",
-      "thumbnail": "",
-      "totalTime": "قريباً",
-      "videos": [],
-      "source": "M2R-Academy",
-      "comingSoon": true
-    }
-  ]
-}
-  </script>
-
-  <script src="app.js"></script>
 </body>
 </html>

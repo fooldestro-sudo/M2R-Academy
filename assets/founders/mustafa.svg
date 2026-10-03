@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="mustafa">
+<circle cx="60" cy="60" r="58" fill="#1a1a35"/>
+<circle cx="60" cy="60" r="58" fill="none" stroke="#6366f1" stroke-width="3"/>
+<text x="60" y="78" text-anchor="middle" font-family="Inter,system-ui,sans-serif" font-weight="700" font-size="52" fill="#818cf8">M</text>
+</svg>

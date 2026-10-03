@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Contact" />
+  <title>M2R-Academy — Contact</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="contact">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="contact.t">Contact us</h1>
+    <p style="color:var(--text-secondary)" data-i18n="contact.sub">sub</p>
+    <div class="grid grid--2">
+      <div class="admin-card" style="text-align:center">
+        <img src="assets/founders/mustafa.svg" alt="Mustafa" style="width:96px;height:96px;border-radius:999px;margin:0 auto var(--sp-3);border:2px solid var(--accent)" />
+        <h2 style="margin:0" data-i18n="contact.founder">Mustafa — founder</h2>
+        <p style="margin-top:var(--sp-4)">
+          <a class="wa-btn" id="wa-btn" href="https://wa.me/201094578070" target="_blank" rel="noopener">✆ <span data-i18n="contact.wa">WhatsApp</span></a>
+        </p>
+        <p style="color:var(--text-secondary);font-size:.875rem" data-i18n="contact.projects_note">note</p>
+      </div>
+      <div class="admin-card">
+        <h2 data-i18n="contact.channels_t">Channels</h2>
+        <ul>
+          <li>Elzero Web School</li>
+          <li>codeZone</li>
+          <li>Codezilla</li>
+          <li>Takkat Chess</li>
+          <li>Udemy</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      document.getElementById('wa-btn').href =
+        'https://wa.me/201094578070?text=' +
+        encodeURIComponent('Hello M2R-Academy, I need help with: ');
+    });
+  </script>
+</body>
+</html>

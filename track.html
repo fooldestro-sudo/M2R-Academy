@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Track" />
+  <title>M2R-Academy — Track</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="courses">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <p><a class="btn btn-ghost btn-sm" href="courses.html" data-i18n="detail.back">← All tracks</a></p>
+    <div class="detail-hero">
+      <div class="detail-hero__media" id="track-media">🎓</div>
+      <div class="detail-hero__body">
+        <h1 class="detail-hero__title" id="track-title">…</h1>
+        <div class="chip-row" id="track-chips"></div>
+        <p class="detail-hero__about" id="track-about"></p>
+      </div>
+    </div>
+    <h2 class="section-title" data-i18n="detail.choose">Choose your part</h2>
+    <ol class="video-list" id="parts-list"></ol>
+    <p class="form-error" id="track-error" hidden></p>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script>
+    (function () {
+      var track = null;
+      function thumbOf(part) {
+        var v = (part.videos || [])[0];
+        return v ? 'https://img.youtube.com/vi/' + v.youtubeId + '/maxresdefault.jpg' : '';
+      }
+      function render() {
+        if (!track) return;
+        var L = window.M2R.lang();
+        var en = window.M2RAuth.getEnrolled();
+        document.getElementById('track-title').textContent =
+          track.icon + ' ' + (L === 'en' ? (track.titleEn || track.title) : track.title);
+        document.getElementById('track-about').textContent =
+          L === 'en' ? (track.descriptionEn || track.description) : track.description;
+        var n = 0;
+        (track.parts || []).forEach(function (p) { n += (p.videos || []).length; });
+        document.getElementById('track-chips').innerHTML =
+          '<span class="chip">🎬 ' + n + ' ' + window.M2R.esc(window.M2R.t('common.videos')) + '</span>' +
+          '<span class="chip">🧩 ' + track.parts.length + ' ' + window.M2R.esc(window.M2R.t('common.parts')) + '</span>';
+        var first = (track.parts || []).filter(function (p) { return (p.videos || []).length; })[0];
+        var media = document.getElementById('track-media');
+        var img = first ? thumbOf(first) : '';
+        media.innerHTML = img
+          ? '<img src="' + img + '" alt="" loading="lazy" onerror="this.remove()" />' : track.icon;
+        var list = document.getElementById('parts-list');
+        list.innerHTML = '';
+        track.parts.forEach(function (p) {
+          var li = document.createElement('li');
+          var opened = en.indexOf(p.id) !== -1;
+          var card = document.createElement('div');
+          card.className = 'part-card';
+          card.innerHTML = '<div class="part-card__info"><strong>' +
+            window.M2R.esc(L === 'en' ? (p.titleEn || p.title) : p.title) + '</strong>' +
+            '<span class="part-card__meta">🎬 ' + (p.videos || []).length + ' ' +
+            window.M2R.esc(window.M2R.t('common.videos')) + ' · ' +
+            (p.comingSoon ? window.M2R.esc(window.M2R.t('common.coming')) :
+              opened ? window.M2R.esc(window.M2R.t('detail.unlocked')) : window.M2R.esc(window.M2R.t('detail.locked'))) +
+            '</span></div>';
+          var btn = document.createElement('a');
+          btn.className = 'btn btn-sm ' + (opened ? 'btn-ghost' : 'btn-primary');
+          if (p.comingSoon) {
+            btn.setAttribute('aria-disabled', 'true');
+            btn.style.cssText = 'opacity:.4;pointer-events:none';
+            btn.textContent = window.M2R.t('common.coming');
+          } else {
+            btn.href = opened ? ('watch.html?course=' + encodeURIComponent(p.id))
+                              : ('enroll.html?course=' + encodeURIComponent(p.id));
+            btn.textContent = window.M2R.t(opened ? 'detail.continue' : 'detail.enroll');
+          }
+          card.appendChild(btn);
+          li.appendChild(card);
+          list.appendChild(li);
+        });
+      }
+      document.addEventListener('DOMContentLoaded', function () {
+        var id = window.M2R.getParam('track');
+        window.M2R.loadJSON('data/courses.json').then(function (d) {
+          (d.tracks || []).forEach(function (t) { if (t.id === id) track = t; });
+          if (!track) { window.location.href = 'courses.html'; return; }
+          render();
+          window.M2R.onLang(render);
+        }).catch(function () {
+          var e = document.getElementById('track-error');
+          e.textContent = window.M2R.t('common.load_fail');
+          e.hidden = false;
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

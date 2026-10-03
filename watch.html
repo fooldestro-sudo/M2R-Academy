@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Watch" />
+  <title>M2R-Academy — Watch</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="courses">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main" style="max-width:1200px">
+    <p>
+      <a class="btn btn-ghost btn-sm" href="courses.html" data-i18n="watch.back">← Back to course</a>
+      <span id="playlist-position" style="color:var(--text-secondary);font-family:ui-monospace,monospace;font-size:.875rem" aria-live="polite"></span>
+    </p>
+    <div class="player-layout">
+      <div>
+        <div class="player-stage" id="player-wrapper" role="region" aria-label="M2R Academy video player">
+          <div id="yt-player"></div>
+          <button type="button" class="player-shield" id="player-shield" aria-label="Play or pause"></button>
+          <div class="player-watermark" aria-hidden="true"><span>M2R Academy</span><span style="color:var(--success)">🔒 Protected</span></div>
+          <div class="player-fallback" id="player-fallback" hidden style="padding:var(--sp-6);text-align:center;position:relative;z-index:5">
+            <p data-i18n="watch.unavailable">Video unavailable.</p>
+            <p><button type="button" class="btn btn-primary btn-sm" id="btn-fallback-next" data-i18n="watch.next">Next video</button></p>
+          </div>
+        </div>
+        <h1 id="now-playing" tabindex="-1" style="font-size:1.5rem;margin:var(--sp-4) 0 0">…</h1>
+        <p id="now-playing-course" style="color:var(--text-secondary);font-size:.875rem"></p>
+        <div class="controls" aria-label="Playback controls">
+          <button type="button" class="controls__btn" id="btn-prev" aria-label="Previous">⏮</button>
+          <button type="button" class="controls__btn controls__btn--play" id="btn-play" aria-label="Play">▶</button>
+          <button type="button" class="controls__btn" id="btn-next" aria-label="Next">⏭</button>
+          <span class="controls__time" id="time-current">0:00</span>
+          <label class="visually-hidden" for="seek">Seek</label>
+          <input class="controls__seek" type="range" id="seek" min="0" max="100" step="0.1" value="0" aria-label="Seek" />
+          <span class="controls__time" id="time-total">0:00</span>
+          <button type="button" class="controls__btn" id="btn-mute" aria-label="Mute">🔊</button>
+          <label class="visually-hidden" for="volume">Volume</label>
+          <input class="controls__volume" type="range" id="volume" min="0" max="100" value="100" aria-label="Volume" />
+          <label class="visually-hidden" for="speed">Speed</label>
+          <select class="controls__select" id="speed" aria-label="Speed">
+            <option value="0.5">0.5×</option><option value="0.75">0.75×</option>
+            <option value="1" selected>1×</option><option value="1.25">1.25×</option>
+            <option value="1.5">1.5×</option><option value="2">2×</option>
+          </select>
+          <label class="visually-hidden" for="quality">Quality</label>
+          <select class="controls__select" id="quality" aria-label="Quality">
+            <option value="auto">Auto</option><option value="hd720" selected>720p</option>
+            <option value="large">480p</option><option value="medium">360p</option>
+          </select>
+          <button type="button" class="controls__btn" id="btn-fullscreen" aria-label="Fullscreen">⛶</button>
+        </div>
+        <p class="player-error" id="player-error" role="status" aria-live="polite" hidden></p>
+      </div>
+      <aside class="playlist-wrap" aria-label="Playlist">
+        <h2 style="font-size:1.125rem;margin:0 0 var(--sp-3)" data-i18n="watch.playlist_t">Course content</h2>
+        <ol class="playlist" id="playlist"></ol>
+      </aside>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/player.js"></script>
+</body>
+</html>
