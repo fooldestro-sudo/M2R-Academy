@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Leaderboard" />
+  <title>M2R-Academy — Leaderboard</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="leaderboard">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="lb.t">Top learners</h1>
+    <p style="color:var(--text-secondary)" data-i18n="lb.sub">Highest points.</p>
+    <div id="comp-banner"></div>
+    <div id="lb-login-hint" hidden><p data-i18n="lb.login_hint">Log in to appear.</p></div>
+    <div style="overflow-x:auto">
+      <table class="lb-table" id="lb-table" hidden>
+        <thead><tr>
+          <th data-i18n="lb.rank">Rank</th><th></th><th data-i18n="lb.user">Learner</th>
+          <th data-i18n="lb.points">Points</th><th data-i18n="lb.courses">Courses</th>
+        </tr></thead>
+        <tbody id="lb-body"></tbody>
+      </table>
+    </div>
+    <p id="lb-empty" hidden data-i18n="lb.empty">No points yet.</p>
+    <p class="form-error" id="lb-error" hidden></p>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/leaderboard.js"></script>
+</body>
+</html>

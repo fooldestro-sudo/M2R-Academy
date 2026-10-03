@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="M2R-Academy — Admin" />
+  <title>M2R-Academy — Admin</title>
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="icon" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body data-page="admin">
+  <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
+  <div id="site-header"></div>
+  <main class="container" id="main">
+    <h1 data-i18n="admin.t">Admin panel</h1>
+    <p class="form-error" id="admin-denied" role="status" hidden data-i18n="admin.denied">Admins only.</p>
+    <div id="admin-main" class="admin-grid" hidden>
+      <section class="admin-card">
+        <h2 data-i18n="admin.users_t">Users</h2>
+        <div style="overflow-x:auto"><table class="lb-table"><thead><tr>
+          <th data-i18n="lb.user">Learner</th><th data-i18n="admin.pts">Points</th><th></th>
+        </tr></thead><tbody id="admin-users"></tbody></table></div>
+      </section>
+      <section class="admin-card">
+        <h2 data-i18n="admin.ann_t">Announcements</h2>
+        <div class="field"><textarea class="field__textarea" id="admin-ann" data-i18n-ph="admin.ann_ph"></textarea></div>
+        <p><button class="btn btn-primary btn-sm" id="admin-ann-save" data-i18n="admin.save">Save</button></p>
+      </section>
+      <section class="admin-card">
+        <h2 data-i18n="admin.projects_t">Projects</h2>
+        <div class="field"><input class="field__input" id="admin-proj-title" data-i18n-ph="admin.title_ph" /></div>
+        <p><button class="btn btn-primary btn-sm" id="admin-proj-add" data-i18n="admin.add">Add</button></p>
+        <div id="admin-projects"></div>
+      </section>
+      <section class="admin-card">
+        <h2 data-i18n="admin.comp_t">Competitions</h2>
+        <div class="field"><input class="field__input" id="admin-comp-title" data-i18n-ph="admin.title_ph" /></div>
+        <p><button class="btn btn-primary btn-sm" id="admin-comp-add" data-i18n="admin.add">Add</button></p>
+        <div id="admin-comps"></div>
+      </section>
+    </div>
+  </main>
+  <div id="site-footer"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <script src="assets/site.js"></script>
+  <script src="assets/firebase.js"></script>
+  <script src="assets/auth.js"></script>
+  <script src="assets/admin.js"></script>
+</body>
+</html>
