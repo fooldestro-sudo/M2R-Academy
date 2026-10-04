@@ -171,14 +171,30 @@
       }
       function renderProjects() {
         window.M2R.loadJSON('data/projects.json').then(function (d) {
+          var local = d.projects || [];
+          return window.M2RFirebase.ready().then(function (fb) {
+            return fb.db.collection('siteProjects').orderBy('createdAt', 'desc').limit(3).get()
+              .then(function (snap) {
+                var extra = [];
+                snap.forEach(function (doc) {
+                  var p = doc.data() || {};
+                  p.title = p.title || doc.id;
+                  extra.push(p);
+                });
+                return local.concat(extra);
+              });
+          }).catch(function () { return local; });
+        }).then(function (list) {
           var box = document.getElementById('projects-preview');
           var L = lang();
           box.innerHTML = '';
-          (d.projects || []).slice(0, 3).forEach(function (p) {
+          (list || []).slice(0, 3).forEach(function (p) {
             var a = document.createElement('a');
             a.className = 'card';
             a.href = 'projects.html';
-            a.innerHTML = '<div class="card__media">🎨</div><div class="card__body">' +
+            a.innerHTML = '<div class="card__media">' +
+              (p.image ? '<img loading="lazy" src="' + window.M2R.esc(p.image) + '" alt="" onerror="this.remove()" />' : '🎨') +
+              '</div><div class="card__body">' +
               '<h3 class="card__title">' + window.M2R.esc(L === 'en' ? (p.titleEn || p.title) : p.title) + '</h3>' +
               '<p class="card__text">' + window.M2R.esc(L === 'en' ? (p.descriptionEn || p.description) : p.description) + '</p></div>';
             box.appendChild(a);
