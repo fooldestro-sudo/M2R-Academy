@@ -6,7 +6,7 @@
       "student": "أحمد",
       "studentEn": "Ahmed",
       "track": "web",
-      "image": "",
+      "image": "assets/projects/portfolio.jpg",
       "description": "موقع تعريفي من صفحة واحدة بـ HTML وCSS مع قسم مشاريع ونموذج تواصل.",
       "descriptionEn": "One-page personal site in HTML/CSS with a projects section.",
       "link": ""
@@ -17,7 +17,7 @@
       "student": "منة",
       "studentEn": "Menna",
       "track": "programming",
-      "image": "",
+      "image": "assets/projects/calculator.jpg",
       "description": "آلة حاسبة في التيرمينال تدعم العمليات الأساسية وحفظ النتائج.",
       "descriptionEn": "Terminal calculator with history.",
       "link": ""
@@ -28,7 +28,7 @@
       "student": "يوسف",
       "studentEn": "Youssef",
       "track": "chess",
-      "image": "",
+      "image": "assets/projects/chess.jpg",
       "description": "تحليل مفصّل لنهاية ملك وبيدق ضد ملك بأسلوب المدرسة السوفيتية.",
       "descriptionEn": "Annotated king+pawn vs king endgame study.",
       "link": ""
@@ -39,7 +39,7 @@
       "student": "سلمى",
       "studentEn": "Salma",
       "track": "programming",
-      "image": "",
+      "image": "assets/projects/expense.jpg",
       "description": "برنامج C++ لتسجيل المصاريف اليومية وحساب الإجمالي بالفئات.",
       "descriptionEn": "C++ daily expense tracker with category totals.",
       "link": ""
