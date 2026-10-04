@@ -85,6 +85,11 @@
       document.addEventListener('DOMContentLoaded', function () {
         render();
         window.M2R.onLang(render);
+        // Cloud-first badges (✓ opened) for new-device logins.
+        window.M2RAuth.current().then(function () {
+          return window.M2RAuth.pullCloud().catch(function () {});
+        }).then(function () { render(); });
+        window.M2RAuth.onAuth(function () { render(); });
       });
     })();
   </script>

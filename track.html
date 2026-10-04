@@ -105,6 +105,11 @@
           if (!track) { window.location.href = 'courses.html'; return; }
           render();
           window.M2R.onLang(render);
+          // Cloud-first badges: correct stale 🔒/✓ after sync + on later auth.
+          window.M2RAuth.current().then(function () {
+            return window.M2RAuth.pullCloud().catch(function () {});
+          }).then(function () { render(); });
+          window.M2RAuth.onAuth(function () { render(); });
         }).catch(function () {
           var e = document.getElementById('track-error');
           e.textContent = window.M2R.t('common.load_fail');
