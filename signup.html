@@ -72,7 +72,7 @@
         err.hidden = true;
         window.M2RAuth.signup(name, email, p1).then(function () {
           window.M2R.toast(window.M2R.t('auth.created'), 'success');
-          setTimeout(function () { window.location.href = 'index.html'; }, 600);
+          setTimeout(function () { window.location.href = 'profile.html'; }, 600);
         }).catch(function (e) { fail(window.M2RAuth.errKey(e)); });
       });
     });

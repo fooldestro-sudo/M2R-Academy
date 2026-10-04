@@ -4,12 +4,16 @@
 (function () {
   'use strict';
 
-  // TODO: paste from Firebase Console (Project settings > Your apps > Web).
+  // Live config from Firebase Console (Project settings > Your apps > Web).
+  // Project: m2r-academy. Spark plan (free, no card).
   var FIREBASE_CONFIG = {
-    apiKey: '',
-    authDomain: '',
-    projectId: '',
-    appId: ''
+    apiKey: 'AIzaSyAoV7n3JIXUu2XeWWCESMWXPykneZMA-2I',
+    authDomain: 'm2r-academy.firebaseapp.com',
+    projectId: 'm2r-academy',
+    storageBucket: 'm2r-academy.firebasestorage.app',
+    messagingSenderId: '537816928545',
+    appId: '1:537816928545:web:893c0918738f816d1eae60',
+    measurementId: 'G-FQM4G7R724'
   };
 
   var app = null, auth = null, db = null, storage = null, loading = null;

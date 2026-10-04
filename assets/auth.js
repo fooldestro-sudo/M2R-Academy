@@ -3,8 +3,8 @@
 (function () {
   'use strict';
 
-  // TODO: replace with Mustafa's real admin email(s).
-  var ADMIN_EMAILS = ['mustafa@m2r.academy'];
+  // Admin allow-list — Mustafa (owner).
+  var ADMIN_EMAILS = ['darkstorm885@gmail.com'];
 
   var LS_ENROLLED = 'eduportal.enrolled';
   var LS_PROGRESS = 'eduportal.progress';
@@ -49,6 +49,24 @@
 
   function notify() { listeners.forEach(function (fn) { try { fn(me); } catch (e) {} }); }
 
+  function handleBannedFlag(fb, doc) {
+    if (doc && doc.banned) {
+      fb.auth.signOut().catch(function () {});
+      me = null; meDoc = null; notify(); refreshHeader();
+      try {
+        if (window.M2R && window.M2R.toast) window.M2R.toast(window.M2R.t('auth.err_banned'), 'error');
+      } catch (e) {}
+      if (window.location.pathname.indexOf('login.html') === -1) {
+        window.location.href = 'login.html?banned=1';
+      } else {
+        var be = document.getElementById('login-error');
+        if (be && window.M2R) { be.textContent = window.M2R.t('auth.err_banned'); be.hidden = false; }
+      }
+      return true;
+    }
+    return false;
+  }
+
   function watch() {
     if (watched) return;
     watched = true;
@@ -59,7 +77,10 @@
         fb.db.collection('users').doc(fu.uid).get()
           .then(function (s) { meDoc = s.exists ? s.data() : null; })
           .catch(function () { meDoc = null; })
-          .then(function () { me = shapeUser(fu, meDoc); notify(); refreshHeader(); });
+          .then(function () {
+            if (handleBannedFlag(fb, meDoc)) return;
+            me = shapeUser(fu, meDoc); notify(); refreshHeader();
+          });
       });
     }).catch(function () { /* demo/offline: header stays logged-out */ });
   }
@@ -70,7 +91,15 @@
       var fu = fb.auth.currentUser;
       if (!fu) return null;
       return fb.db.collection('users').doc(fu.uid).get()
-        .then(function (s) { me = shapeUser(fu, s.exists ? s.data() : null); return me; })
+        .then(function (s) {
+          var d = s.exists ? s.data() : null;
+          if (d && d.banned) {
+            return fb.auth.signOut().catch(function () {}).then(function () {
+              me = null; return null;
+            });
+          }
+          me = shapeUser(fu, d); return me;
+        })
         .catch(function () { me = shapeUser(fu, null); return me; });
     }).catch(function () { return me; });
   }
@@ -114,7 +143,7 @@
     return window.M2RFirebase.ready()
       .then(function (fb) { return fb.auth.signOut().catch(function () {}); })
       .catch(function () {})
-      .then(function () { window.location.href = 'index.html'; });
+      .then(function () { window.location.href = 'login.html'; });
   }
 
   function isAdmin(user) {
@@ -141,7 +170,7 @@
   }
 
   function redirectIfAuthed() {
-    current().then(function (u) { if (u) window.location.href = 'index.html'; });
+    current().then(function (u) { if (u) window.location.href = 'profile.html'; });
   }
 
   /* ---- Per-device enrollments, mirrored to cloud when logged in ---- */
@@ -213,7 +242,12 @@
   document.addEventListener('DOMContentLoaded', watch);
 
   window.M2RAuth = {
-    current: current, onAuth: onAuth, signup: signup, login: login, logout: logout,
+    current: current, currentUser: current,
+    onAuth: onAuth,
+    signup: signup, signUp: signup,
+    login: login, signIn: login,
+    logout: logout, signOut: logout,
+    signOutToLogin: logout,
     isAdmin: isAdmin, requireAuth: requireAuth, requireAdmin: requireAdmin,
     redirectIfAuthed: redirectIfAuthed, refreshHeader: refreshHeader,
     getEnrolled: getEnrolled, setEnrolled: setEnrolled, addEnrollment: addEnrollment,

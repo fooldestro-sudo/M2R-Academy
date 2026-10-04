@@ -19,16 +19,38 @@ accounts, leaderboard, and admin.
 └── README.md M2R-Spec.md target001.md
 ```
 
-## Firebase setup (free, optional but needed for accounts)
+## Firebase Setup (live — `m2r-academy`)
 
-1. **console.firebase.google.com** → Add project (e.g. `m2r-academy`).
+1. **Where `firebase.js` lives:** `assets/firebase.js` holds `FIREBASE_CONFIG`
+   (already filled for `m2r-academy`) + lazy Compat loader (`10.12.0`).
+   Pages load `site.js → firebase.js → auth.js`; SDKs load on demand only
+   when `apiKey+projectId` are set and online. No `import`, no bundler.
+2. **How to replace `ADMIN_EMAILS`:** open `assets/auth.js:7` —
+   `var ADMIN_EMAILS = ['mustafa@m2r.academy']` → replace with Mustafa's real
+   email (lowercase). ⚠️ ACTION REQUIRED before launch. For true enforcement,
+   also set `role: "admin"` on his `users/{uid}` doc (see `firebase-rules.md`).
+3. **Where to paste Security Rules:** full copy-paste file is `firebase-rules.md`
+   in repo root. Firestore → Rules → paste Block 1 → Publish. Storage → Rules
+   → paste Block 2 → Publish.
+4. **How to add the GitHub Pages domain:** Firebase Console → Authentication →
+   Settings → Authorized domains → Add ` <your-username>.github.io`
+   (plus `localhost` for local testing).
+5. **How to test signup/login locally:**
+   `python3 -m http.server 8000` → `http://localhost:8000/signup.html` →
+   create account → check Firestore `users/{uid}` → `login.html` →
+   `profile.html` (avatar 2MB max) → `leaderboard.html` → `admin.html`
+   (admin email only). Offline/unconfigured still works for enroll/watch via
+   `eduportal.enrolled` localStorage.
+
+## Firebase setup (free, optional but needed for accounts) — legacy checklist
+
+1. **console.firebase.google.com** → project `m2r-academy` (already created).
 2. **Authentication** → Get started → enable **Email/Password**.
-3. **Firestore Database** → Create database → Start in test mode.
-4. **Storage** → Get started (default rules fine to start).
-5. ⚙️ **Project settings** → Your apps → `</>` → copy the config.
-6. Paste the 4 values into `FIREBASE_CONFIG` in `assets/firebase.js`
-   (marked `TODO`), and put the admin email in `ADMIN_EMAILS` in
-   `assets/auth.js`. Push — live in ~1 minute.
+3. **Firestore Database** → Create database → Start in test mode (then paste
+   production rules from `firebase-rules.md`).
+4. **Storage** → Get started (then paste Storage rules).
+5. Config already in `FIREBASE_CONFIG` in `assets/firebase.js`; admin email in
+   `ADMIN_EMAILS` in `assets/auth.js`. Push — live in ~1 minute.
 
 Without config, the site runs fully except account features
 (signup/login/board/admin show friendly messages).

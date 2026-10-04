@@ -47,15 +47,27 @@ M2R-Academy/
 ├── watch.html              # Protected player (query: ?course=<id>)
 ├── projects.html           # Student showcase
 ├── contact.html            # Founder contact + WhatsApp
+├── login.html              # Login (Firebase Auth)
+├── signup.html             # Signup (Firebase Auth)
+├── profile.html            # Profile + avatar + rank (requires auth)
+├── leaderboard.html        # Live ranks (Firestore)
+├── admin.html              # Admin panel (isAdmin gate)
 ├── 404.html                # Custom not-found
 ├── assets/
 │   ├── styles.css          # All styles (shared)
-│   ├── site.js             # Header/nav/footer injection + i18n
+│   ├── site.js             # Header/nav/footer injection + i18n + auth slot
+│   ├── firebase.js         # Firebase Compat init (m2r-academy config)
+│   ├── auth.js             # M2RAuth: signup/login/logout, enroll sync, banned check
+│   ├── profile.js          # Profile logic (only in profile.html)
+│   ├── leaderboard.js      # Leaderboard logic (only in leaderboard.html)
+│   ├── admin.js            # Admin logic (only in admin.html)
 │   ├── player.js           # Video player logic (only in watch.html)
 │   └── logo.svg            # M2R logo (inline SVG preferred over PNG)
 ├── data/
 │   ├── courses.json        # Full course catalogue (4 tracks)
-│   └── projects.json       # Student projects
+│   ├── projects.json       # Student projects
+│   └── settings.json       # Offline fallback settings
+├── firebase-rules.md       # Firestore + Storage rules to paste in console
 ├── README.md               # Project readme
 └── M2R-Spec.md             # This file
 ```
@@ -356,8 +368,9 @@ Before marking the project as done, verify:
 - ❌ No React, Vue, Angular, Svelte
 - ❌ No Tailwind, Bootstrap, or any CSS framework
 - ❌ No TypeScript compilation
-- ❌ No backend, no Firebase, no database
-- ❌ No login, sign-up, or user accounts
+- ❌ No backend, no database
+- ✅ Firebase (Auth + Firestore + Storage) is allowed on Spark plan for accounts, leaderboard, competitions, and profile pictures. No custom backend server.
+- ❌ No custom login server — use Firebase Auth only
 - ❌ No SPA (must be multi-page)
 - ❌ No external build tools (Webpack, Vite, Rollup)
 

@@ -34,7 +34,14 @@
             b.className = 'btn btn-ghost btn-sm';
             b.textContent = pair[0];
             b.addEventListener('click', function () {
-              users.doc(d.id).update({ points: FV().increment(pair[1]) }).catch(function () {});
+              users.doc(d.id).update({ points: FV().increment(pair[1]) }).then(function () {
+                fb.db.collection('points_log').add({
+                  userId: d.id,
+                  delta: pair[1],
+                  by: (window.M2RAuth.me() && window.M2RAuth.me().email) || 'admin',
+                  createdAt: FV().serverTimestamp()
+                }).catch(function () {});
+              }).catch(function () {});
             });
             cell.appendChild(b);
           });
