@@ -90,6 +90,7 @@
           });
           render();
           window.M2R.onLang(render);
+          window.M2R.reveal();
         }).catch(function () {
           var e = document.getElementById('projects-error');
           e.textContent = window.M2R.t('common.load_fail');
