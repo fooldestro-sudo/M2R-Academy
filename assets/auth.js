@@ -250,8 +250,45 @@
       return fb.db.collection('users').doc(me.uid).get().then(function (s) {
         if (!s.exists) return;
         var d = s.data() || {};
-        if (Array.isArray(d.enrolledCourses)) writeLS(LS_ENROLLED, d.enrolledCourses);
-        if (d.progress && typeof d.progress === 'object') writeLS(LS_PROGRESS, d.progress);
+        // Union-merge enrollments: last-write-wins would drop an unlock made
+        // on another device. Local + cloud union keeps every unlock.
+        var localEn = getEnrolled();
+        if (Array.isArray(d.enrolledCourses)) {
+          var merged = localEn.slice();
+          d.enrolledCourses.forEach(function (c) {
+            if (merged.indexOf(c) === -1) merged.push(c);
+          });
+          writeLS(LS_ENROLLED, merged);
+          if (merged.length !== d.enrolledCourses.length) {
+            fb.db.collection('users').doc(me.uid)
+              .set({ enrolledCourses: merged }, { merge: true }).catch(function () {});
+          }
+        }
+        // Merge progress per part: keep the furthest videoIndex (tie: seconds).
+        var localPr = getProgress();
+        if (d.progress && typeof d.progress === 'object') {
+          var out = {}, changed = false, keys = {};
+          Object.keys(localPr).forEach(function (k) { keys[k] = 1; });
+          Object.keys(d.progress).forEach(function (k) { keys[k] = 1; });
+          Object.keys(keys).forEach(function (k) {
+            var a = localPr[k], b = d.progress[k];
+            var pick = a;
+            if (!a) pick = b;
+            else if (b) {
+              var ai = (typeof a.videoIndex === 'number') ? a.videoIndex : -1;
+              var bi = (typeof b.videoIndex === 'number') ? b.videoIndex : -1;
+              if (bi > ai) pick = b;
+              else if (bi === ai && (Number(b.seconds) || 0) > (Number(a.seconds) || 0)) pick = b;
+            }
+            out[k] = pick;
+            if (JSON.stringify(pick) !== JSON.stringify(a)) changed = true;
+          });
+          writeLS(LS_PROGRESS, out);
+          if (changed) {
+            fb.db.collection('users').doc(me.uid)
+              .set({ progress: out }, { merge: true }).catch(function () {});
+          }
+        }
         meDoc = d;
         me.displayName = d.displayName || me.displayName;
         me.photoURL = d.photoURL || me.photoURL;
