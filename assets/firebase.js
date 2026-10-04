@@ -44,7 +44,8 @@
     loading = Promise.resolve()
       .then(function () {
         if (!configured()) throw new Error('firebase not configured');
-        if (!window.navigator.onLine) throw new Error('offline');
+        // NOTE: no navigator.onLine gate — browsers lie about offline status.
+        // Just attempt the CDN load; failures reject and callers fail soft.
         if (!window.firebase || !window.firebase.initializeApp) {
           var base = 'https://www.gstatic.com/firebasejs/10.12.0/';
           return loadScript(base + 'firebase-app-compat.js')

@@ -14,14 +14,26 @@
     return Math.min(100, Math.round(((e.videoIndex || 0) / total) * 100));
   }
 
+  var booted = false;
+
+  function show(el, on) { var n = document.getElementById(el); if (n) n.hidden = !on; }
+
+  function resolve(u) {
+    show('profile-loading', false);
+    if (!u) { show('profile-need-login', true); return; }
+    show('profile-need-login', false);
+    show('profile-main', true);
+    if (!booted) { booted = true; boot(u); }
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
-    window.M2RAuth.current().then(function (u) {
-      if (!u) {
-        document.getElementById('profile-need-login').hidden = false;
-        return;
-      }
-      document.getElementById('profile-main').hidden = false;
-      boot(u);
+    window.M2RAuth.current().then(resolve);
+    // Late-arriving session (slow SDK / second tab login) → render without reload.
+    window.M2RAuth.onAuth(function (u) { if (u) resolve(u); });
+    var retry = document.getElementById('profile-retry');
+    if (retry) retry.addEventListener('click', function () {
+      show('profile-loading', true); show('profile-need-login', false);
+      window.M2RAuth.current().then(resolve);
     });
   });
 

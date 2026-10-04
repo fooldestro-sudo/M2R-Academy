@@ -9,6 +9,12 @@
       if (!u) document.getElementById('lb-login-hint').hidden = false;
       boot(u ? u.uid : null);
     });
+    // Late session → re-render with highlight, hide hint.
+    window.M2RAuth.onAuth(function (u) {
+      var hint = document.getElementById('lb-login-hint');
+      if (hint) hint.hidden = !!u;
+      boot(u ? u.uid : null);
+    });
     window.M2R.onLang(function () { boot(window.M2RAuth.me() ? window.M2RAuth.me().uid : null); });
   });
 

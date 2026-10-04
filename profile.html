@@ -25,9 +25,13 @@
   <a class="skip-link" href="#main" data-i18n="skip">Skip to content</a>
   <div id="site-header"></div>
   <main class="container" id="main">
+    <div id="profile-loading">
+      <p data-i18n="common.loading">بيحمّل…</p>
+    </div>
     <div id="profile-need-login" hidden>
       <p data-i18n="profile.need_login">Log in to see your profile.</p>
-      <p><a class="btn btn-primary" href="login.html" data-i18n="auth.signin">Log in</a></p>
+      <p><a class="btn btn-primary" href="login.html" data-i18n="auth.signin">Log in</a>
+      <button type="button" class="btn btn-ghost" id="profile-retry" data-i18n="common.retry">حاول تاني</button></p>
     </div>
     <div id="profile-main" hidden>
       <h1 data-i18n="profile.t">My profile</h1>

@@ -24,7 +24,11 @@
 
   function errKey(err) {
     var c = (err && err.code) || '';
-    if (!window.navigator.onLine) return 'auth.err_net';
+    var msg = (err && err.message) || '';
+    if (c === 'auth/operation-not-allowed') return 'auth.err_noconfig';
+    if (c === 'auth/user-disabled') return 'auth.err_banned';
+    if (c === 'auth/unauthorized-domain' || msg.indexOf('unauthorized-domain') !== -1) return 'auth.err_domain';
+    if (!window.navigator.onLine && !c) return 'auth.err_net';
     switch (c) {
       case 'auth/email-already-in-use': return 'auth.err_used';
       case 'auth/invalid-email': return 'auth.err_bad';
@@ -79,19 +83,45 @@
   function watch() {
     if (watched) return;
     watched = true;
-    window.M2RFirebase.ready().then(function (fb) {
-      fb.auth.onAuthStateChanged(function (fu) {
-        if (!fu) { me = null; meDoc = null; notify(); refreshHeader(); settleAuth(); return; }
-        fu.getIdToken().catch(function () {});
-        fb.db.collection('users').doc(fu.uid).get()
-          .then(function (s) { meDoc = s.exists ? s.data() : null; })
-          .catch(function () { meDoc = null; })
-          .then(function () {
-            if (handleBannedFlag(fb, meDoc)) { settleAuth(); return; }
-            me = shapeUser(fu, meDoc); notify(); refreshHeader(); settleAuth();
-          });
+    var tries = 0;
+    (function attempt() {
+      tries++;
+      window.M2RFirebase.ready().then(function (fb) {
+        var settledOnce = false;
+        // Safety: if onAuthStateChanged never fires (blocked SDK), unblock after 10s.
+        var guard = setTimeout(function () {
+          if (!settledOnce) { settleAuth(); }
+        }, 10000);
+        fb.auth.onAuthStateChanged(function (fu) {
+          settledOnce = true;
+          clearTimeout(guard);
+          if (!fu) { me = null; meDoc = null; notify(); refreshHeader(); settleAuth(); return; }
+          fu.getIdToken().catch(function () {});
+          fb.db.collection('users').doc(fu.uid).get()
+            .then(function (s) { meDoc = s.exists ? s.data() : null; })
+            .catch(function () { meDoc = null; })
+            .then(function () {
+              if (handleBannedFlag(fb, meDoc)) { settleAuth(); return; }
+              // Self-heal: Auth exists but users/{uid} doc missing (signed up
+              // before Firestore DB existed) → create minimal doc so profile works.
+              if (!meDoc) {
+                fb.db.collection('users').doc(fu.uid).set({
+                  uid: fu.uid, email: (fu.email || '').toLowerCase(),
+                  displayName: fu.displayName || ((fu.email || '').split('@')[0]),
+                  photoURL: fu.photoURL || '', bio: '', country: '',
+                  role: 'student', points: 0,
+                  enrolledCourses: readLS(LS_ENROLLED, []), banned: false
+                }, { merge: true }).catch(function () {});
+              }
+              me = shapeUser(fu, meDoc); notify(); refreshHeader(); settleAuth();
+            });
+        });
+      }).catch(function () {
+        // Transient CDN failure → retry twice before giving up to offline mode.
+        if (tries < 3) { setTimeout(attempt, 1500); return; }
+        settleAuth();
       });
-    }).catch(function () { /* demo/offline: header stays logged-out */ settleAuth(); });
+    })();
   }
 
   /** Resolve with current user or null (never rejects). Waits for restore. */
