@@ -362,7 +362,7 @@
       h.innerHTML =
         '<div class="site-header__inner">' +
         '<a class="site-header__brand" href="index.html">' +
-        '<img class="site-header__logo" src="assets/logo.svg" alt="M2R" />' +
+        '<img class="site-header__logo" src="assets/logo.svg?v=2" alt="M2R" />' +
         '<span>' + esc(t('brand')) + '</span></a>' +
         '<button class="hamburger" id="nav-toggle" aria-label="' + esc(t('nav.menu')) + '">☰</button>' +
         '<nav class="site-nav" id="site-nav" aria-label="main">' +
