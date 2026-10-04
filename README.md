@@ -2,10 +2,10 @@
 
 Arabic-first multi-page academy (Programming, Web, Chess + Cybersecurity soon).
 Vanilla HTML + CSS + JS. No backend code, no build step, no npm — push to
-`main` and GitHub Pages redeploys. Optional Firebase (free Spark) powers
-accounts, leaderboard, and admin.
+`main` and GitHub Pages redeploys. Courses are paid (details/pricing on
+WhatsApp). Firebase free Spark powers accounts, leaderboard, and admin infra.
 
-> Live: `https://<username>.github.io/M2R-Academy/`
+> Live: `https://fooldestro-sudo.github.io/M2R-Academy/`
 
 ## Folder structure
 
@@ -16,6 +16,7 @@ accounts, leaderboard, and admin.
 ├── assets/ styles.css site.js firebase.js auth.js profile.js
 │          leaderboard.js admin.js player.js logo.svg founders/
 ├── data/ courses.json projects.json settings.json
+├── firebase-rules.md sitemap.xml robots.txt
 └── README.md M2R-Spec.md target001.md
 ```
 
@@ -23,8 +24,8 @@ accounts, leaderboard, and admin.
 
 1. **Where `firebase.js` lives:** `assets/firebase.js` holds `FIREBASE_CONFIG`
    (already filled for `m2r-academy`) + lazy Compat loader (`10.12.0`).
-   Pages load `site.js → firebase.js → auth.js`; SDKs load on demand only
-   when `apiKey+projectId` are set and online. No `import`, no bundler.
+   Pages load `site.js → firebase.js → auth.js`; SDKs load on demand when
+   `apiKey+projectId` are set. No `import`, no bundler, no online-gate.
 2. **Admin owner (done):** `assets/auth.js:7` —
    `var ADMIN_EMAILS = ['darkstorm885@gmail.com']`. Server enforcement is
    `isOwner()` in `firebase-rules.md` (no manual `role` edit needed).
@@ -47,12 +48,13 @@ accounts, leaderboard, and admin.
 2. **Authentication** → Get started → enable **Email/Password**.
 3. **Firestore Database** → Create database → Start in test mode (then paste
    production rules from `firebase-rules.md`).
-4. **Storage** → Get started (then paste Storage rules).
+4. **Storage** → Optional (new buckets may require Blaze). Avatars degrade
+   gracefully without it (profile name/bio/points still save).
 5. Config already in `FIREBASE_CONFIG` in `assets/firebase.js`; admin email in
    `ADMIN_EMAILS` in `assets/auth.js`. Push — live in ~1 minute.
 
-Without config, the site runs fully except account features
-(signup/login/board/admin show friendly messages).
+Offline, the site runs fully except account features
+(signup/login/board/admin show friendly messages; enroll/watch use localStorage).
 
 ## Deploy to GitHub Pages
 
