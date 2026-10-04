@@ -57,7 +57,7 @@
         var media = document.getElementById('track-media');
         var img = first ? thumbOf(first) : '';
         media.innerHTML = img
-          ? '<img src="' + img + '" alt="" loading="lazy" onerror="this.remove()" />' : track.icon;
+          ? '<img src="' + window.M2R.esc(img) + '" alt="" loading="lazy" onerror="this.remove()" />' : window.M2R.esc(track.icon);
         var list = document.getElementById('parts-list');
         list.innerHTML = '';
         track.parts.forEach(function (p) {

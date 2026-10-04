@@ -103,7 +103,7 @@
             var img = thumbFor(t);
             a.innerHTML =
               '<div class="card__media">' +
-              (img ? '<img loading="lazy" alt="" src="' + img + '" onerror="this.remove()" />' : '<span>' + t.icon + '</span>') +
+              (img ? '<img loading="lazy" alt="" src="' + window.M2R.esc(img) + '" onerror="this.remove()" />' : '<span>' + window.M2R.esc(t.icon) + '</span>') +
               '</div><div class="card__body">' +
               '<h3 class="card__title">' + window.M2R.esc(t.icon + ' ' + (L === 'en' ? (t.titleEn || t.title) : t.title)) + '</h3>' +
               '<p class="card__text">' + window.M2R.esc(L === 'en' ? (t.descriptionEn || t.description) : t.description) + '</p>' +

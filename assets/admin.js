@@ -25,7 +25,9 @@
         snap.forEach(function (d) {
           var u = d.data() || {};
           var tr = document.createElement('tr');
-          tr.innerHTML = '<td>' + esc(u.displayName || u.email) +
+          tr.innerHTML = '<td><strong>' + esc(u.displayName || '?') + '</strong><br>' +
+            '<span style="color:var(--text-secondary);font-size:.8rem">' + esc(u.email || '') +
+            (u.role ? ' · ' + esc(u.role) : '') + '</span>' +
             (u.banned ? ' <span class="chip chip--warning">' + esc(T('admin.banned')) + '</span>' : '') + '</td>' +
             '<td><strong>' + (u.points || 0) + '</strong></td><td></td>';
           var cell = tr.lastChild;
