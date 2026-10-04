@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin.html
+Disallow: /profile.html
+
+Sitemap: https://fooldestro-sudo.github.io/M2R-Academy/sitemap.xml

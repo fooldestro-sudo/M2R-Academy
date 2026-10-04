@@ -6,14 +6,14 @@
 
   // Live config from Firebase Console (Project settings > Your apps > Web).
   // Project: m2r-academy. Spark plan (free, no card).
+  // Note: measurementId omitted — Analytics SDK not loaded (keeps bundle lean, no tracking).
   var FIREBASE_CONFIG = {
     apiKey: 'AIzaSyAoV7n3JIXUu2XeWWCESMWXPykneZMA-2I',
     authDomain: 'm2r-academy.firebaseapp.com',
     projectId: 'm2r-academy',
     storageBucket: 'm2r-academy.firebasestorage.app',
     messagingSenderId: '537816928545',
-    appId: '1:537816928545:web:893c0918738f816d1eae60',
-    measurementId: 'G-FQM4G7R724'
+    appId: '1:537816928545:web:893c0918738f816d1eae60'
   };
 
   var app = null, auth = null, db = null, storage = null, loading = null;
