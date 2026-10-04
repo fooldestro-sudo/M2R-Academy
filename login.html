@@ -40,7 +40,7 @@
         <p class="form-error" id="login-error" role="status" aria-live="polite" hidden></p>
         <button type="submit" class="btn btn-primary btn-block" data-i18n="auth.signin">Log in</button>
       </form>
-      <p class="auth-switch"><span data-i18n="auth.no_account">New here?</span> <a class="btn-link" href="signup.html" data-i18n="auth.create_link">Sign up</a></p>
+      <p class="auth-switch"><span data-i18n="auth.no_account">New here?</span> <a class="btn-link" id="to-signup" href="signup.html" data-i18n="auth.create_link">Sign up</a></p>
     </div>
   </main>
   <div id="site-footer"></div>
@@ -51,6 +51,12 @@
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       window.M2RAuth.redirectIfAuthed();
+      // Keep enroll return-trip when the user switches to signup.
+      var nx = window.M2R.getParam('next');
+      if (nx) {
+        var su = document.getElementById('to-signup');
+        if (su) su.href = 'signup.html?next=' + encodeURIComponent(nx);
+      }
       if (window.M2R.getParam('banned') === '1') {
         var be = document.getElementById('login-error');
         be.textContent = window.M2R.t('auth.err_banned'); be.hidden = false;
@@ -67,7 +73,13 @@
         window.M2RAuth.login(email, pass).then(function () {
           return window.M2RAuth.pullCloud();
         }).then(function () {
-          window.location.href = 'profile.html';
+          var next = window.M2R.getParam('next');
+          // Only same-site page returns (no protocol/host) to avoid open redirects.
+          if (next && !/^(https?:)?\/\//i.test(next) && next.indexOf('.html') !== -1) {
+            window.location.href = next;
+          } else {
+            window.location.href = 'profile.html';
+          }
         }).catch(function (e) {
           err.textContent = window.M2R.t(window.M2RAuth.errKey(e)); err.hidden = false;
         });

@@ -165,11 +165,14 @@ Sections (in order):
 - Each part: title, video count, "Get Code" button → `enroll.html?course=<courseId>`
 - Coming-soon parts render disabled, never link to enroll
 
-### `enroll.html` — OTP Unlock
-- Query param: `?course=<courseId>`
+### `enroll.html` — OTP Unlock (login required)
+- Query param: `?course=<courseId>`; anonymous visitors redirect to
+- `login.html?next=enroll.html?course=<courseId>` and return after auth.
 - Display: "Contact your Appline and enter the OTP code it gives you."
-- Input field: 8-char code
-- Verify logic (see §8 — reverse of the shown code, no stored list)
+- Shown code: 16 chars — track prefix (P/W/C/S) + 15 base64url chars
+- (A–Z a–z 0–9 `-_`, WhatsApp-safe, no `+/=`). Input `maxlength=24`
+- allows separators; normalize keeps `[0-9a-zA-Z-_]`; require 16.
+- Verify logic (reverse of the shown code, no stored list):
 - On success → save to localStorage `eduportal.enrolled`, redirect to `watch.html?course=<id>`
 - On failure → show error message
 - Per-device unlock (no server)
@@ -269,14 +272,15 @@ blocks are shipped (fetch-only by design).
 ## 8. OTP Unlock Logic (`enroll.html`)
 
 ```javascript
-// The page shows a random code, e.g. "C7B2E9A1".
-// First char = track prefix (P/W/C) + 7 random hex chars (0-9, A-F).
-// The user types its REVERSE. There is NO stored list of valid codes.
+// The page shows a random code, e.g. "Wk9-xQ2mZ4Lp_7RtY".
+// First char = track prefix (P/W/C/S) + 15 base64url chars (typable, no +/=).
+// Login is required before any code is shown. The user types its REVERSE.
+// There is NO stored list of valid codes.
 // Honest note: this client check is demo friction only — paid enforcement is
 // the human WhatsApp review, not cryptography. Server-verify if abuse matters.
 function verifyOTP(input, displayedCode) {
-  const norm = input.replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
-  if (norm.length < 8) return 'Please enter the 8-character code.';
+  const norm = input.replace(/[^0-9a-zA-Z\-_]/g, '').toUpperCase();
+  if (norm.length < 16) return 'Please enter the 16-character code.';
   return norm === displayedCode.split('').reverse().join('').toUpperCase();
 }
 ```

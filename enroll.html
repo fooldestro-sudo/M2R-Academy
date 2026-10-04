@@ -42,7 +42,7 @@
       <p><strong data-i18n="enroll.step2">Enter the unlock code:</strong></p>
       <div class="field">
         <label class="field__label" for="otp-input" data-i18n="enroll.otp">Unlock code</label>
-        <input class="field__input field__input--mono" type="text" id="otp-input" autocomplete="one-time-code" maxlength="16" />
+        <input class="field__input field__input--mono" type="text" id="otp-input" autocomplete="one-time-code" maxlength="24" />
       </div>
       <p class="form-error" id="otp-error" role="status" aria-live="polite" hidden></p>
       <p><button type="button" class="btn btn-primary btn-block" id="btn-verify" data-i18n="enroll.verify">Verify</button></p>
@@ -58,11 +58,12 @@
     (function () {
       var part = null, track = null, code = null, busy = false;
 
-      /** Per-part 8-char code: track prefix + 7 random hex. */
+      /** Per-part 16-char code: track prefix + 15 base64url chars (typable).
+       *  WhatsApp-safe (no +/=), verified by reverse like before. */
       function generateCode(prefix) {
-        var hex = '0123456789ABCDEF';
+        var b64 = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
         var c = String(prefix || 'X').toUpperCase().charAt(0);
-        for (var i = 1; i < 8; i++) c += hex.charAt(Math.floor(Math.random() * 16));
+        for (var i = 1; i < 16; i++) c += b64.charAt(Math.floor(Math.random() * b64.length));
         return c;
       }
       function expectedOtp(c) { return String(c).split('').reverse().join(''); }
@@ -124,8 +125,8 @@
         busy = true;
         var err = document.getElementById('otp-error');
         var input = document.getElementById('otp-input');
-        var norm = String(input.value || '').replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
-        if (norm.length < 8) {
+        var norm = String(input.value || '').replace(/[^0-9a-zA-Z\-_]/g, '').toUpperCase();
+        if (norm.length < 16) {
           err.textContent = window.M2R.t('enroll.err_short'); err.hidden = false; busy = false; return;
         }
         if (norm !== expectedOtp(code).toUpperCase()) {
@@ -156,11 +157,16 @@
             });
           });
           if (!part) { window.location.href = 'courses.html'; return; }
-          // Sync cloud enrollments first so a logged-in user on a new device
-          // isn't bounced to enroll for a part they already unlocked.
-          window.M2RAuth.current().then(function () {
+          // Login required: codes are issued per account.
+          window.M2RAuth.current().then(function (u) {
+            if (!u) {
+              window.location.href = 'login.html?next=' +
+                encodeURIComponent('enroll.html?course=' + encodeURIComponent(part.id));
+              return null;
+            }
             return window.M2RAuth.pullCloud().catch(function () {});
-          }).then(function () {
+          }).then(function (gate) {
+            if (gate === null) return; // redirected to login
             if (window.M2RAuth.getEnrolled().indexOf(part.id) !== -1) {
               window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
               return;

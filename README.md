@@ -69,8 +69,9 @@ Firestore `siteProjects`, merged in automatically).
 
 ## Enroll flow
 
-Track page → part → `enroll.html?course=<partId>` shows an 8-char code
-(track prefix + 7 hex). The user sends it on WhatsApp
+Track page → part → `enroll.html?course=<partId>` (login required, returns
+via `?next=`) shows a 16-char code (track prefix + 15 base64url chars).
+The user sends it on WhatsApp
 (`wa.me/201094578070`, message prefilled) and pastes back the reversed code.
 Unlocks persist per device (`eduportal.enrolled`) and sync to Firestore
 `users/{uid}.enrolledCourses` when logged in.

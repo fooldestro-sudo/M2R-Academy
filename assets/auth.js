@@ -211,7 +211,16 @@
   }
 
   function redirectIfAuthed() {
-    current().then(function (u) { if (u) window.location.href = 'profile.html'; });
+    current().then(function (u) {
+      if (!u) return;
+      var next = null;
+      try { next = window.M2R.getParam('next'); } catch (e) {}
+      if (next && !/^(https?:)?\/\//i.test(next) && next.indexOf('.html') !== -1) {
+        window.location.href = next;
+      } else {
+        window.location.href = 'profile.html';
+      }
+    });
   }
 
   /* ---- Per-device enrollments, mirrored to cloud when logged in ---- */
