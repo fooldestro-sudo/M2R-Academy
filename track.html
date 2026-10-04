@@ -70,12 +70,14 @@
           ? '<img src="' + window.M2R.esc(img) + '" alt="" loading="lazy" onerror="this.remove()" />' : window.M2R.esc(track.icon);
         var list = document.getElementById('parts-list');
         list.innerHTML = '';
-        track.parts.forEach(function (p) {
+        track.parts.forEach(function (p, pi) {
           var li = document.createElement('li');
           var opened = en.indexOf(p.id) !== -1;
           var card = document.createElement('div');
           card.className = 'part-card';
-          card.innerHTML = '<div class="part-card__info"><strong>' +
+          var pnum = ('0' + (pi + 1)).slice(-2);
+          card.innerHTML = '<span class="icon-tile">' + pnum + '</span>' +
+            '<div class="part-card__info"><strong>' +
             window.M2R.esc(L === 'en' ? (p.titleEn || p.title) : p.title) + '</strong>' +
             '<span class="part-card__meta">🎬 ' + (p.videos || []).length + ' ' +
             window.M2R.esc(window.M2R.t('common.videos')) + ' · ' +

@@ -58,16 +58,18 @@
           var L = window.M2R.lang();
           var en = enrolledIds();
           box.innerHTML = '';
-          (d.tracks || []).forEach(function (t) {
+          (d.tracks || []).forEach(function (t, ti) {
             var soon = (t.parts || []).every(function (p) { return p.comingSoon; });
             var open = (t.parts || []).some(function (p) { return en.indexOf(p.id) !== -1; });
             var a = document.createElement('a');
             a.className = 'card';
             a.href = 'track.html?track=' + encodeURIComponent(t.id);
             var img = thumb(t);
+            var num = ('0' + (ti + 1)).slice(-2) + '/' + ('0' + (d.tracks || []).length).slice(-2);
             a.innerHTML = '<div class="card__media">' +
               (img ? '<img loading="lazy" alt="" src="' + window.M2R.esc(img) + '" onerror="this.remove()" />' : '<span>' + window.M2R.esc(t.icon) + '</span>') +
               '</div><div class="card__body">' +
+              '<p class="eyebrow">' + num + '</p>' +
               '<h3 class="card__title">' + window.M2R.esc(t.icon + ' ' + (L === 'en' ? (t.titleEn || t.title) : t.title)) + '</h3>' +
               '<p class="card__text">' + window.M2R.esc(L === 'en' ? (t.descriptionEn || t.description) : t.description) + '</p>' +
               '<div class="card__meta"><span class="chip">🎬 ' + count(t) + '</span>' +

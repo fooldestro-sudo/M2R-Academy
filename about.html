@@ -45,7 +45,7 @@
     </section>
     <section class="section">
       <h2 class="section__title" data-i18n="quote.t">Fuel</h2>
-      <p class="quote" data-i18n="quote.x">x</p>
+      <p class="quote serif-quote" data-i18n="quote.x">x</p>
     </section>
     <section class="section faq">
       <h2 class="section__title" data-i18n="faq.t">FAQ</h2>
@@ -88,6 +88,7 @@
       document.addEventListener('DOMContentLoaded', function () {
         render();
         window.M2R.onLang(render);
+        window.M2R.reveal();
       });
     })();
   </script>
