@@ -69,3 +69,7 @@ M2R-Academy/
     clean-code structure above.
 11. Removed Limitless Organization (trading track retired) → 3 tracks / 112 videos;
     Udemy added as a credited content source.
+12. Paid model (courses paid, details on WhatsApp — no free claims AR/EN) +
+    auth-restore hardening (authInit gate, retry, self-heal user doc) +
+    30-min senior loop: cloud-first enroll/watch gates, leaderboard unsub,
+    SEO (OG/canonical/sitemap/robots), paid i18n, spec honesty.
