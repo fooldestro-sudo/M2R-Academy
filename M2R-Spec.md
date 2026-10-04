@@ -12,7 +12,7 @@
 - **Name:** M2R-Academy
 - **Founders:** Mustafa, Malak, Rahma (initials: M2R)
 - **Tagline:** "Learn. Practice. Master."
-- **Mission:** Provide high-quality programming and chess courses in Arabic, free and accessible.
+- **Mission:** Provide high-quality programming and chess courses in Arabic — paid courses, details and pricing on WhatsApp.
 - **Target audience:** Arabic-speaking learners in Egypt and the Middle East.
 - **Founder contact (WhatsApp):** +201094578070 → `https://wa.me/201094578070`
 - **Source channels (credited in footer):** Elzero Web School, codeZone, Codezilla, Takkat Chess, Udemy.

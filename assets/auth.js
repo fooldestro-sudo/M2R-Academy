@@ -49,6 +49,15 @@
 
   function notify() { listeners.forEach(function (fn) { try { fn(me); } catch (e) {} }); }
 
+  /* Auth-restore gate: Firebase restores the session async, so currentUser
+     is null until the first onAuthStateChanged fires. All callers wait here. */
+  var authDone = false;
+  var authResolve = null;
+  var authInit = new Promise(function (res) { authResolve = res; });
+  function settleAuth() {
+    if (!authDone) { authDone = true; try { authResolve(me); } catch (e) {} }
+  }
+
   function handleBannedFlag(fb, doc) {
     if (doc && doc.banned) {
       fb.auth.signOut().catch(function () {});
@@ -72,36 +81,23 @@
     watched = true;
     window.M2RFirebase.ready().then(function (fb) {
       fb.auth.onAuthStateChanged(function (fu) {
-        if (!fu) { me = null; meDoc = null; notify(); refreshHeader(); return; }
+        if (!fu) { me = null; meDoc = null; notify(); refreshHeader(); settleAuth(); return; }
         fu.getIdToken().catch(function () {});
         fb.db.collection('users').doc(fu.uid).get()
           .then(function (s) { meDoc = s.exists ? s.data() : null; })
           .catch(function () { meDoc = null; })
           .then(function () {
-            if (handleBannedFlag(fb, meDoc)) return;
-            me = shapeUser(fu, meDoc); notify(); refreshHeader();
+            if (handleBannedFlag(fb, meDoc)) { settleAuth(); return; }
+            me = shapeUser(fu, meDoc); notify(); refreshHeader(); settleAuth();
           });
       });
-    }).catch(function () { /* demo/offline: header stays logged-out */ });
+    }).catch(function () { /* demo/offline: header stays logged-out */ settleAuth(); });
   }
 
-  /** Resolve with current user or null (never rejects). */
+  /** Resolve with current user or null (never rejects). Waits for restore. */
   function current() {
-    return window.M2RFirebase.ready().then(function (fb) {
-      var fu = fb.auth.currentUser;
-      if (!fu) return null;
-      return fb.db.collection('users').doc(fu.uid).get()
-        .then(function (s) {
-          var d = s.exists ? s.data() : null;
-          if (d && d.banned) {
-            return fb.auth.signOut().catch(function () {}).then(function () {
-              me = null; return null;
-            });
-          }
-          me = shapeUser(fu, d); return me;
-        })
-        .catch(function () { me = shapeUser(fu, null); return me; });
-    }).catch(function () { return me; });
+    watch();
+    return authInit.then(function () { return me; });
   }
 
   function onAuth(fn) { listeners.push(fn); }
@@ -123,7 +119,15 @@
             createdAt: window.firebase.firestore.FieldValue.serverTimestamp(),
             lastLogin: window.firebase.firestore.FieldValue.serverTimestamp()
           }, { merge: true }).catch(function () {});
-        }).then(function () { return cred.user; });
+        }).then(function () {
+          meDoc = {
+            displayName: disp, email: email.toLowerCase(), photoURL: '',
+            points: 0, banned: false
+          };
+          me = shapeUser(cred.user, meDoc); notify(); refreshHeader();
+          if (!authDone) settleAuth();
+          return cred.user;
+        });
       });
     });
   }
@@ -134,7 +138,14 @@
         fb.db.collection('users').doc(cred.user.uid).set({
           lastLogin: window.firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true }).catch(function () {});
-        return cred.user;
+        return fb.db.collection('users').doc(cred.user.uid).get()
+          .then(function (s) { meDoc = s.exists ? s.data() : null; })
+          .catch(function () { meDoc = null; })
+          .then(function () {
+            me = shapeUser(cred.user, meDoc); notify(); refreshHeader();
+            if (!authDone) settleAuth();
+            return cred.user;
+          });
       });
     });
   }
