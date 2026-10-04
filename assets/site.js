@@ -295,6 +295,44 @@
     catch (e) { return null; }
   }
 
+  function reveal(scope) {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        (scope || document).querySelectorAll('[data-reveal]').forEach(function (el) {
+          el.classList.add('revealed');
+        });
+        return;
+      }
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('revealed'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      (scope || document).querySelectorAll('[data-reveal]').forEach(function (el) { io.observe(el); });
+    } catch (e) {}
+  }
+
+  function countUp(el, target, dur) {
+    try {
+      target = Number(target) || 0; dur = dur || 1400;
+      if (!el) return;
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        el.textContent = fmtNum(target);
+        return;
+      }
+      var t0 = null;
+      function fmtNum(n) { return Number(n).toLocaleString('en-US'); }
+      function step(ts) {
+        if (!t0) t0 = ts;
+        var p = Math.min(1, (ts - t0) / dur);
+        var eased = 1 - Math.pow(1 - p, 3);
+        el.textContent = fmtNum(Math.round(target * eased));
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    } catch (e) {}
+  }
+
   function loadJSON(path) {
     return fetch(path, { cache: 'no-store' }).then(function (r) {
       if (!r.ok) throw new Error('http ' + r.status);
@@ -333,6 +371,17 @@
       if (tg) tg.addEventListener('click', function () {
         document.getElementById('site-nav').classList.toggle('site-nav--open');
       });
+      // Falcon-style glass: solidify header after scroll.
+      try {
+        var hdr = document.getElementById('site-header');
+        var onScroll = function () {
+          if (hdr) hdr.classList.toggle('site-header--scrolled', window.scrollY > 8);
+        };
+        window.removeEventListener('scroll', window.__m2rScroll);
+        window.__m2rScroll = onScroll;
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      } catch (e) {}
       var lt = document.getElementById('lang-toggle');
       if (lt) lt.addEventListener('click', function () { setLang(lang === 'ar' ? 'en' : 'ar'); });
     }
@@ -383,6 +432,7 @@
   window.M2R = {
     t: t, lang: getLang, setLang: setLang, onLang: onLang,
     esc: esc, toast: toast, getParam: getParam, loadJSON: loadJSON,
-    applyI18n: applyI18n, renderChrome: renderChrome, TRACKS_META: TRACKS_META
+    applyI18n: applyI18n, renderChrome: renderChrome, reveal: reveal,
+    countUp: countUp, TRACKS_META: TRACKS_META
   };
 })();
