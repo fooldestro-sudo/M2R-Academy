@@ -115,6 +115,8 @@
       'contact.founder': 'مصطفى — مؤسس الأكاديمية',
       'contact.wa': 'كلمنا واتساب', 'contact.channels_t': 'قنوات المحتوى',
       'contact.projects_note': 'عندك مشروع؟ ابعته وهنعرضه باسمك.',
+      'join.t': 'انضم لينا النهارده',
+      'join.x': 'ابدأ رحلتك مع M2R-Academy — كلمنا واتساب واعرف التفاصيل والأسعار.',
       'e404.t': 'الصفحة مش موجودة', 'e404.x': 'اللينك ده مودّيش لحتة.',
       'e404.home': '← رجوع للرئيسية'
     },
@@ -226,6 +228,8 @@
       'contact.founder': 'Mustafa — Academy founder',
       'contact.wa': 'Chat on WhatsApp', 'contact.channels_t': 'Content channels',
       'contact.projects_note': 'Have a project? Send it and we will feature you.',
+      'join.t': 'Join us today',
+      'join.x': 'Start your journey with M2R-Academy — message us on WhatsApp for details and pricing.',
       'e404.t': 'Page not found', 'e404.x': 'This link leads nowhere.',
       'e404.home': '← Back home'
     }
