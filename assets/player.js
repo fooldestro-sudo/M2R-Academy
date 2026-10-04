@@ -90,14 +90,18 @@
   }
 
   function resetHolder() {
+    // Stop all API traffic BEFORE touching the iframe — prevents YouTube's
+    // internal postMessage poller from firing at a half-destroyed window
+    // (the 'target origin mismatch' console spam).
+    stopTick();
+    state.playerReady = false;
     var wrap = $('#player-wrapper');
     var old = $('#yt-player');
     if (wrap && old) {
       if (state.player && state.player.destroy) {
         try { state.player.destroy(); } catch (e) {}
-        state.player = null;
-        state.playerReady = false;
       }
+      state.player = null;
       if (old.parentNode === wrap) wrap.removeChild(old);
     }
     if (wrap) {
@@ -111,6 +115,7 @@
     resetHolder();
     try {
       state.player = new window.YT.Player('yt-player', {
+        host: 'https://www.youtube-nocookie.com',
         videoId: youtubeId,
         playerVars: {
           controls: 0, rel: 0, modestbranding: 1, disablekb: 1,
@@ -160,6 +165,7 @@
   }
 
   function onError() {
+    stopTick();
     setPlayIcon(false);
     var last = state.part.videos.length - 1;
     showFallback(state.videoIndex < last ? undefined : window.M2R.t('watch.unavailable'));
