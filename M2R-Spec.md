@@ -76,19 +76,20 @@ M2R-Academy/
 
 ## 4. Design System
 
-### Colors (CSS Variables in `:root`)
+### Colors (CSS Variables in `:root` — Falcon-inspired ink + emerald)
 ```css
---bg-primary: #0f0f23;      /* Deep dark indigo */
---bg-secondary: #1a1a35;    /* Slightly lighter */
---bg-card: #1e1e3f;         /* Cards */
---accent: #6366f1;          /* Indigo accent */
---accent-hover: #818cf8;    /* Lighter indigo */
---text-primary: #e2e8f0;    /* Light gray */
---text-secondary: #94a3b8;  /* Muted */
---success: #10b981;
+--bg-primary: #080a09;      /* Near-black green-tinted ink */
+--bg-secondary: #0d1310;    /* Panel */
+--bg-card: #101812;         /* Cards */
+--accent: #22c55e;          /* Emerald brand */
+--accent-hover: #4ade80;    /* Light emerald */
+--sand: #e3d6c1;            /* Serif quote accent */
+--text-primary: #f0f4ef;    /* Off-white */
+--text-secondary: #9db3a4;  /* Muted sage */
+--success: #22c55e;
 --warning: #f59e0b;
 --danger: #ef4444;
---border: #2d2d52;
+--border: #1f2b24;
 ```
 
 ### Typography
