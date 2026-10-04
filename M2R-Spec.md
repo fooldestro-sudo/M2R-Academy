@@ -271,6 +271,8 @@ blocks are shipped (fetch-only by design).
 // The page shows a random code, e.g. "C7B2E9A1".
 // First char = track prefix (P/W/C) + 7 random hex chars (0-9, A-F).
 // The user types its REVERSE. There is NO stored list of valid codes.
+// Honest note: this client check is demo friction only — paid enforcement is
+// the human WhatsApp review, not cryptography. Server-verify if abuse matters.
 function verifyOTP(input, displayedCode) {
   const norm = input.replace(/[^0-9a-zA-Z]/g, '').toUpperCase();
   if (norm.length < 8) return 'Please enter the 8-character code.';
