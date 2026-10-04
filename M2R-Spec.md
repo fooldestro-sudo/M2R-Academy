@@ -259,9 +259,9 @@ disabled until its content ships.
 ```
 
 ### `file://` support
-`fetch()` of local JSON is blocked on `file://`. Mirror each JSON file inside its
-pages as `<script type="application/json">` fallback blocks (same pattern as the
-previous build): try `fetch()` first, fall back to inline data.
+`fetch()` of local JSON is blocked on `file://`. Supported launch is a local
+server (`python3 -m http.server`) or GitHub Pages — no inline-JSON fallback
+blocks are shipped (fetch-only by design).
 
 ---
 

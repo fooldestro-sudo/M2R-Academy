@@ -25,15 +25,14 @@ accounts, leaderboard, and admin.
    (already filled for `m2r-academy`) + lazy Compat loader (`10.12.0`).
    Pages load `site.js → firebase.js → auth.js`; SDKs load on demand only
    when `apiKey+projectId` are set and online. No `import`, no bundler.
-2. **How to replace `ADMIN_EMAILS`:** open `assets/auth.js:7` —
-   `var ADMIN_EMAILS = ['mustafa@m2r.academy']` → replace with Mustafa's real
-   email (lowercase). ⚠️ ACTION REQUIRED before launch. For true enforcement,
-   also set `role: "admin"` on his `users/{uid}` doc (see `firebase-rules.md`).
+2. **Admin owner (done):** `assets/auth.js:7` —
+   `var ADMIN_EMAILS = ['darkstorm885@gmail.com']`. Server enforcement is
+   `isOwner()` in `firebase-rules.md` (no manual `role` edit needed).
 3. **Where to paste Security Rules:** full copy-paste file is `firebase-rules.md`
    in repo root. Firestore → Rules → paste Block 1 → Publish. Storage → Rules
    → paste Block 2 → Publish.
 4. **How to add the GitHub Pages domain:** Firebase Console → Authentication →
-   Settings → Authorized domains → Add ` <your-username>.github.io`
+   Settings → Authorized domains → Add `fooldestro-sudo.github.io`
    (plus `localhost` for local testing).
 5. **How to test signup/login locally:**
    `python3 -m http.server 8000` → `http://localhost:8000/signup.html` →

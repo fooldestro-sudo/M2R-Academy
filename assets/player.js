@@ -460,11 +460,18 @@
           if (p.id === id && !p.comingSoon) { found = p; tr = t; }
         });
       });
-      if (!found) { window.location.href = 'courses.html'; return; }
-      if (window.M2RAuth.getEnrolled().indexOf(found.id) === -1) {
-        window.location.href = 'enroll.html?course=' + encodeURIComponent(found.id);
-        return;
-      }
+      if (!found) { failBoot(id, 'courses.html'); return; }
+      // Cloud-first gate: new-device logins must see cloud unlocks, not just LS.
+      window.M2RAuth.current().then(function () {
+        return window.M2RAuth.pullCloud().catch(function () {});
+      }).then(function () {
+        if (window.M2RAuth.getEnrolled().indexOf(found.id) === -1) {
+          window.location.href = 'enroll.html?course=' + encodeURIComponent(found.id);
+          return;
+        }
+        bootPlayer();
+      });
+      function bootPlayer() {
       state.part = found;
       state.track = tr;
       var saved = window.M2RAuth.getProgress()[found.id];
@@ -474,7 +481,33 @@
       state.pendingSeek = saved ? (Number(saved.seconds) || 0) : 0;
       renderAll();
       loadYouTubeApi().then(function () { createPlayer(found.videos[idx].youtubeId); })
-        .catch(function () {});
-    }).catch(function () { window.location.href = 'courses.html'; });
+        .catch(function () {
+          // YouTube blocked/offline: stay on page with fallback + Next — no redirect.
+          showFallback();
+          try {
+            var nb = document.getElementById('btn-fallback-next');
+            if (nb && !nb._wired) {
+              nb._wired = true;
+              nb.addEventListener('click', function () {
+                ytApiPromise = null; hideFallback();
+                loadYouTubeApi().then(function () {
+                  createPlayer(found.videos[state.videoIndex].youtubeId);
+                }).catch(function () { showFallback(); });
+              });
+            }
+          } catch (e) {}
+        });
+      } // end bootPlayer
+      function failBoot(badId, fallback) {
+        try {
+          var e = document.getElementById('player-error');
+          if (e && window.M2R) {
+            e.textContent = window.M2R.t('common.load_fail') + (badId ? ' (' + badId + ')' : '');
+            e.hidden = false;
+          }
+        } catch (err) {}
+        setTimeout(function () { window.location.href = fallback; }, 2500);
+      }
+    }).catch(function () { failBoot(id, 'courses.html'); });
   });
 })();

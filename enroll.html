@@ -70,8 +70,9 @@
       function paint() {
         document.getElementById('enroll-code').textContent = code;
         document.getElementById('enroll-track-hint').textContent =
-          'Track code — starts with “' + track.trackPrefix + '”.';
-        var msg = 'Hello M2R-Academy, my enrollment code is: ' + code + ' (' + part.title + ')';
+          window.M2R.t('enroll.hint').replace('{prefix}', track.trackPrefix);
+        var msg = window.M2R.t('enroll.wa_msg')
+          .replace('{code}', code).replace('{title}', part.title);
         document.getElementById('btn-wa').href =
           'https://wa.me/201094578070?text=' + encodeURIComponent(msg);
       }
@@ -99,8 +100,27 @@
         }
       }
 
+      // NOTE: paid-gate is client-side demo friction (Spec §8) + human WhatsApp
+      // review — NOT server security. Rate-limit verify attempts below.
+      var attempts = 0, lastTry = 0;
+
+      function errLocked() {
+        var err = document.getElementById('otp-error');
+        err.textContent = window.M2R.t('enroll.err_wrong') + ' — ' + window.M2R.t('common.retry');
+        err.hidden = false;
+        busy = false;
+      }
+
       function verify() {
         if (busy || !code) return;
+        var now = Date.now();
+        if (now - lastTry < 1500) return; // max ~1 try / 1.5s
+        lastTry = now;
+        attempts++;
+        if (attempts > 20) {
+          errLocked();
+          return;
+        }
         busy = true;
         var err = document.getElementById('otp-error');
         var input = document.getElementById('otp-input');
@@ -121,6 +141,9 @@
           setTimeout(function () {
             window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
           }, 600);
+        }).catch(function () {
+          busy = false;
+          err.textContent = window.M2R.t('auth.err_net'); err.hidden = false;
         });
       }
 
@@ -133,16 +156,26 @@
             });
           });
           if (!part) { window.location.href = 'courses.html'; return; }
-          if (window.M2RAuth.getEnrolled().indexOf(part.id) !== -1) {
-            window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
-            return;
-          }
-          document.getElementById('enroll-name').textContent = part.title;
-          code = generateCode(track.trackPrefix);
-          paint();
+          // Sync cloud enrollments first so a logged-in user on a new device
+          // isn't bounced to enroll for a part they already unlocked.
+          window.M2RAuth.current().then(function () {
+            return window.M2RAuth.pullCloud().catch(function () {});
+          }).then(function () {
+            if (window.M2RAuth.getEnrolled().indexOf(part.id) !== -1) {
+              window.location.href = 'watch.html?course=' + encodeURIComponent(part.id);
+              return;
+            }
+            bootEnroll();
+          });
+
+          function bootEnroll() {
+            document.getElementById('enroll-name').textContent = part.title;
+            code = generateCode(track.trackPrefix);
+            paint();
           document.getElementById('btn-copy').addEventListener('click', copyCode);
           document.getElementById('btn-regen').addEventListener('click', function () {
             code = generateCode(track.trackPrefix);
+            attempts = 0; lastTry = 0;
             document.getElementById('otp-input').value = '';
             document.getElementById('otp-error').hidden = true;
             paint();
@@ -151,6 +184,7 @@
           document.getElementById('otp-input').addEventListener('keydown', function (ev) {
             if (ev.key === 'Enter') { ev.preventDefault(); verify(); }
           });
+          } // end bootEnroll
         }).catch(function () { window.location.href = 'courses.html'; });
       });
     })();

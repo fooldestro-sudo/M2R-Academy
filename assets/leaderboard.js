@@ -18,7 +18,10 @@
     window.M2R.onLang(function () { boot(window.M2RAuth.me() ? window.M2RAuth.me().uid : null); });
   });
 
+  var unsub = null;
+
   function boot(myUid) {
+    if (typeof unsub === 'function') { try { unsub(); } catch (e) {} unsub = null; }
     window.M2RFirebase.ready().then(function (fb) {
       // Active competition banner (optional).
       fb.db.collection('competitions').where('active', '==', true).limit(1).get()
@@ -29,15 +32,23 @@
             box.innerHTML = '<p class="quote">🏆 ' + esc(c.title || '') + '</p>';
           }
         }).catch(function () {});
-      // Live board.
-      fb.db.collection('users').orderBy('points', 'desc').limit(50)
+      // Live board (requires login per Firestore rules — public sees login CTA).
+      unsub = fb.db.collection('users').orderBy('points', 'desc').limit(50)
         .onSnapshot(function (snap) {
           render(snap.docs.map(function (d) {
             var v = d.data() || {};
             v.uid = d.id;
             return v;
           }), myUid);
-        }, function () {
+        }, function (err) {
+          if (!myUid) {
+            // Logged-out: rules deny users read — show login hint, not an error.
+            var t = document.getElementById('lb-table');
+            if (t) t.hidden = true;
+            var hint = document.getElementById('lb-login-hint');
+            if (hint) hint.hidden = false;
+            return;
+          }
           var e = document.getElementById('lb-error');
           e.textContent = window.M2R.t('common.load_fail');
           e.hidden = false;

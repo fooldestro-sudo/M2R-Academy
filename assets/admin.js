@@ -162,6 +162,9 @@
         }).catch(function () {});
       });
     }).catch(function () {
+      // Offline/CDN failure (NOT a permission verdict): keep denied state intact.
+      var main = document.getElementById('admin-main');
+      if (main && main.hidden) return; // requireAdmin already showed denied
       var d = document.getElementById('admin-denied');
       if (d) { d.textContent = window.M2R.t('common.load_fail'); d.hidden = false; }
     });

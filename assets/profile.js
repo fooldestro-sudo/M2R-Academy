@@ -20,7 +20,10 @@
 
   function resolve(u) {
     show('profile-loading', false);
-    if (!u) { show('profile-need-login', true); return; }
+    if (!u) {
+      // Signed out (e.g. second tab) after boot → revert to login state.
+      show('profile-main', false); show('profile-need-login', true); return;
+    }
     show('profile-need-login', false);
     show('profile-main', true);
     if (!booted) { booted = true; boot(u); }
@@ -29,11 +32,11 @@
   document.addEventListener('DOMContentLoaded', function () {
     window.M2RAuth.current().then(resolve);
     // Late-arriving session (slow SDK / second tab login) → render without reload.
-    window.M2RAuth.onAuth(function (u) { if (u) resolve(u); });
+    window.M2RAuth.onAuth(function (u) { resolve(u); });
     var retry = document.getElementById('profile-retry');
     if (retry) retry.addEventListener('click', function () {
-      show('profile-loading', true); show('profile-need-login', false);
-      window.M2RAuth.current().then(resolve);
+      // SDK/CDN transient failure: full reload re-runs lazy loader cleanly.
+      window.location.reload();
     });
   });
 
@@ -59,10 +62,10 @@
     });
   }
 
-  /** Rank = 1 + number of users with strictly more points. */
+  /** Rank = 1 + users with strictly more points (bounded; academy scale). */
   function rankOf(points) {
     window.M2RFirebase.ready().then(function (fb) {
-      return fb.db.collection('users').where('points', '>', points).get();
+      return fb.db.collection('users').where('points', '>', points).limit(1000).get();
     }).then(function (snap) {
       document.getElementById('pf-rank').textContent = '#' + (snap.size + 1);
     }).catch(function () {
